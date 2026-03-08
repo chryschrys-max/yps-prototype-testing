@@ -185,6 +185,9 @@
     font-size: 4rem; position: relative; z-index: 1;
     overflow: hidden;
   }
+  .card-banner img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
   .card-banner::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(to bottom, transparent 60%, var(--bg-primary) 100%);
@@ -579,7 +582,7 @@
   <p class="subtitle">Click a concept to explore</p>
   <div class="concepts-grid">
     <div class="concept-card stagger-in" style="animation-delay: 0.1s" onclick="showPage('concept1')">
-      <div class="card-banner">&#x1F319;&#x1F6CF;&#xFE0F;</div>
+      <div class="card-banner"><img src="images/Concept-1.png" alt="Concept 1"></div>
       <div class="card-body">
         <div class="label">Concept 1</div>
         <h2>Bedtime Wind-Down</h2>
@@ -588,7 +591,7 @@
       </div>
     </div>
     <div class="concept-card stagger-in" style="animation-delay: 0.25s" onclick="showPage('concept2')">
-      <div class="card-banner">&#x1F46B;&#x1F91D;</div>
+      <div class="card-banner"><img src="images/Concept-2.png" alt="Concept 2"></div>
       <div class="card-body">
         <div class="label">Concept 2</div>
         <h2>Peer Challenge</h2>
@@ -597,7 +600,7 @@
       </div>
     </div>
     <div class="concept-card stagger-in" style="animation-delay: 0.4s" onclick="showPage('concept3')">
-      <div class="card-banner">&#x1F468;&#x200D;&#x1F469;&#x200D;&#x1F467;</div>
+      <div class="card-banner"><img src="images/Concept-3.png" alt="Concept 3"></div>
       <div class="card-body">
         <div class="label">Concept 3</div>
         <h2>WOU (We Open Up)</h2>
