@@ -15,7 +15,7 @@
     overflow-x: hidden;
   }
   button { cursor: pointer; font-family: inherit; }
-  img { -webkit-user-drag: none; user-select: none; }
+  img { user-select: none; }
 
   /* ── Shared Navigation ── */
   .back-btn {
@@ -190,9 +190,10 @@
     transition: transform 0.3s, box-shadow 0.3s;
     border-radius: 16px; overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    line-height: 0; background: #f5f0eb;
   }
   .c2-deck-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
-  .c2-deck-card img { width: 100%; display: block; border-radius: 16px; }
+  .c2-deck-card img { width: 100%; display: block; }
 
   /* Card grid */
   .c2-card-grid-view { display: none; }
@@ -213,10 +214,10 @@
     cursor: pointer; border-radius: 14px; overflow: hidden;
     transition: transform 0.25s, box-shadow 0.25s;
     box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    background: #fff; line-height: 0;
+    background: #f5f0eb; line-height: 0;
   }
   .c2-grid-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-  .c2-grid-card img { width: 100%; height: 100%; display: block; border-radius: 14px; object-fit: cover; }
+  .c2-grid-card img { width: 100%; display: block; }
 
   /* C2 Zoom + Flip overlay */
   .c2-overlay {
