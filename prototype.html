@@ -186,9 +186,9 @@
   /* Deck covers */
   .c2-decks { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
   .c2-deck-card {
-    width: 240px; cursor: pointer;
+    width: 300px; cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
-    overflow: hidden;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     line-height: 0; background: #f5f0eb;
   }
@@ -207,11 +207,11 @@
   .c2-grid-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; text-align: center; color: #c46a1a; }
   .c2-grid-subtitle { font-size: 0.95rem; color: #888; margin-bottom: 24px; text-align: center; }
   .c2-card-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 18px;
   }
   .c2-grid-card {
-    cursor: pointer; overflow: hidden;
+    cursor: pointer; border-radius: 20px; overflow: hidden;
     transition: transform 0.25s, box-shadow 0.25s;
     box-shadow: 0 3px 12px rgba(0,0,0,0.1);
     background: #f5f0eb; line-height: 0;
