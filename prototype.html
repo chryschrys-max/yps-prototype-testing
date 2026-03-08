@@ -107,15 +107,15 @@
 
   /* ── Page Containers ── */
   .page { display: none; }
-  .page.active { display: block; animation: pageIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-  .page.fade-out { display: block; animation: pageFadeOut 0.25s ease forwards; }
+  .page.active { display: block; animation: pageIn 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .page.fade-out { display: block; animation: pageFadeOut 0.35s cubic-bezier(0.4, 0, 1, 1) forwards; }
   @keyframes pageIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(30px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
   @keyframes pageFadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
+    from { opacity: 1; transform: translateY(0) scale(1); }
+    to { opacity: 0; transform: translateY(-20px) scale(0.98); }
   }
 
   /* ── Stagger animation utility ── */
