@@ -457,12 +457,12 @@
 
       <div class="c1-board">
         <!-- Wind-Down column -->
-        <div class="board-col" data-section="wind-down" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
+        <div class="board-col" data-section="wind-down">
           <h3>Wind-Down</h3>
           <div class="magnets-in-section"></div>
         </div>
         <!-- Room Setup column -->
-        <div class="board-col" data-section="room-setup" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
+        <div class="board-col" data-section="room-setup">
           <h3>My Room Setup</h3>
           <div class="magnets-in-section"></div>
         </div>
@@ -479,25 +479,25 @@
       <div class="c1-tracking">
         <h3>How was your sleep?</h3>
         <div class="tracking-week">
-          <div class="day-slot" data-day="mon" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="mon">
             <span class="day-label">Mon</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="tue" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="tue">
             <span class="day-label">Tue</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="wed" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="wed">
             <span class="day-label">Wed</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="thu" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="thu">
             <span class="day-label">Thu</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="fri" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="fri">
             <span class="day-label">Fri</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="sat" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="sat">
             <span class="day-label">Sat</span><span class="placed-feeling"></span>
           </div>
-          <div class="day-slot" data-day="sun" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
+          <div class="day-slot" data-day="sun">
             <span class="day-label">Sun</span><span class="placed-feeling"></span>
           </div>
         </div>
@@ -673,12 +673,10 @@ function buildMagnetRow(container, items, type) {
     img.alt = item.label;
     img.title = item.label;
     img.className = type === 'feeling' ? 'feeling-img' : 'magnet-img';
-    img.draggable = true;
+    img.draggable = false;
     img.dataset.type = type;
     img.dataset.src = item.src;
     img.dataset.label = item.label;
-    img.addEventListener('dragstart', magnetDragStart);
-    img.addEventListener('dragend', magnetDragEnd);
     row.appendChild(img);
   });
 }
@@ -687,78 +685,150 @@ buildMagnetRow('c1WindDownRow', c1WindDown, 'wind-down');
 buildMagnetRow('c1RoomSetupRow', c1RoomSetup, 'room-setup');
 buildMagnetRow('c1FeelingRow', c1Feelings, 'feeling');
 
-let draggedMagnet = null;
+/* Custom pointer-based drag & drop (works on Mac/PC/touch) */
+(function() {
+  let dragEl = null;
+  let dragClone = null;
+  let offsetX = 0;
+  let offsetY = 0;
 
-function magnetDragStart(e) {
-  draggedMagnet = e.target;
-  e.target.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'copy';
-  e.dataTransfer.setData('text/plain', '');
-}
-function magnetDragEnd(e) {
-  e.target.classList.remove('dragging');
-  draggedMagnet = null;
-}
-
-function boardDragOver(e) {
-  e.preventDefault();
-  if (!draggedMagnet) return;
-  const type = draggedMagnet.dataset.type;
-  if (type === 'feeling') return;
-  const section = e.currentTarget;
-  if (section.dataset.section === type) {
-    section.classList.add('drag-over');
+  function getPointerTarget(x, y) {
+    if (dragClone) dragClone.style.display = 'none';
+    const el = document.elementFromPoint(x, y);
+    if (dragClone) dragClone.style.display = '';
+    return el;
   }
-}
-function boardDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
 
-function boardDrop(e) {
-  e.preventDefault();
-  const section = e.currentTarget;
-  section.classList.remove('drag-over');
-  if (!draggedMagnet) return;
-  const type = draggedMagnet.dataset.type;
-  if (type === 'feeling') return;
-  if (section.dataset.section !== type) return;
+  function findDropZone(el) {
+    if (!el) return null;
+    if (el.classList.contains('board-col')) return el;
+    if (el.classList.contains('day-slot')) return el;
+    if (el.classList.contains('magnets-in-section')) return el.closest('.board-col');
+    if (el.closest) {
+      const bc = el.closest('.board-col');
+      if (bc) return bc;
+      const ds = el.closest('.day-slot');
+      if (ds) return ds;
+    }
+    return null;
+  }
 
-  const clone = document.createElement('img');
-  clone.src = draggedMagnet.dataset.src;
-  clone.alt = draggedMagnet.dataset.label;
-  clone.title = draggedMagnet.dataset.label + ' (click to remove)';
-  clone.className = 'magnet-img placed';
-  clone.draggable = false;
-  clone.onclick = function() {
-    this.style.transform = 'scale(0)';
-    setTimeout(() => this.remove(), 200);
-  };
-  section.querySelector('.magnets-in-section').appendChild(clone);
-}
+  function startDrag(target, clientX, clientY) {
+    if (!target.classList.contains('magnet-img') && !target.classList.contains('feeling-img')) return;
+    if (target.classList.contains('placed')) return;
 
-function dayDragOver(e) {
-  e.preventDefault();
-  if (!draggedMagnet || draggedMagnet.dataset.type !== 'feeling') return;
-  e.currentTarget.classList.add('drag-over');
-}
-function dayDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+    dragEl = target;
+    const rect = target.getBoundingClientRect();
+    offsetX = clientX - rect.left;
+    offsetY = clientY - rect.top;
 
-function dayDrop(e) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  if (!draggedMagnet || draggedMagnet.dataset.type !== 'feeling') return;
-  const feelingEl = e.currentTarget.querySelector('.placed-feeling');
-  feelingEl.innerHTML = '';
-  const img = document.createElement('img');
-  img.src = draggedMagnet.dataset.src;
-  img.alt = draggedMagnet.dataset.label;
-  img.style.width = '54px';
-  img.style.height = '54px';
-  img.style.borderRadius = '8px';
-  img.style.cursor = 'pointer';
-  img.onclick = function() {
-    feelingEl.innerHTML = '';
-  };
-  feelingEl.appendChild(img);
-}
+    dragClone = target.cloneNode(true);
+    dragClone.style.position = 'fixed';
+    dragClone.style.zIndex = '9999';
+    dragClone.style.pointerEvents = 'none';
+    dragClone.style.opacity = '0.85';
+    dragClone.style.transform = 'scale(1.1)';
+    dragClone.style.left = (clientX - offsetX) + 'px';
+    dragClone.style.top = (clientY - offsetY) + 'px';
+    dragClone.style.width = rect.width + 'px';
+    dragClone.style.height = rect.height + 'px';
+    document.body.appendChild(dragClone);
+    target.classList.add('dragging');
+  }
+
+  function moveDrag(clientX, clientY) {
+    if (!dragEl) return;
+    dragClone.style.left = (clientX - offsetX) + 'px';
+    dragClone.style.top = (clientY - offsetY) + 'px';
+
+    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
+    const elUnder = getPointerTarget(clientX, clientY);
+    const zone = findDropZone(elUnder);
+    if (zone) {
+      const type = dragEl.dataset.type;
+      if (zone.classList.contains('day-slot') && type === 'feeling') {
+        zone.classList.add('drag-over');
+      } else if (zone.classList.contains('board-col') && type !== 'feeling' && zone.dataset.section === type) {
+        zone.classList.add('drag-over');
+      }
+    }
+  }
+
+  function endDrag(clientX, clientY) {
+    if (!dragEl) return;
+    const elUnder = getPointerTarget(clientX, clientY);
+    const zone = findDropZone(elUnder);
+
+    if (zone) {
+      const type = dragEl.dataset.type;
+
+      if (zone.classList.contains('day-slot') && type === 'feeling') {
+        const feelingEl = zone.querySelector('.placed-feeling');
+        feelingEl.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = dragEl.dataset.src;
+        img.alt = dragEl.dataset.label;
+        img.style.width = '54px';
+        img.style.height = '54px';
+        img.style.borderRadius = '8px';
+        img.style.cursor = 'pointer';
+        img.onclick = function() { feelingEl.innerHTML = ''; };
+        feelingEl.appendChild(img);
+      } else if (zone.classList.contains('board-col') && type !== 'feeling' && zone.dataset.section === type) {
+        const clone = document.createElement('img');
+        clone.src = dragEl.dataset.src;
+        clone.alt = dragEl.dataset.label;
+        clone.title = dragEl.dataset.label + ' (click to remove)';
+        clone.className = 'magnet-img placed';
+        clone.draggable = false;
+        clone.onclick = function() {
+          this.style.transform = 'scale(0)';
+          setTimeout(() => this.remove(), 200);
+        };
+        zone.querySelector('.magnets-in-section').appendChild(clone);
+      }
+    }
+
+    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
+    dragEl.classList.remove('dragging');
+    if (dragClone) { dragClone.remove(); dragClone = null; }
+    dragEl = null;
+  }
+
+  // Mouse events
+  document.addEventListener('mousedown', function(e) {
+    if (e.button !== 0) return;
+    startDrag(e.target, e.clientX, e.clientY);
+    if (dragEl) e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e) {
+    if (!dragEl) return;
+    e.preventDefault();
+    moveDrag(e.clientX, e.clientY);
+  });
+  document.addEventListener('mouseup', function(e) {
+    if (!dragEl) return;
+    endDrag(e.clientX, e.clientY);
+  });
+
+  // Touch events
+  document.addEventListener('touchstart', function(e) {
+    const t = e.touches[0];
+    startDrag(e.target, t.clientX, t.clientY);
+    if (dragEl) e.preventDefault();
+  }, { passive: false });
+  document.addEventListener('touchmove', function(e) {
+    if (!dragEl) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    moveDrag(t.clientX, t.clientY);
+  }, { passive: false });
+  document.addEventListener('touchend', function(e) {
+    if (!dragEl) return;
+    const t = e.changedTouches[0];
+    endDrag(t.clientX, t.clientY);
+  });
+})();
 
 /* ══════════════════════════════════════
    CONCEPT 2 – PEER CHALLENGE
@@ -933,135 +1003,6 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* ══════════════════════════════════════
-   CONCEPT 1 – TOUCH DRAG & DROP SUPPORT
-   ══════════════════════════════════════ */
-(function() {
-  let touchDragEl = null;
-  let touchClone = null;
-  let touchOffsetX = 0;
-  let touchOffsetY = 0;
-
-  function getTouchTarget(x, y) {
-    // Hide clone temporarily to get element underneath
-    if (touchClone) touchClone.style.display = 'none';
-    const el = document.elementFromPoint(x, y);
-    if (touchClone) touchClone.style.display = '';
-    return el;
-  }
-
-  function findDropZone(el) {
-    if (!el) return null;
-    // Check if it's a board-col or day-slot
-    if (el.classList && el.classList.contains('board-col')) return el;
-    if (el.classList && el.classList.contains('day-slot')) return el;
-    if (el.classList && el.classList.contains('magnets-in-section')) return el.closest('.board-col');
-    if (el.closest) {
-      const boardCol = el.closest('.board-col');
-      if (boardCol) return boardCol;
-      const daySlot = el.closest('.day-slot');
-      if (daySlot) return daySlot;
-    }
-    return null;
-  }
-
-  document.addEventListener('touchstart', function(e) {
-    const target = e.target;
-    if (!target.classList.contains('magnet-img') && !target.classList.contains('feeling-img')) return;
-    if (target.classList.contains('placed')) return;
-
-    e.preventDefault();
-    touchDragEl = target;
-    const touch = e.touches[0];
-    const rect = target.getBoundingClientRect();
-    touchOffsetX = touch.clientX - rect.left;
-    touchOffsetY = touch.clientY - rect.top;
-
-    // Create a visual clone to follow the finger
-    touchClone = target.cloneNode(true);
-    touchClone.style.position = 'fixed';
-    touchClone.style.zIndex = '9999';
-    touchClone.style.pointerEvents = 'none';
-    touchClone.style.opacity = '0.85';
-    touchClone.style.transform = 'scale(1.1)';
-    touchClone.style.left = (touch.clientX - touchOffsetX) + 'px';
-    touchClone.style.top = (touch.clientY - touchOffsetY) + 'px';
-    document.body.appendChild(touchClone);
-
-    target.classList.add('dragging');
-  }, { passive: false });
-
-  document.addEventListener('touchmove', function(e) {
-    if (!touchDragEl) return;
-    e.preventDefault();
-    const touch = e.touches[0];
-    if (touchClone) {
-      touchClone.style.left = (touch.clientX - touchOffsetX) + 'px';
-      touchClone.style.top = (touch.clientY - touchOffsetY) + 'px';
-    }
-
-    // Highlight drop zones
-    const elUnder = getTouchTarget(touch.clientX, touch.clientY);
-    const dropZone = findDropZone(elUnder);
-
-    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
-
-    if (dropZone) {
-      const type = touchDragEl.dataset.type;
-      if (dropZone.classList.contains('day-slot') && type === 'feeling') {
-        dropZone.classList.add('drag-over');
-      } else if (dropZone.classList.contains('board-col') && type !== 'feeling' && dropZone.dataset.section === type) {
-        dropZone.classList.add('drag-over');
-      }
-    }
-  }, { passive: false });
-
-  document.addEventListener('touchend', function(e) {
-    if (!touchDragEl) return;
-
-    const touch = e.changedTouches[0];
-    const elUnder = getTouchTarget(touch.clientX, touch.clientY);
-    const dropZone = findDropZone(elUnder);
-
-    if (dropZone) {
-      const type = touchDragEl.dataset.type;
-
-      if (dropZone.classList.contains('day-slot') && type === 'feeling') {
-        // Drop feeling into day slot
-        const feelingEl = dropZone.querySelector('.placed-feeling');
-        feelingEl.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = touchDragEl.dataset.src;
-        img.alt = touchDragEl.dataset.label;
-        img.style.width = '54px';
-        img.style.height = '54px';
-        img.style.borderRadius = '8px';
-        img.style.cursor = 'pointer';
-        img.onclick = function() { feelingEl.innerHTML = ''; };
-        feelingEl.appendChild(img);
-      } else if (dropZone.classList.contains('board-col') && type !== 'feeling' && dropZone.dataset.section === type) {
-        // Drop magnet into board section
-        const clone = document.createElement('img');
-        clone.src = touchDragEl.dataset.src;
-        clone.alt = touchDragEl.dataset.label;
-        clone.title = touchDragEl.dataset.label + ' (click to remove)';
-        clone.className = 'magnet-img placed';
-        clone.draggable = false;
-        clone.onclick = function() {
-          this.style.transform = 'scale(0)';
-          setTimeout(() => this.remove(), 200);
-        };
-        dropZone.querySelector('.magnets-in-section').appendChild(clone);
-      }
-    }
-
-    // Cleanup
-    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
-    touchDragEl.classList.remove('dragging');
-    if (touchClone) { touchClone.remove(); touchClone = null; }
-    touchDragEl = null;
-  });
-})();
 </script>
 </body>
 </html>
