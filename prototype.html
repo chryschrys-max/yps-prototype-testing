@@ -72,7 +72,7 @@
      CONCEPT 1 – BEDTIME WIND-DOWN
      ════════════════════════════════════════ */
   #concept1 { padding: 20px; }
-  .c1-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); }
+  .c1-layout { display: flex; gap: 24px; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 40px); }
 
   .c1-howto {
     width: 280px; flex-shrink: 0;
@@ -84,7 +84,7 @@
   .c1-howto li { font-size: 0.85rem; color: #3a6b62; margin-bottom: 10px; line-height: 1.5; }
 
   .c1-center { flex: 1; display: flex; flex-direction: column; gap: 16px; }
-  .c1-board-title { text-align: center; font-size: 1.4rem; color: #5b9bd5; font-weight: 700; font-style: italic; }
+  .c1-board-title { text-align: center; font-size: 1.8rem; color: #5b9bd5; font-weight: 700; font-style: italic; }
 
   .c1-board {
     background: #faf8f5; border: 3px solid #d0d0d0; border-radius: 16px;
@@ -92,14 +92,14 @@
   }
   .board-col {
     flex: 1; border: 2px dashed #c5dce8; border-radius: 12px;
-    padding: 12px; min-height: 280px;
+    padding: 16px; min-height: 320px;
     transition: background 0.2s, border-color 0.2s;
     display: flex; flex-direction: column;
   }
   .board-col.drag-over { background: #e0f0ff; border-color: #5b9bd5; }
   .board-col h3 {
-    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
-    color: #5b9bd5; margin-bottom: 10px; text-align: center;
+    font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;
+    color: #5b9bd5; margin-bottom: 12px; text-align: center;
   }
   .board-col .magnets-in-section {
     display: flex; flex-wrap: wrap; gap: 8px; flex: 1;
@@ -123,14 +123,14 @@
   .c1-tracking h3 { font-size: 0.85rem; color: #5b9bd5; margin-bottom: 12px; font-style: italic; }
   .tracking-week { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
   .day-slot {
-    width: 72px; height: 80px; border: 2px dashed #b3d4f0; border-radius: 12px;
+    width: 90px; height: 100px; border: 2px dashed #b3d4f0; border-radius: 12px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 0.75rem; color: #999; transition: all 0.2s; background: #fff;
+    font-size: 0.85rem; color: #999; transition: all 0.2s; background: #fff;
   }
   .day-slot.drag-over { background: #e0f0ff; border-color: #5b9bd5; }
   .day-slot .day-label { font-weight: 700; margin-bottom: 4px; color: #5b9bd5; }
   .day-slot .placed-feeling { display: flex; align-items: center; justify-content: center; }
-  .day-slot .placed-feeling img { width: 40px; height: 40px; border-radius: 8px; }
+  .day-slot .placed-feeling img { width: 54px; height: 54px; border-radius: 8px; }
 
   /* Magnet tray */
   .c1-tray {
@@ -143,22 +143,24 @@
   .magnet-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
   .magnet-img {
-    width: 72px; height: 72px; border-radius: 14px;
+    width: 100px; height: 100px; border-radius: 14px;
     cursor: grab; transition: transform 0.15s, box-shadow 0.15s;
     object-fit: cover; border: 2px solid transparent;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    touch-action: none;
   }
   .magnet-img:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
   .magnet-img.dragging { opacity: 0.4; transform: scale(0.9); }
   .magnet-img.placed {
-    width: 56px; height: 56px; cursor: pointer; border-radius: 10px;
+    width: 76px; height: 76px; cursor: pointer; border-radius: 10px;
   }
   .magnet-img.placed:hover { transform: scale(1.1); box-shadow: 0 0 0 2px #ff6b6b; }
 
   .feeling-img {
-    width: 60px; height: 60px; border-radius: 12px;
+    width: 80px; height: 80px; border-radius: 12px;
     cursor: grab; transition: transform 0.15s, box-shadow 0.15s;
     object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    touch-action: none;
   }
   .feeling-img:hover { transform: scale(1.1); }
   .feeling-img.dragging { opacity: 0.4; transform: scale(0.9); }
@@ -167,7 +169,7 @@
      CONCEPT 2 – PEER CHALLENGE (HOOK U UP)
      ════════════════════════════════════════ */
   #concept2 { padding: 20px; }
-  .c2-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); }
+  .c2-layout { display: flex; gap: 24px; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 40px); }
 
   .c2-howto {
     width: 280px; flex-shrink: 0;
@@ -179,12 +181,12 @@
   .c2-howto li { font-size: 0.85rem; color: #8a5a2a; margin-bottom: 10px; line-height: 1.5; }
 
   .c2-center { flex: 1; }
-  .c2-title { text-align: center; font-size: 1.4rem; color: #c46a1a; font-weight: 700; margin-bottom: 20px; }
+  .c2-title { text-align: center; font-size: 1.8rem; color: #c46a1a; font-weight: 700; margin-bottom: 24px; }
 
   /* Deck covers */
   .c2-decks { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
   .c2-deck-card {
-    width: 180px; cursor: pointer;
+    width: 240px; cursor: pointer;
     transition: transform 0.3s, box-shadow 0.3s;
     border-radius: 16px; overflow: hidden;
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
@@ -201,19 +203,20 @@
     display: flex; align-items: center; gap: 4px;
   }
   .c2-grid-back:hover { text-decoration: underline; }
-  .c2-grid-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; text-align: center; color: #c46a1a; }
-  .c2-grid-subtitle { font-size: 0.85rem; color: #888; margin-bottom: 20px; text-align: center; }
+  .c2-grid-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; text-align: center; color: #c46a1a; }
+  .c2-grid-subtitle { font-size: 0.95rem; color: #888; margin-bottom: 24px; text-align: center; }
   .c2-card-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 14px;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 18px;
   }
   .c2-grid-card {
     cursor: pointer; border-radius: 14px; overflow: hidden;
     transition: transform 0.25s, box-shadow 0.25s;
     box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    background: #fff; line-height: 0;
   }
   .c2-grid-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-  .c2-grid-card img { width: 100%; display: block; border-radius: 14px; }
+  .c2-grid-card img { width: 100%; height: 100%; display: block; border-radius: 14px; object-fit: cover; }
 
   /* C2 Zoom + Flip overlay */
   .c2-overlay {
@@ -224,7 +227,7 @@
   }
   .c2-overlay.active { display: flex; }
   .c2-flip-container {
-    width: 340px; max-width: 85vw;
+    width: 440px; max-width: 85vw;
     perspective: 1200px;
     cursor: pointer;
     animation: c2ZoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -274,7 +277,7 @@
      CONCEPT 3 – WOU (WE OPEN UP)
      ════════════════════════════════════════ */
   #concept3 { padding: 20px; }
-  .c3-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); }
+  .c3-layout { display: flex; gap: 24px; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 40px); }
 
   .c3-howto {
     width: 280px; flex-shrink: 0;
@@ -286,8 +289,8 @@
   .c3-howto li { font-size: 0.85rem; color: #5a3a6b; margin-bottom: 10px; line-height: 1.5; }
 
   .c3-center { flex: 1; }
-  .c3-title { text-align: center; font-size: 1.4rem; color: #6b3a8a; font-weight: 700; margin-bottom: 8px; }
-  .c3-subtitle { text-align: center; font-size: 0.9rem; color: #888; margin-bottom: 24px; }
+  .c3-title { text-align: center; font-size: 1.8rem; color: #6b3a8a; font-weight: 700; margin-bottom: 8px; }
+  .c3-subtitle { text-align: center; font-size: 1.05rem; color: #888; margin-bottom: 24px; }
 
   /* Shuffle area */
   .c3-card-area {
@@ -296,7 +299,7 @@
   }
 
   .c3-card-wrapper {
-    width: 150px; perspective: 1000px;
+    width: 200px; perspective: 1000px;
     cursor: pointer;
   }
   .c3-card-inner {
@@ -347,10 +350,10 @@
 
   /* Shuffle button */
   .c3-shuffle-btn {
-    display: block; margin: 0 auto 24px;
+    display: block; margin: 0 auto 28px;
     background: linear-gradient(135deg, #b088f9, #8b5cf6);
     color: #fff; border: none; border-radius: 50px;
-    padding: 12px 32px; font-size: 1rem; font-weight: 600;
+    padding: 14px 40px; font-size: 1.15rem; font-weight: 600;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
   }
@@ -366,7 +369,7 @@
   }
   .c3-zoom-overlay.active { display: flex; }
   .c3-zoom-img {
-    max-width: 420px; width: 90%;
+    max-width: 520px; width: 90%;
     border-radius: 20px;
     box-shadow: 0 16px 60px rgba(0,0,0,0.3);
     animation: c2ZoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -388,7 +391,7 @@
     .concepts-grid { flex-direction: column; align-items: center; }
     .concept-card { width: 100%; max-width: 340px; }
     .c1-board { flex-direction: column; }
-    .c2-flip-container { width: 280px; }
+    .c2-flip-container { width: 340px; }
   }
 </style>
 </head>
@@ -746,8 +749,8 @@ function dayDrop(e) {
   const img = document.createElement('img');
   img.src = draggedMagnet.dataset.src;
   img.alt = draggedMagnet.dataset.label;
-  img.style.width = '40px';
-  img.style.height = '40px';
+  img.style.width = '54px';
+  img.style.height = '54px';
   img.style.borderRadius = '8px';
   img.style.cursor = 'pointer';
   img.onclick = function() {
@@ -928,6 +931,136 @@ document.addEventListener('keydown', function(e) {
     closeC3Zoom();
   }
 });
+
+/* ══════════════════════════════════════
+   CONCEPT 1 – TOUCH DRAG & DROP SUPPORT
+   ══════════════════════════════════════ */
+(function() {
+  let touchDragEl = null;
+  let touchClone = null;
+  let touchOffsetX = 0;
+  let touchOffsetY = 0;
+
+  function getTouchTarget(x, y) {
+    // Hide clone temporarily to get element underneath
+    if (touchClone) touchClone.style.display = 'none';
+    const el = document.elementFromPoint(x, y);
+    if (touchClone) touchClone.style.display = '';
+    return el;
+  }
+
+  function findDropZone(el) {
+    if (!el) return null;
+    // Check if it's a board-col or day-slot
+    if (el.classList && el.classList.contains('board-col')) return el;
+    if (el.classList && el.classList.contains('day-slot')) return el;
+    if (el.classList && el.classList.contains('magnets-in-section')) return el.closest('.board-col');
+    if (el.closest) {
+      const boardCol = el.closest('.board-col');
+      if (boardCol) return boardCol;
+      const daySlot = el.closest('.day-slot');
+      if (daySlot) return daySlot;
+    }
+    return null;
+  }
+
+  document.addEventListener('touchstart', function(e) {
+    const target = e.target;
+    if (!target.classList.contains('magnet-img') && !target.classList.contains('feeling-img')) return;
+    if (target.classList.contains('placed')) return;
+
+    e.preventDefault();
+    touchDragEl = target;
+    const touch = e.touches[0];
+    const rect = target.getBoundingClientRect();
+    touchOffsetX = touch.clientX - rect.left;
+    touchOffsetY = touch.clientY - rect.top;
+
+    // Create a visual clone to follow the finger
+    touchClone = target.cloneNode(true);
+    touchClone.style.position = 'fixed';
+    touchClone.style.zIndex = '9999';
+    touchClone.style.pointerEvents = 'none';
+    touchClone.style.opacity = '0.85';
+    touchClone.style.transform = 'scale(1.1)';
+    touchClone.style.left = (touch.clientX - touchOffsetX) + 'px';
+    touchClone.style.top = (touch.clientY - touchOffsetY) + 'px';
+    document.body.appendChild(touchClone);
+
+    target.classList.add('dragging');
+  }, { passive: false });
+
+  document.addEventListener('touchmove', function(e) {
+    if (!touchDragEl) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    if (touchClone) {
+      touchClone.style.left = (touch.clientX - touchOffsetX) + 'px';
+      touchClone.style.top = (touch.clientY - touchOffsetY) + 'px';
+    }
+
+    // Highlight drop zones
+    const elUnder = getTouchTarget(touch.clientX, touch.clientY);
+    const dropZone = findDropZone(elUnder);
+
+    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+    if (dropZone) {
+      const type = touchDragEl.dataset.type;
+      if (dropZone.classList.contains('day-slot') && type === 'feeling') {
+        dropZone.classList.add('drag-over');
+      } else if (dropZone.classList.contains('board-col') && type !== 'feeling' && dropZone.dataset.section === type) {
+        dropZone.classList.add('drag-over');
+      }
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function(e) {
+    if (!touchDragEl) return;
+
+    const touch = e.changedTouches[0];
+    const elUnder = getTouchTarget(touch.clientX, touch.clientY);
+    const dropZone = findDropZone(elUnder);
+
+    if (dropZone) {
+      const type = touchDragEl.dataset.type;
+
+      if (dropZone.classList.contains('day-slot') && type === 'feeling') {
+        // Drop feeling into day slot
+        const feelingEl = dropZone.querySelector('.placed-feeling');
+        feelingEl.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = touchDragEl.dataset.src;
+        img.alt = touchDragEl.dataset.label;
+        img.style.width = '54px';
+        img.style.height = '54px';
+        img.style.borderRadius = '8px';
+        img.style.cursor = 'pointer';
+        img.onclick = function() { feelingEl.innerHTML = ''; };
+        feelingEl.appendChild(img);
+      } else if (dropZone.classList.contains('board-col') && type !== 'feeling' && dropZone.dataset.section === type) {
+        // Drop magnet into board section
+        const clone = document.createElement('img');
+        clone.src = touchDragEl.dataset.src;
+        clone.alt = touchDragEl.dataset.label;
+        clone.title = touchDragEl.dataset.label + ' (click to remove)';
+        clone.className = 'magnet-img placed';
+        clone.draggable = false;
+        clone.onclick = function() {
+          this.style.transform = 'scale(0)';
+          setTimeout(() => this.remove(), 200);
+        };
+        dropZone.querySelector('.magnets-in-section').appendChild(clone);
+      }
+    }
+
+    // Cleanup
+    document.querySelectorAll('.board-col.drag-over, .day-slot.drag-over').forEach(el => el.classList.remove('drag-over'));
+    touchDragEl.classList.remove('dragging');
+    if (touchClone) { touchClone.remove(); touchClone = null; }
+    touchDragEl = null;
+  });
+})();
 </script>
 </body>
 </html>
