@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prototype Testing</title>
+<title>YPS Prototype Testing</title>
 <style>
   /* ── Reset & Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -15,6 +15,7 @@
     overflow-x: hidden;
   }
   button { cursor: pointer; font-family: inherit; }
+  img { -webkit-user-drag: none; user-select: none; }
 
   /* ── Shared Navigation ── */
   .back-btn {
@@ -49,17 +50,13 @@
     width: 310px; overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     transition: transform 0.25s, box-shadow 0.25s;
-    cursor: pointer; border: 3px solid transparent;
-    text-align: left;
+    cursor: pointer; border: 3px solid transparent; text-align: left;
   }
   .concept-card:hover { transform: translateY(-6px); box-shadow: 0 8px 32px rgba(0,0,0,0.14); }
   .concept-card:nth-child(1) { border-color: #7ecec1; }
   .concept-card:nth-child(2) { border-color: #f2a65a; }
   .concept-card:nth-child(3) { border-color: #b088f9; }
-  .card-banner {
-    height: 180px; display: flex; align-items: center; justify-content: center;
-    font-size: 4rem;
-  }
+  .card-banner { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
   .concept-card:nth-child(1) .card-banner { background: linear-gradient(135deg, #7ecec1, #4fb3a3); }
   .concept-card:nth-child(2) .card-banner { background: linear-gradient(135deg, #f2a65a, #e8863a); }
   .concept-card:nth-child(3) .card-banner { background: linear-gradient(135deg, #b088f9, #8b5cf6); }
@@ -77,7 +74,6 @@
   #concept1 { padding: 20px; }
   .c1-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); }
 
-  /* Left panel – How to Use */
   .c1-howto {
     width: 280px; flex-shrink: 0;
     background: #e8f5f1; border-radius: 16px; padding: 24px;
@@ -87,71 +83,88 @@
   .c1-howto ol { padding-left: 18px; }
   .c1-howto li { font-size: 0.85rem; color: #3a6b62; margin-bottom: 10px; line-height: 1.5; }
 
-  /* Middle – Board */
   .c1-center { flex: 1; display: flex; flex-direction: column; gap: 16px; }
-  .c1-board-title { text-align: center; font-size: 1.4rem; color: #2a7a6d; font-weight: 700; }
+  .c1-board-title { text-align: center; font-size: 1.4rem; color: #5b9bd5; font-weight: 700; font-style: italic; }
 
   .c1-board {
-    background: #fff; border: 3px solid #7ecec1; border-radius: 16px;
-    flex: 1; min-height: 480px; padding: 20px;
-    display: flex; flex-direction: column; gap: 16px;
+    background: #faf8f5; border: 3px solid #d0d0d0; border-radius: 16px;
+    padding: 20px; display: flex; gap: 16px; min-height: 320px;
   }
-  .board-section {
-    flex: 1; border: 2px dashed #c5e8e1; border-radius: 12px;
-    padding: 12px; min-height: 100px;
+  .board-col {
+    flex: 1; border: 2px dashed #c5dce8; border-radius: 12px;
+    padding: 12px; min-height: 280px;
     transition: background 0.2s, border-color 0.2s;
+    display: flex; flex-direction: column;
   }
-  .board-section.drag-over { background: #e0f7f1; border-color: #4fb3a3; }
-  .board-section h3 {
+  .board-col.drag-over { background: #e0f0ff; border-color: #5b9bd5; }
+  .board-col h3 {
     font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;
-    color: #7ecec1; margin-bottom: 8px;
+    color: #5b9bd5; margin-bottom: 10px; text-align: center;
   }
-  .board-section .magnets-in-section { display: flex; flex-wrap: wrap; gap: 8px; min-height: 36px; }
+  .board-col .magnets-in-section {
+    display: flex; flex-wrap: wrap; gap: 8px; flex: 1;
+    align-content: flex-start;
+  }
+  .board-col.parent-col { border-style: none; background: transparent; }
+  .board-col.parent-col h3 { color: #888; }
+  .parent-input {
+    width: 100%; border: none; border-bottom: 1px dashed #ccc;
+    background: transparent; font-family: 'Comic Sans MS', 'Segoe UI', cursive;
+    font-size: 0.95rem; padding: 8px 4px; color: #555;
+    outline: none; margin-bottom: 8px;
+  }
+  .parent-input::placeholder { color: #bbb; font-style: italic; }
 
-  /* Magnets tray */
+  /* Sleep tracker */
+  .c1-tracking {
+    background: #fff; border: 3px solid #5b9bd5; border-radius: 16px;
+    padding: 16px; text-align: center;
+  }
+  .c1-tracking h3 { font-size: 0.85rem; color: #5b9bd5; margin-bottom: 12px; font-style: italic; }
+  .tracking-week { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .day-slot {
+    width: 72px; height: 80px; border: 2px dashed #b3d4f0; border-radius: 12px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: #999; transition: all 0.2s; background: #fff;
+  }
+  .day-slot.drag-over { background: #e0f0ff; border-color: #5b9bd5; }
+  .day-slot .day-label { font-weight: 700; margin-bottom: 4px; color: #5b9bd5; }
+  .day-slot .placed-feeling { display: flex; align-items: center; justify-content: center; }
+  .day-slot .placed-feeling img { width: 40px; height: 40px; border-radius: 8px; }
+
+  /* Magnet tray */
   .c1-tray {
     background: #fff; border: 3px solid #d4d4d4; border-radius: 16px;
     padding: 16px; text-align: center;
   }
   .c1-tray h3 { font-size: 0.85rem; color: #888; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
-  .magnet-group { margin-bottom: 12px; }
-  .magnet-group-label { font-size: 0.75rem; font-weight: 600; color: #aaa; margin-bottom: 6px; text-transform: uppercase; }
-  .magnet-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .magnet-group { margin-bottom: 16px; }
+  .magnet-group-label { font-size: 0.75rem; font-weight: 600; color: #aaa; margin-bottom: 8px; text-transform: uppercase; }
+  .magnet-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
 
-  .magnet {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 16px; border-radius: 50px;
-    font-size: 0.85rem; font-weight: 600;
-    cursor: grab; user-select: none;
-    transition: transform 0.15s, box-shadow 0.15s;
-    border: 2px solid transparent;
+  .magnet-img {
+    width: 72px; height: 72px; border-radius: 14px;
+    cursor: grab; transition: transform 0.15s, box-shadow 0.15s;
+    object-fit: cover; border: 2px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  .magnet:active { cursor: grabbing; }
-  .magnet:hover { transform: scale(1.05); }
-  .magnet.dragging { opacity: 0.4; transform: scale(0.95); }
+  .magnet-img:hover { transform: scale(1.1); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+  .magnet-img.dragging { opacity: 0.4; transform: scale(0.9); }
+  .magnet-img.placed {
+    width: 56px; height: 56px; cursor: pointer; border-radius: 10px;
+  }
+  .magnet-img.placed:hover { transform: scale(1.1); box-shadow: 0 0 0 2px #ff6b6b; }
 
-  .magnet.wind-down { background: #d1f0ea; color: #1a6b5c; border-color: #7ecec1; }
-  .magnet.room-setup { background: #dce4f9; color: #3a4e8a; border-color: #8aa4e8; }
-  .magnet.parent-action { background: #fce4d6; color: #8a5a3a; border-color: #e8a87a; }
-  .magnet.feeling { background: #f3e0f9; color: #6b3a8a; border-color: #c088e8; }
-
-  .c1-tracking {
-    background: #fff; border: 3px solid #c088e8; border-radius: 16px;
-    padding: 16px; text-align: center;
+  .feeling-img {
+    width: 60px; height: 60px; border-radius: 12px;
+    cursor: grab; transition: transform 0.15s, box-shadow 0.15s;
+    object-fit: cover; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   }
-  .c1-tracking h3 { font-size: 0.85rem; color: #8b5cf6; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
-  .tracking-week { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-  .day-slot {
-    width: 64px; height: 70px; border: 2px dashed #d9ccf0; border-radius: 12px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-size: 0.75rem; color: #999; transition: all 0.2s;
-  }
-  .day-slot.drag-over { background: #f0e6ff; border-color: #8b5cf6; }
-  .day-slot .day-label { font-weight: 700; margin-bottom: 4px; }
-  .day-slot .placed-feeling { font-size: 1.4rem; }
+  .feeling-img:hover { transform: scale(1.1); }
+  .feeling-img.dragging { opacity: 0.4; transform: scale(0.9); }
 
   /* ════════════════════════════════════════
-     CONCEPT 2 – HOOK U UP
+     CONCEPT 2 – PEER CHALLENGE (HOOK U UP)
      ════════════════════════════════════════ */
   #concept2 { padding: 20px; }
   .c2-layout { display: flex; gap: 24px; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 40px); }
@@ -168,74 +181,94 @@
   .c2-center { flex: 1; }
   .c2-title { text-align: center; font-size: 1.4rem; color: #c46a1a; font-weight: 700; margin-bottom: 20px; }
 
-  /* Category boxes */
-  .c2-categories { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-  .c2-cat-card {
-    width: 180px; height: 200px;
-    border-radius: 16px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 10px;
-    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-    color: #fff; font-weight: 700; font-size: 1rem; text-align: center;
-    padding: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  /* Deck covers */
+  .c2-decks { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+  .c2-deck-card {
+    width: 180px; cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   }
-  .c2-cat-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-  .c2-cat-card .cat-icon { font-size: 2.5rem; }
+  .c2-deck-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
+  .c2-deck-card img { width: 100%; display: block; border-radius: 16px; }
 
-  /* Challenge grid */
-  .c2-challenges { display: none; }
-  .c2-challenges.active { display: block; }
-  .c2-challenges-back {
+  /* Card grid */
+  .c2-card-grid-view { display: none; }
+  .c2-card-grid-view.active { display: block; }
+  .c2-grid-back {
     background: none; border: none; font-size: 0.95rem;
     color: #c46a1a; font-weight: 600; margin-bottom: 16px;
     display: flex; align-items: center; gap: 4px;
   }
-  .c2-challenges-back:hover { text-decoration: underline; }
-  .c2-challenges-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; text-align: center; }
-  .c2-challenge-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
+  .c2-grid-back:hover { text-decoration: underline; }
+  .c2-grid-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; text-align: center; color: #c46a1a; }
+  .c2-grid-subtitle { font-size: 0.85rem; color: #888; margin-bottom: 20px; text-align: center; }
+  .c2-card-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 14px;
   }
-  .c2-challenge-card {
-    background: #fff; border: 2px solid #f2a65a; border-radius: 12px;
-    padding: 16px; text-align: center; cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    min-height: 120px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
+  .c2-grid-card {
+    cursor: pointer; border-radius: 14px; overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
   }
-  .c2-challenge-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
-  .c2-challenge-card .day-num { font-size: 0.75rem; font-weight: 700; color: #e8863a; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
-  .c2-challenge-card .challenge-text { font-size: 0.85rem; color: #444; line-height: 1.4; }
+  .c2-grid-card:hover { transform: translateY(-4px) scale(1.03); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+  .c2-grid-card img { width: 100%; display: block; border-radius: 14px; }
 
-  /* Challenge detail modal */
-  .c2-modal-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+  /* C2 Zoom + Flip overlay */
+  .c2-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
     z-index: 200; align-items: center; justify-content: center;
-    animation: fadeIn 0.25s ease;
+    backdrop-filter: blur(4px);
   }
-  .c2-modal-overlay.active { display: flex; }
-  .c2-modal {
-    background: #fff; border-radius: 20px; padding: 36px;
-    max-width: 440px; width: 90%; text-align: center;
-    box-shadow: 0 12px 48px rgba(0,0,0,0.2);
-    position: relative;
+  .c2-overlay.active { display: flex; }
+  .c2-flip-container {
+    width: 340px; max-width: 85vw;
+    perspective: 1200px;
+    cursor: pointer;
+    animation: c2ZoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
-  .c2-modal .close-modal {
-    position: absolute; top: 14px; right: 14px;
-    background: #f0f0f0; border: none; width: 36px; height: 36px;
-    border-radius: 50%; font-size: 1.2rem; display: flex;
-    align-items: center; justify-content: center;
+  @keyframes c2ZoomIn {
+    from { transform: scale(0.3); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
   }
-  .c2-modal .close-modal:hover { background: #ddd; }
-  .c2-modal .modal-day { font-size: 0.8rem; color: #e8863a; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-  .c2-modal .modal-challenge { font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: #2d2d2d; }
-  .c2-modal .modal-detail { font-size: 0.95rem; color: #555; line-height: 1.6; margin-bottom: 20px; }
-  .c2-modal .qr-placeholder {
-    width: 140px; height: 140px; margin: 0 auto;
-    background: #f8f8f8; border: 2px dashed #ddd; border-radius: 12px;
+  .c2-flip-inner {
+    position: relative; width: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .c2-flip-inner.flipped { transform: rotateY(180deg); }
+  .c2-flip-front, .c2-flip-back {
+    width: 100%; backface-visibility: hidden;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: 0 16px 60px rgba(0,0,0,0.3);
+  }
+  .c2-flip-front img, .c2-flip-back img {
+    width: 100%; display: block; border-radius: 18px;
+  }
+  .c2-flip-back {
+    position: absolute; top: 0; left: 0;
+    transform: rotateY(180deg);
+  }
+  .c2-flip-hint {
+    text-align: center; color: rgba(255,255,255,0.8);
+    font-size: 0.85rem; margin-top: 16px;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  .c2-close-btn {
+    position: fixed; top: 20px; right: 20px;
+    background: rgba(255,255,255,0.2); border: none;
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 1.4rem; color: #fff; z-index: 210;
     display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 4px; color: #aaa; font-size: 0.8rem;
+    backdrop-filter: blur(4px); transition: background 0.2s;
   }
-  .c2-modal .qr-placeholder .qr-icon { font-size: 2.5rem; }
+  .c2-close-btn:hover { background: rgba(255,255,255,0.4); }
 
   /* ════════════════════════════════════════
      CONCEPT 3 – WOU (WE OPEN UP)
@@ -253,83 +286,100 @@
   .c3-howto li { font-size: 0.85rem; color: #5a3a6b; margin-bottom: 10px; line-height: 1.5; }
 
   .c3-center { flex: 1; }
-  .c3-title { text-align: center; font-size: 1.4rem; color: #6b3a8a; font-weight: 700; margin-bottom: 20px; }
+  .c3-title { text-align: center; font-size: 1.4rem; color: #6b3a8a; font-weight: 700; margin-bottom: 8px; }
+  .c3-subtitle { text-align: center; font-size: 0.9rem; color: #888; margin-bottom: 24px; }
 
-  /* Category piles */
-  .c3-categories { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
-  .c3-cat-pile {
-    width: 170px; height: 210px;
-    border-radius: 16px; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 10px;
-    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
-    color: #fff; font-weight: 700; font-size: 1rem; text-align: center;
-    padding: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-    position: relative;
-  }
-  .c3-cat-pile:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-  .c3-cat-pile .pile-icon { font-size: 2.5rem; }
-  .c3-cat-pile .pile-count {
-    position: absolute; top: 10px; right: 10px;
-    background: rgba(255,255,255,0.3); border-radius: 50%;
-    width: 28px; height: 28px; font-size: 0.75rem;
-    display: flex; align-items: center; justify-content: center;
+  /* Shuffle area */
+  .c3-card-area {
+    display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;
+    min-height: 400px; position: relative;
   }
 
-  /* Shuffled cards view */
-  .c3-cards-view { display: none; }
-  .c3-cards-view.active { display: block; }
-  .c3-cards-back {
-    background: none; border: none; font-size: 0.95rem;
-    color: #6b3a8a; font-weight: 600; margin-bottom: 16px;
-    display: flex; align-items: center; gap: 4px;
+  .c3-card-wrapper {
+    width: 150px; perspective: 1000px;
+    cursor: pointer;
   }
-  .c3-cards-back:hover { text-decoration: underline; }
-  .c3-cards-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; text-align: center; }
-  .c3-cards-subtitle { font-size: 0.85rem; color: #888; margin-bottom: 16px; text-align: center; }
-  .c3-card-spread {
-    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+  .c3-card-inner {
+    position: relative; width: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
   }
-  .c3-card {
-    width: 130px; height: 170px;
-    border-radius: 14px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    text-align: center; padding: 14px; font-size: 0.82rem;
-    font-weight: 600; line-height: 1.4;
+  .c3-card-inner.revealed { transform: rotateY(180deg); }
+  .c3-card-face {
+    width: 100%; backface-visibility: hidden;
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  }
+  .c3-card-face img {
+    width: 100%; display: block; border-radius: 14px;
+  }
+  .c3-card-back-face {
+    position: absolute; top: 0; left: 0; width: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+  }
+  .c3-card-back-face img {
+    width: 100%; display: block; border-radius: 14px;
+  }
+
+  /* Shuffle animation */
+  .c3-card-wrapper {
+    opacity: 0;
+    animation: c3Deal 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  .c3-card-wrapper.no-anim { animation: none; opacity: 1; }
+  @keyframes c3Deal {
+    0% {
+      opacity: 0;
+      transform: translate(var(--deal-x, 0px), var(--deal-y, -200px)) rotate(var(--deal-r, 0deg)) scale(0.4);
+    }
+    60% {
+      opacity: 1;
+      transform: translate(0, 0) rotate(calc(var(--deal-r, 0deg) * -0.5)) scale(1.05);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+  }
+
+  /* Shuffle button */
+  .c3-shuffle-btn {
+    display: block; margin: 0 auto 24px;
+    background: linear-gradient(135deg, #b088f9, #8b5cf6);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 12px 32px; font-size: 1rem; font-weight: 600;
     transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    color: #fff;
-    position: relative;
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.3);
   }
-  .c3-card:hover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 8px 20px rgba(0,0,0,0.18); }
-  .c3-card .card-number {
-    position: absolute; top: 8px; left: 10px;
-    font-size: 0.65rem; opacity: 0.7;
-  }
+  .c3-shuffle-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(139, 92, 246, 0.4); }
+  .c3-shuffle-btn:active { transform: scale(0.97); }
 
-  /* Card zoom overlay */
+  /* C3 Zoom overlay */
   .c3-zoom-overlay {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
     z-index: 200; align-items: center; justify-content: center;
-    animation: fadeIn 0.25s ease;
-  }
-  .c3-zoom-overlay.active { display: flex; }
-  .c3-zoom-card {
-    border-radius: 24px; padding: 48px 40px;
-    max-width: 420px; width: 90%; text-align: center;
-    box-shadow: 0 16px 60px rgba(0,0,0,0.3);
-    position: relative; color: #fff;
-  }
-  .c3-zoom-card .close-zoom {
-    position: absolute; top: 14px; right: 14px;
-    background: rgba(255,255,255,0.25); border: none; width: 40px; height: 40px;
-    border-radius: 50%; font-size: 1.3rem; color: #fff;
-    display: flex; align-items: center; justify-content: center;
     backdrop-filter: blur(4px);
   }
-  .c3-zoom-card .close-zoom:hover { background: rgba(255,255,255,0.4); }
-  .c3-zoom-card .zoom-type { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 14px; opacity: 0.8; }
-  .c3-zoom-card .zoom-text { font-size: 1.5rem; font-weight: 700; line-height: 1.5; }
-  .c3-zoom-card .zoom-instruction { font-size: 0.9rem; margin-top: 20px; opacity: 0.7; font-style: italic; }
+  .c3-zoom-overlay.active { display: flex; }
+  .c3-zoom-img {
+    max-width: 420px; width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 16px 60px rgba(0,0,0,0.3);
+    animation: c2ZoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .c3-zoom-close {
+    position: fixed; top: 20px; right: 20px;
+    background: rgba(255,255,255,0.2); border: none;
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 1.4rem; color: #fff; z-index: 210;
+    display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(4px); transition: background 0.2s;
+  }
+  .c3-zoom-close:hover { background: rgba(255,255,255,0.4); }
 
   /* ── Responsive ── */
   @media (max-width: 768px) {
@@ -337,6 +387,8 @@
     .c1-howto, .c2-howto, .c3-howto { width: 100%; position: static; }
     .concepts-grid { flex-direction: column; align-items: center; }
     .concept-card { width: 100%; max-width: 340px; }
+    .c1-board { flex-direction: column; }
+    .c2-flip-container { width: 280px; }
   }
 </style>
 </head>
@@ -352,7 +404,6 @@
   <h1>Prototype Concepts</h1>
   <p class="subtitle">Click a concept to explore</p>
   <div class="concepts-grid">
-    <!-- Concept 1 -->
     <div class="concept-card" onclick="showPage('concept1')">
       <div class="card-banner">🧲</div>
       <div class="card-body">
@@ -361,22 +412,20 @@
         <p>Build your bedtime routine together using magnets on a fridge board. Track sleep feelings over a week.</p>
       </div>
     </div>
-    <!-- Concept 2 -->
     <div class="concept-card" onclick="showPage('concept2')">
       <div class="card-banner">🃏</div>
       <div class="card-body">
         <div class="label">Concept 2</div>
-        <h2>Hook U Up</h2>
-        <p>Pick a challenge category with a buddy. Complete 14 daily challenges together without breaking the streak.</p>
+        <h2>Peer Challenge</h2>
+        <p>Pick a challenge deck with a buddy. Complete 14 daily challenges together without breaking the streak.</p>
       </div>
     </div>
-    <!-- Concept 3 -->
     <div class="concept-card" onclick="showPage('concept3')">
       <div class="card-banner">💜</div>
       <div class="card-body">
         <div class="label">Concept 3</div>
         <h2>WOU (We Open Up)</h2>
-        <p>Draw question cards and answer together. Build trust between parent and youth one card at a time.</p>
+        <p>Shuffle and draw question cards. Answer together and build trust one card at a time.</p>
       </div>
     </div>
   </div>
@@ -387,70 +436,65 @@
      ════════════════════════════════════════ -->
 <div id="concept1" class="page">
   <div class="c1-layout">
-    <!-- How to Use -->
     <div class="c1-howto">
       <h2>How to Use</h2>
       <ol>
-        <li><strong>Choose your wind-down routine</strong> &mdash; drag magnets from the tray onto the board. Agree on it together.</li>
-        <li><strong>Set up your room</strong> &mdash; pick room setup magnets. Your picks, both happy with it.</li>
-        <li><strong>Parent commits too</strong> &mdash; drag parent action magnets to the board. Youth reviews it.</li>
-        <li><strong>Track your sleep</strong> &mdash; every night, drag a feeling magnet to the day slot.</li>
-        <li><strong>Weekly check-in</strong> &mdash; after a week, sit down and talk about how it went. No pressure.</li>
-        <li><strong>Adjust</strong> &mdash; keep what works and drop what doesn't.</li>
+        <li><strong>Choose your wind-down routine</strong> &mdash; drag magnets from the tray onto the Wind-Down zone.</li>
+        <li><strong>Set up your room</strong> &mdash; drag room setup magnets to the Room Setup zone.</li>
+        <li><strong>Parent commits too</strong> &mdash; type what the parent will do in the Parent section.</li>
+        <li><strong>Track your sleep</strong> &mdash; drag a feeling face to each day slot.</li>
+        <li><strong>Weekly check-in</strong> &mdash; after a week, talk about how it went.</li>
+        <li><strong>Adjust</strong> &mdash; keep what works, drop what doesn't.</li>
       </ol>
     </div>
 
-    <!-- Board + Tray -->
     <div class="c1-center">
-      <div class="c1-board-title">🧲 My Bedtime Board</div>
+      <div class="c1-board-title">Better Sleep for Better School Days</div>
 
-      <!-- The Board -->
       <div class="c1-board">
-        <div class="board-section" data-section="wind-down" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
-          <h3>🌙 Wind-Down Routine</h3>
+        <!-- Wind-Down column -->
+        <div class="board-col" data-section="wind-down" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
+          <h3>Wind-Down</h3>
           <div class="magnets-in-section"></div>
         </div>
-        <div class="board-section" data-section="room-setup" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
-          <h3>🛏️ Room Setup</h3>
+        <!-- Room Setup column -->
+        <div class="board-col" data-section="room-setup" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
+          <h3>My Room Setup</h3>
           <div class="magnets-in-section"></div>
         </div>
-        <div class="board-section" data-section="parent-action" ondragover="boardDragOver(event)" ondragleave="boardDragLeave(event)" ondrop="boardDrop(event)">
-          <h3>👨‍👩‍👧 Parent Will...</h3>
-          <div class="magnets-in-section"></div>
+        <!-- Parent column -->
+        <div class="board-col parent-col">
+          <h3>Parent</h3>
+          <input class="parent-input" type="text" placeholder="e.g. Set alarm">
+          <input class="parent-input" type="text" placeholder="e.g. Check in">
+          <input class="parent-input" type="text" placeholder="e.g. Goodnight routine">
         </div>
       </div>
 
       <!-- Sleep Tracking -->
       <div class="c1-tracking">
-        <h3>😴 Weekly Sleep Tracker</h3>
+        <h3>How was your sleep?</h3>
         <div class="tracking-week">
           <div class="day-slot" data-day="mon" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Mon</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Mon</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="tue" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Tue</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Tue</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="wed" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Wed</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Wed</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="thu" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Thu</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Thu</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="fri" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Fri</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Fri</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="sat" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Sat</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Sat</span><span class="placed-feeling"></span>
           </div>
           <div class="day-slot" data-day="sun" ondragover="dayDragOver(event)" ondragleave="dayDragLeave(event)" ondrop="dayDrop(event)">
-            <span class="day-label">Sun</span>
-            <span class="placed-feeling"></span>
+            <span class="day-label">Sun</span><span class="placed-feeling"></span>
           </div>
         </div>
       </div>
@@ -460,49 +504,18 @@
         <h3>Magnets</h3>
 
         <div class="magnet-group">
-          <div class="magnet-group-label">🌙 Wind-Down</div>
-          <div class="magnet-row">
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Read a book" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">📖 Read a book</div>
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Stretch" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🧘 Stretch</div>
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Listen to music" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🎵 Listen to music</div>
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Journal" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">📝 Journal</div>
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Deep breathing" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🌬️ Deep breathing</div>
-            <div class="magnet wind-down" draggable="true" data-type="wind-down" data-text="Warm drink" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">☕ Warm drink</div>
-          </div>
+          <div class="magnet-group-label">Wind-Down Activities</div>
+          <div class="magnet-row" id="c1WindDownRow"></div>
         </div>
 
         <div class="magnet-group">
-          <div class="magnet-group-label">🛏️ Room Setup</div>
-          <div class="magnet-row">
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="Lights dim" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">💡 Lights dim</div>
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="Phone away" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">📵 Phone away</div>
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="Cool temp" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">❄️ Cool temp</div>
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="White noise" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🔊 White noise</div>
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="Tidy space" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">✨ Tidy space</div>
-            <div class="magnet room-setup" draggable="true" data-type="room-setup" data-text="Cozy blanket" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🧸 Cozy blanket</div>
-          </div>
+          <div class="magnet-group-label">Room Setup</div>
+          <div class="magnet-row" id="c1RoomSetupRow"></div>
         </div>
 
         <div class="magnet-group">
-          <div class="magnet-group-label">👨‍👩‍👧 Parent Actions</div>
-          <div class="magnet-row">
-            <div class="magnet parent-action" draggable="true" data-type="parent-action" data-text="Check in before bed" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">💬 Check in before bed</div>
-            <div class="magnet parent-action" draggable="true" data-type="parent-action" data-text="Set alarm together" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">⏰ Set alarm together</div>
-            <div class="magnet parent-action" draggable="true" data-type="parent-action" data-text="No screens reminder" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">📱 No screens reminder</div>
-            <div class="magnet parent-action" draggable="true" data-type="parent-action" data-text="Goodnight routine" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">🌙 Goodnight routine</div>
-            <div class="magnet parent-action" draggable="true" data-type="parent-action" data-text="Morning check-in" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">☀️ Morning check-in</div>
-          </div>
-        </div>
-
-        <div class="magnet-group">
-          <div class="magnet-group-label">😊 Feelings</div>
-          <div class="magnet-row">
-            <div class="magnet feeling" draggable="true" data-type="feeling" data-emoji="😴" data-text="Slept great" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">😴 Slept great</div>
-            <div class="magnet feeling" draggable="true" data-type="feeling" data-emoji="😊" data-text="Pretty good" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">😊 Pretty good</div>
-            <div class="magnet feeling" draggable="true" data-type="feeling" data-emoji="😐" data-text="Okay" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">😐 Okay</div>
-            <div class="magnet feeling" draggable="true" data-type="feeling" data-emoji="😫" data-text="Rough night" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">😫 Rough night</div>
-            <div class="magnet feeling" draggable="true" data-type="feeling" data-emoji="😤" data-text="Couldn't sleep" ondragstart="magnetDragStart(event)" ondragend="magnetDragEnd(event)">😤 Couldn't sleep</div>
-          </div>
+          <div class="magnet-group-label">How Do You Feel?</div>
+          <div class="magnet-row" id="c1FeelingRow"></div>
         </div>
       </div>
     </div>
@@ -510,71 +523,54 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     CONCEPT 2 – HOOK U UP
+     CONCEPT 2 – PEER CHALLENGE
      ════════════════════════════════════════ -->
 <div id="concept2" class="page">
   <div class="c2-layout">
-    <!-- How to Use -->
     <div class="c2-howto">
       <h2>How to Use</h2>
       <ol>
-        <li><strong>Pick a box</strong> &mdash; choose the topic that speaks to you both.</li>
-        <li><strong>Find your buddy</strong> &mdash; minimum 2 people, same box, same commitment.</li>
-        <li><strong>Daily challenge</strong> &mdash; each day, flip the next card in order and complete the challenge together.</li>
-        <li><strong>Scan &amp; upload</strong> &mdash; scan the QR code and upload proof before midnight.</li>
+        <li><strong>Pick a deck</strong> &mdash; choose the challenge topic that speaks to you both.</li>
+        <li><strong>Find your buddy</strong> &mdash; minimum 2 people, same deck, same commitment.</li>
+        <li><strong>Daily challenge</strong> &mdash; each day, flip the next card and complete the challenge together.</li>
+        <li><strong>Scan &amp; upload</strong> &mdash; scan the QR code on the back and upload proof before midnight.</li>
         <li><strong>Don't break the streak</strong> &mdash; miss a day and start over.</li>
-        <li><strong>Win!</strong> &mdash; complete all 14 days and enter the public gallery. HPB awards a prize to the most-voted pair.</li>
+        <li><strong>Win!</strong> &mdash; complete all 14 days and enter the public gallery.</li>
       </ol>
     </div>
 
     <div class="c2-center">
-      <div class="c2-title">🃏 Hook U Up</div>
+      <div class="c2-title">Level Up in 14 Days</div>
 
-      <!-- Categories -->
-      <div class="c2-categories" id="c2Categories">
-        <div class="c2-cat-card" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24)" onclick="showC2Category(0)">
-          <span class="cat-icon">💪</span>
-          Fitness Challenge
-        </div>
-        <div class="c2-cat-card" style="background: linear-gradient(135deg, #1dd1a1, #10ac84)" onclick="showC2Category(1)">
-          <span class="cat-icon">🥗</span>
-          Eat Well Together
-        </div>
-        <div class="c2-cat-card" style="background: linear-gradient(135deg, #54a0ff, #2e86de)" onclick="showC2Category(2)">
-          <span class="cat-icon">🧘</span>
-          Mindful Minutes
-        </div>
-        <div class="c2-cat-card" style="background: linear-gradient(135deg, #feca57, #ff9f43)" onclick="showC2Category(3)">
-          <span class="cat-icon">📵</span>
-          Screen-Free Living
-        </div>
-        <div class="c2-cat-card" style="background: linear-gradient(135deg, #c56cf0, #8b5cf6)" onclick="showC2Category(4)">
-          <span class="cat-icon">😊</span>
-          Kindness Streak
-        </div>
-      </div>
+      <!-- Deck covers -->
+      <div class="c2-decks" id="c2Decks"></div>
 
-      <!-- Challenges view (hidden by default) -->
-      <div class="c2-challenges" id="c2Challenges">
-        <button class="c2-challenges-back" onclick="backToC2Categories()">&#8592; Back to categories</button>
-        <div class="c2-challenges-title" id="c2ChallengesTitle"></div>
-        <div class="c2-challenge-grid" id="c2ChallengeGrid"></div>
+      <!-- Card grid (hidden by default) -->
+      <div class="c2-card-grid-view" id="c2CardGridView">
+        <button class="c2-grid-back" onclick="backToC2Decks()">&#8592; Back to decks</button>
+        <div class="c2-grid-title" id="c2GridTitle"></div>
+        <div class="c2-grid-subtitle">Tap a card to zoom in. Tap again to flip it over.</div>
+        <div class="c2-card-grid" id="c2CardGrid"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- C2 Modal -->
-<div class="c2-modal-overlay" id="c2Modal">
-  <div class="c2-modal">
-    <button class="close-modal" onclick="closeC2Modal()">✕</button>
-    <div class="modal-day" id="c2ModalDay"></div>
-    <div class="modal-challenge" id="c2ModalChallenge"></div>
-    <div class="modal-detail" id="c2ModalDetail"></div>
-    <div class="qr-placeholder">
-      <span class="qr-icon">📱</span>
-      Scan QR Code<br>to upload proof
+<!-- C2 Zoom + Flip overlay -->
+<div class="c2-overlay" id="c2Overlay">
+  <button class="c2-close-btn" onclick="closeC2Overlay()">&#10005;</button>
+  <div style="text-align:center;">
+    <div class="c2-flip-container" id="c2FlipContainer" onclick="flipC2Card()">
+      <div class="c2-flip-inner" id="c2FlipInner">
+        <div class="c2-flip-front">
+          <img id="c2FlipFrontImg" src="" alt="Card front">
+        </div>
+        <div class="c2-flip-back">
+          <img id="c2FlipBackImg" src="" alt="Card back">
+        </div>
+      </div>
     </div>
+    <div class="c2-flip-hint" id="c2FlipHint">Tap card to flip</div>
   </div>
 </div>
 
@@ -583,69 +579,31 @@
      ════════════════════════════════════════ -->
 <div id="concept3" class="page">
   <div class="c3-layout">
-    <!-- How to Use -->
     <div class="c3-howto">
       <h2>How to Use</h2>
       <ol>
-        <li><strong>Sit together</strong> &mdash; shuffle the category cards. Place Swap and Spark in separate piles.</li>
-        <li><strong>Take turns</strong> &mdash; draw a card and read it out loud. Both answer. Parent first or youth first &mdash; you decide.</li>
-        <li><strong>Spark cards</strong> &mdash; after any card, either person can draw a Spark card to keep going deeper.</li>
-        <li><strong>Swap cards</strong> &mdash; at any point, play a Swap card to answer as the other person. Find out how well you know each other.</li>
-        <li><strong>No pressure</strong> &mdash; play as many rounds as you like. If a question feels too personal, just say pass and draw another.</li>
+        <li><strong>Shuffle the deck</strong> &mdash; hit shuffle to mix up all the cards.</li>
+        <li><strong>Pick a card</strong> &mdash; tap any face-down card to flip and reveal.</li>
+        <li><strong>Read &amp; answer</strong> &mdash; both answer the question out loud. No judgement.</li>
+        <li><strong>Spark cards</strong> &mdash; go deeper on the last question. Keep the conversation flowing.</li>
+        <li><strong>Swap cards</strong> &mdash; answer as the other person. See how well you know each other.</li>
+        <li><strong>No pressure</strong> &mdash; play as many or as few rounds as you like.</li>
       </ol>
     </div>
 
     <div class="c3-center">
-      <div class="c3-title">💜 WOU &mdash; We Open Up</div>
-
-      <!-- Category piles -->
-      <div class="c3-categories" id="c3Categories">
-        <div class="c3-cat-pile" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24)" onclick="showC3Category(0)">
-          <span class="pile-count">8</span>
-          <span class="pile-icon">💭</span>
-          Feelings
-        </div>
-        <div class="c3-cat-pile" style="background: linear-gradient(135deg, #1dd1a1, #10ac84)" onclick="showC3Category(1)">
-          <span class="pile-count">8</span>
-          <span class="pile-icon">🏠</span>
-          Home Life
-        </div>
-        <div class="c3-cat-pile" style="background: linear-gradient(135deg, #54a0ff, #2e86de)" onclick="showC3Category(2)">
-          <span class="pile-count">8</span>
-          <span class="pile-icon">🎯</span>
-          Dreams &amp; Goals
-        </div>
-        <div class="c3-cat-pile" style="background: linear-gradient(135deg, #feca57, #ff9f43)" onclick="showC3Category(3)">
-          <span class="pile-count">6</span>
-          <span class="pile-icon">⚡</span>
-          Spark
-        </div>
-        <div class="c3-cat-pile" style="background: linear-gradient(135deg, #c56cf0, #8b5cf6)" onclick="showC3Category(4)">
-          <span class="pile-count">4</span>
-          <span class="pile-icon">🔄</span>
-          Swap
-        </div>
-      </div>
-
-      <!-- Shuffled cards view -->
-      <div class="c3-cards-view" id="c3CardsView">
-        <button class="c3-cards-back" onclick="backToC3Categories()">&#8592; Back to piles</button>
-        <div class="c3-cards-title" id="c3CardsTitle"></div>
-        <div class="c3-cards-subtitle">Tap a card to read it</div>
-        <div class="c3-card-spread" id="c3CardSpread"></div>
-      </div>
+      <div class="c3-title">WOU &mdash; We Open Up</div>
+      <div class="c3-subtitle">Shuffle the deck, then pick a card to reveal</div>
+      <button class="c3-shuffle-btn" id="c3ShuffleBtn" onclick="shuffleC3Cards()">Shuffle &amp; Deal</button>
+      <div class="c3-card-area" id="c3CardArea"></div>
     </div>
   </div>
 </div>
 
 <!-- C3 Zoom overlay -->
-<div class="c3-zoom-overlay" id="c3Zoom">
-  <div class="c3-zoom-card" id="c3ZoomCard">
-    <button class="close-zoom" onclick="closeC3Zoom()">✕</button>
-    <div class="zoom-type" id="c3ZoomType"></div>
-    <div class="zoom-text" id="c3ZoomText"></div>
-    <div class="zoom-instruction">Both answer this question out loud</div>
-  </div>
+<div class="c3-zoom-overlay" id="c3ZoomOverlay">
+  <button class="c3-zoom-close" onclick="closeC3Zoom()">&#10005;</button>
+  <img class="c3-zoom-img" id="c3ZoomImg" src="" alt="Card">
 </div>
 
 <script>
@@ -657,6 +615,7 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
   document.getElementById('backBtn').classList.add('visible');
   window.scrollTo(0, 0);
+  if (id === 'concept3') initC3();
 }
 function showLanding() {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -666,14 +625,70 @@ function showLanding() {
 }
 
 /* ══════════════════════════════════════
-   CONCEPT 1 – DRAG & DROP MAGNETS
+   CONCEPT 1 – IMAGE MAGNET DRAG & DROP
    ══════════════════════════════════════ */
+const c1WindDown = [
+  { src: 'images/c1-wind_down1.png', label: 'Warm Drink' },
+  { src: 'images/c1-wind_down2.png', label: '5 Min Stretch' },
+  { src: 'images/c1-wind_down3.png', label: 'Chill Music' },
+  { src: 'images/c1-wind_down4.png', label: 'Read a Book' },
+  { src: 'images/c1-wind_down5.png', label: 'Dim Lights' },
+  { src: 'images/c1-wind_down6.png', label: 'Deep Breathe' },
+  { src: 'images/c1-wind_down7.png', label: 'Chat with Family' },
+  { src: 'images/c1-wind_down8.png', label: 'Write or Sketch' },
+  { src: 'images/c1-wind_down9.png', label: 'Journal' },
+  { src: 'images/c1-wind_down10.png', label: 'Warm Shower' },
+];
+
+const c1RoomSetup = [
+  { src: 'images/c1-room_setup1.png', label: 'Fan On' },
+  { src: 'images/c1-room_setup2.png', label: 'Phone Outside Room' },
+  { src: 'images/c1-room_setup3.png', label: 'White Noise On' },
+  { src: 'images/c1-room_setup4.png', label: 'Curtains Closed' },
+  { src: 'images/c1-room_setup5.png', label: 'Eye Mask On' },
+  { src: 'images/c1-room_setup6.png', label: 'Alarm Set' },
+  { src: 'images/c1-room_setup7.png', label: 'Night Light On' },
+  { src: 'images/c1-room_setup8.png', label: 'No Screens in Bed' },
+  { src: 'images/c1-room_setup9.png', label: 'Tidy Bed' },
+  { src: 'images/c1-room_setup10.png', label: 'Cool Room' },
+];
+
+const c1Feelings = [
+  { src: 'images/c1-feeling1.png', label: 'Calm' },
+  { src: 'images/c1-feeling2.png', label: 'Sad' },
+  { src: 'images/c1-feeling3.png', label: 'Happy' },
+  { src: 'images/c1-feeling4.png', label: 'Angry' },
+];
+
+// Build magnet rows
+function buildMagnetRow(container, items, type) {
+  const row = document.getElementById(container);
+  items.forEach(item => {
+    const img = document.createElement('img');
+    img.src = item.src;
+    img.alt = item.label;
+    img.title = item.label;
+    img.className = type === 'feeling' ? 'feeling-img' : 'magnet-img';
+    img.draggable = true;
+    img.dataset.type = type;
+    img.dataset.src = item.src;
+    img.dataset.label = item.label;
+    img.addEventListener('dragstart', magnetDragStart);
+    img.addEventListener('dragend', magnetDragEnd);
+    row.appendChild(img);
+  });
+}
+
+buildMagnetRow('c1WindDownRow', c1WindDown, 'wind-down');
+buildMagnetRow('c1RoomSetupRow', c1RoomSetup, 'room-setup');
+buildMagnetRow('c1FeelingRow', c1Feelings, 'feeling');
+
 let draggedMagnet = null;
 
 function magnetDragStart(e) {
   draggedMagnet = e.target;
   e.target.classList.add('dragging');
-  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.effectAllowed = 'copy';
   e.dataTransfer.setData('text/plain', '');
 }
 function magnetDragEnd(e) {
@@ -681,20 +696,18 @@ function magnetDragEnd(e) {
   draggedMagnet = null;
 }
 
-// Board sections
 function boardDragOver(e) {
   e.preventDefault();
   if (!draggedMagnet) return;
   const type = draggedMagnet.dataset.type;
-  if (type === 'feeling') return; // feelings go to day slots
+  if (type === 'feeling') return;
   const section = e.currentTarget;
-  if (section.dataset.section === type || type === 'parent-action' || type === 'wind-down' || type === 'room-setup') {
+  if (section.dataset.section === type) {
     section.classList.add('drag-over');
   }
 }
-function boardDragLeave(e) {
-  e.currentTarget.classList.remove('drag-over');
-}
+function boardDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
 function boardDrop(e) {
   e.preventDefault();
   const section = e.currentTarget;
@@ -702,258 +715,133 @@ function boardDrop(e) {
   if (!draggedMagnet) return;
   const type = draggedMagnet.dataset.type;
   if (type === 'feeling') return;
-  // Only allow dropping in matching section
   if (section.dataset.section !== type) return;
-  const clone = draggedMagnet.cloneNode(true);
-  clone.setAttribute('draggable', 'false');
-  clone.style.cursor = 'pointer';
-  clone.onclick = function() { this.remove(); };
-  clone.title = 'Click to remove';
+
+  const clone = document.createElement('img');
+  clone.src = draggedMagnet.dataset.src;
+  clone.alt = draggedMagnet.dataset.label;
+  clone.title = draggedMagnet.dataset.label + ' (click to remove)';
+  clone.className = 'magnet-img placed';
+  clone.draggable = false;
+  clone.onclick = function() {
+    this.style.transform = 'scale(0)';
+    setTimeout(() => this.remove(), 200);
+  };
   section.querySelector('.magnets-in-section').appendChild(clone);
 }
 
-// Day slots for feelings
 function dayDragOver(e) {
   e.preventDefault();
   if (!draggedMagnet || draggedMagnet.dataset.type !== 'feeling') return;
   e.currentTarget.classList.add('drag-over');
 }
-function dayDragLeave(e) {
-  e.currentTarget.classList.remove('drag-over');
-}
+function dayDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+
 function dayDrop(e) {
   e.preventDefault();
   e.currentTarget.classList.remove('drag-over');
   if (!draggedMagnet || draggedMagnet.dataset.type !== 'feeling') return;
-  const emoji = draggedMagnet.dataset.emoji;
   const feelingEl = e.currentTarget.querySelector('.placed-feeling');
-  feelingEl.textContent = emoji;
-  feelingEl.style.cursor = 'pointer';
-  feelingEl.onclick = function() { this.textContent = ''; this.onclick = null; };
+  feelingEl.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = draggedMagnet.dataset.src;
+  img.alt = draggedMagnet.dataset.label;
+  img.style.width = '40px';
+  img.style.height = '40px';
+  img.style.borderRadius = '8px';
+  img.style.cursor = 'pointer';
+  img.onclick = function() {
+    feelingEl.innerHTML = '';
+  };
+  feelingEl.appendChild(img);
 }
 
 /* ══════════════════════════════════════
-   CONCEPT 2 – HOOK U UP
+   CONCEPT 2 – PEER CHALLENGE
    ══════════════════════════════════════ */
-const c2Data = [
-  {
-    name: '💪 Fitness Challenge',
-    color: '#ee5a24',
-    challenges: [
-      { title: '10-Min Walk Together', detail: 'Go outside and walk together for at least 10 minutes. Talk about your day while you walk. No phones allowed!' },
-      { title: '20 Jumping Jacks Each', detail: 'Do 20 jumping jacks side by side. Film each other and cheer each other on. Bonus: do them in sync!' },
-      { title: 'Plank Challenge', detail: 'Hold a plank for as long as you can. Time each other. Try to beat 30 seconds. Post your times!' },
-      { title: 'Dance Break', detail: 'Pick a song and dance for the full track. No sitting, no stopping. Style points count!' },
-      { title: 'Stair Climb Race', detail: 'Find a staircase. Race up and down 3 times. Record your best time and try to improve.' },
-      { title: 'Stretch Session', detail: 'Follow a 5-minute stretch routine together. Focus on breathing and flexibility.' },
-      { title: 'Balance Challenge', detail: 'Stand on one leg for as long as you can. Switch legs. Who can last longer? Film the wobbles!' },
-      { title: 'Wall Sit Battle', detail: 'Wall sit together. See who gives up first. Minimum 20 seconds to count!' },
-      { title: 'Shadow Boxing', detail: '2 minutes of shadow boxing. No contact! Just move your arms and feet. Get that heart rate up.' },
-      { title: 'Skip Together', detail: 'Skip (like a kid!) for 100 metres. If you have a skipping rope, even better. Count your jumps.' },
-      { title: 'Yoga Pose-Off', detail: 'Take turns attempting yoga poses. Hold each pose for 15 seconds. Tree pose, warrior, your choice!' },
-      { title: 'Relay Race', detail: 'Set up a short relay course. Take turns running it. Beat your combined time from round 1.' },
-      { title: 'Outdoor Workout', detail: 'Do a full 10-minute outdoor workout: squats, lunges, push-ups, and star jumps. Fresh air required!' },
-      { title: 'Celebration Dance', detail: 'You made it! Create a victory dance together. Film it. This is your 14-day completion dance!' }
-    ]
-  },
-  {
-    name: '🥗 Eat Well Together',
-    color: '#10ac84',
-    challenges: [
-      { title: 'Water Only Today', detail: 'No sugary drinks for the whole day. Only water, and track how many glasses you both drink. Aim for 8!' },
-      { title: 'Cook a Meal Together', detail: 'Pick a simple recipe and cook it from scratch together. Split the tasks. Post a photo of the final dish!' },
-      { title: 'Fruit & Veg Count', detail: 'Count how many different fruits and vegetables you eat today. Try to hit at least 5 each.' },
-      { title: 'No Snacking After 8pm', detail: 'Close the kitchen at 8pm. If you get hungry, drink water. Support each other!' },
-      { title: 'Try Something New', detail: 'Eat one food you\'ve never tried before. Rate it out of 10. Be adventurous!' },
-      { title: 'Meal Prep Together', detail: 'Prepare tomorrow\'s lunch together tonight. Pack it up, label it, and feel smug about it.' },
-      { title: 'Sugar-Free Day', detail: 'No added sugar today. Check the labels! You\'ll be surprised what has sugar in it.' },
-      { title: 'Smoothie Challenge', detail: 'Make a healthy smoothie using at least 3 different fruits or vegetables. Blend and enjoy!' },
-      { title: 'Balanced Plate', detail: 'For dinner, make sure your plate has protein, carbs, vegetables, and healthy fats. Photo evidence!' },
-      { title: 'Eat Mindfully', detail: 'Have one meal with no screens. Sit down. Taste your food. Talk to each other. Old school.' },
-      { title: 'Healthy Swap', detail: 'Replace one unhealthy food item with a healthier version today. Chips → carrot sticks, soda → sparkling water.' },
-      { title: 'Breakfast Champions', detail: 'Make a proper, healthy breakfast. No skipping! Oats, eggs, fruit — whatever works.' },
-      { title: 'Recipe Research', detail: 'Find a healthy recipe online that you both want to try. Save it for your next cooking session.' },
-      { title: 'Celebration Feast', detail: 'Cook your favourite healthy meal together. Set the table properly. You\'ve earned this!' }
-    ]
-  },
-  {
-    name: '🧘 Mindful Minutes',
-    color: '#2e86de',
-    challenges: [
-      { title: '5-Min Breathing', detail: 'Sit together in a quiet space. Breathe in for 4 seconds, hold for 4, breathe out for 4. Repeat for 5 minutes.' },
-      { title: 'Gratitude Share', detail: 'Each of you share 3 things you\'re grateful for today. Write them down and keep them.' },
-      { title: 'Body Scan', detail: 'Lie down and do a 5-minute body scan. Start from your toes, work up to your head. Notice how each part feels.' },
-      { title: 'Mindful Walk', detail: 'Walk slowly for 10 minutes. Notice 5 things you can see, 4 you can hear, 3 you can touch.' },
-      { title: 'Digital Detox Hour', detail: 'Put all devices in a box for 1 hour. What did you do instead? Report back!' },
-      { title: 'Kindness Notes', detail: 'Write a kind note to each other. Leave it somewhere the other person will find it.' },
-      { title: 'Guided Meditation', detail: 'Find a 5-minute guided meditation online. Do it together. Discuss how it felt afterwards.' },
-      { title: 'Worry Dump', detail: 'Write down everything that\'s worrying you on paper. Then fold it up and put it away. Let it go for today.' },
-      { title: 'Positive Affirmations', detail: 'Write 3 positive affirmations about yourself. Read them out loud to each other. Believe them!' },
-      { title: 'Mindful Eating', detail: 'Eat one snack very slowly. Notice the taste, texture, smell. Take at least 5 minutes for one item.' },
-      { title: 'Sunset/Sky Watch', detail: 'Go outside and watch the sky for 5 minutes. No talking. Just observe. Share what you noticed.' },
-      { title: 'Journaling', detail: 'Write for 5 minutes each. Stream of consciousness — whatever comes to mind. No editing, no judgement.' },
-      { title: 'Compliment Chain', detail: 'Take turns giving genuine compliments. Alternate back and forth. Minimum 5 rounds each.' },
-      { title: 'Reflection Session', detail: 'Sit together and reflect on the past 14 days. What did you learn? What will you keep doing?' }
-    ]
-  },
-  {
-    name: '📵 Screen-Free Living',
-    color: '#ff9f43',
-    challenges: [
-      { title: 'Board Game Night', detail: 'Play a board game or card game together. No phones at the table! Post a selfie before you start.' },
-      { title: 'Outdoor Hour', detail: 'Spend 1 hour outside without any screens. Walk, sit, play — whatever you want.' },
-      { title: 'Draw Each Other', detail: 'Take 10 minutes to draw a portrait of each other. No erasing! Share the masterpieces.' },
-      { title: 'Story Time', detail: 'Read a chapter of a book out loud to each other. Take turns reading paragraphs.' },
-      { title: 'Puzzle Time', detail: 'Work on a jigsaw puzzle, crossword, or sudoku together. No looking up answers!' },
-      { title: 'Handwritten Letters', detail: 'Write a letter to someone you care about. Actual pen and paper. Consider posting it!' },
-      { title: 'Cook Without a Recipe', detail: 'Make a meal using only what\'s in the kitchen. No looking up recipes on your phone!' },
-      { title: 'Photo Walk', detail: 'Okay, ONE exception — take photos on a walk but no scrolling. Capture 10 interesting things.' },
-      { title: 'Build Something', detail: 'Build something with your hands. Lego, origami, blanket fort — get creative.' },
-      { title: 'Music Session', detail: 'Listen to a full album together. Discuss your favourite tracks. No skipping!' },
-      { title: 'People Watching', detail: 'Sit at a cafe or park. Watch people for 20 minutes. Make up stories about them.' },
-      { title: 'Clean & Organise', detail: 'Pick one area of your home. Clean and organise it together. Before and after photos!' },
-      { title: 'Teach Each Other', detail: 'Each of you teach the other person a skill. Anything — a knot, a recipe, a dance move.' },
-      { title: 'Screen-Free Evening', detail: 'No screens after 6pm. Plan ahead! What will you do? Document your evening (on paper!).' }
-    ]
-  },
-  {
-    name: '😊 Kindness Streak',
-    color: '#8b5cf6',
-    challenges: [
-      { title: 'Compliment 3 People', detail: 'Give a genuine compliment to 3 different people today. It could be a stranger, friend, or family member.' },
-      { title: 'Help Without Asking', detail: 'Do something helpful for someone without being asked. Wash up, tidy, carry something. Just do it!' },
-      { title: 'Write Thank You Notes', detail: 'Write a thank you note to someone who has helped you recently. Deliver it in person if possible.' },
-      { title: 'Listen Fully', detail: 'Have a conversation where you truly listen. Don\'t plan what to say next. Just listen.' },
-      { title: 'Share Your Lunch', detail: 'Give part of your food to someone. Pack an extra snack to share with a friend or colleague.' },
-      { title: 'Smile Challenge', detail: 'Smile at 10 strangers today. Count them. Notice how they react. Smiles are contagious!' },
-      { title: 'Clean Common Area', detail: 'Clean a shared space — kitchen, living room, or bathroom — without being asked.' },
-      { title: 'Check In on Someone', detail: 'Message or call someone you haven\'t spoken to in a while. Ask how they\'re doing. Really listen.' },
-      { title: 'Pay It Forward', detail: 'Do something kind for a stranger. Hold a door, pick up litter, let someone go ahead in a queue.' },
-      { title: 'Encourage Someone', detail: 'Find someone who\'s working hard at something. Tell them they\'re doing a great job.' },
-      { title: 'Volunteer Time', detail: 'Give 30 minutes of your time to help someone — a neighbour, a friend, a community group.' },
-      { title: 'Leave a Kind Review', detail: 'Write a positive review for a local business or someone\'s work that you appreciate.' },
-      { title: 'Family Appreciation', detail: 'Tell each family member one thing you appreciate about them. Be specific and genuine.' },
-      { title: 'Kindness Reflection', detail: 'Reflect on 14 days of kindness. What felt natural? What was hard? What will you keep doing?' }
-    ]
-  }
+const c2Decks = [
+  { name: 'Bulk Up', key: 'bulk', cover: 'images/c2-deck-bulk.png' },
+  { name: 'Cut Season', key: 'cut', cover: 'images/c2-deck-cut.png' },
+  { name: 'Energy Era', key: 'energy', cover: 'images/c2-deck-energy.png' },
+  { name: 'Glow Up', key: 'glow-up', cover: 'images/c2-deck-glow-up.png' },
+  { name: 'Recharge', key: 'recharge', cover: 'images/c2-deck-recharge.png' },
 ];
 
-function showC2Category(idx) {
-  const cat = c2Data[idx];
-  document.getElementById('c2Categories').style.display = 'none';
-  const challengesDiv = document.getElementById('c2Challenges');
-  challengesDiv.classList.add('active');
-  document.getElementById('c2ChallengesTitle').textContent = cat.name;
-  document.getElementById('c2ChallengesTitle').style.color = cat.color;
-
-  const grid = document.getElementById('c2ChallengeGrid');
-  grid.innerHTML = '';
-  cat.challenges.forEach((ch, i) => {
+// Build deck covers
+(function initC2Decks() {
+  const container = document.getElementById('c2Decks');
+  c2Decks.forEach((deck, idx) => {
     const card = document.createElement('div');
-    card.className = 'c2-challenge-card';
-    card.style.borderColor = cat.color;
-    card.innerHTML = `<div class="day-num" style="color:${cat.color}">Day ${i + 1}</div><div class="challenge-text">${ch.title}</div>`;
-    card.onclick = () => openC2Modal(cat, i);
-    grid.appendChild(card);
+    card.className = 'c2-deck-card';
+    card.innerHTML = `<img src="${deck.cover}" alt="${deck.name}">`;
+    card.onclick = () => showC2Deck(idx);
+    container.appendChild(card);
   });
+})();
+
+function showC2Deck(idx) {
+  const deck = c2Decks[idx];
+  document.getElementById('c2Decks').style.display = 'none';
+  const view = document.getElementById('c2CardGridView');
+  view.classList.add('active');
+  document.getElementById('c2GridTitle').textContent = deck.name + ' — 14 Day Challenge';
+
+  const grid = document.getElementById('c2CardGrid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= 14; i++) {
+    const card = document.createElement('div');
+    card.className = 'c2-grid-card';
+    const frontSrc = `images/c2-${deck.key}${i}-front.png`;
+    const backSrc = `images/c2-${deck.key}${i}-back.png`;
+    card.innerHTML = `<img src="${frontSrc}" alt="Day ${i}">`;
+    card.onclick = () => openC2Zoom(frontSrc, backSrc);
+    grid.appendChild(card);
+  }
 }
 
-function backToC2Categories() {
-  document.getElementById('c2Categories').style.display = 'flex';
-  document.getElementById('c2Challenges').classList.remove('active');
+function backToC2Decks() {
+  document.getElementById('c2Decks').style.display = 'flex';
+  document.getElementById('c2CardGridView').classList.remove('active');
 }
 
-function openC2Modal(cat, idx) {
-  const ch = cat.challenges[idx];
-  document.getElementById('c2ModalDay').textContent = `Day ${idx + 1}`;
-  document.getElementById('c2ModalDay').style.color = cat.color;
-  document.getElementById('c2ModalChallenge').textContent = ch.title;
-  document.getElementById('c2ModalDetail').textContent = ch.detail;
-  document.getElementById('c2Modal').classList.add('active');
+let c2Flipped = false;
+
+function openC2Zoom(frontSrc, backSrc) {
+  c2Flipped = false;
+  document.getElementById('c2FlipInner').classList.remove('flipped');
+  document.getElementById('c2FlipFrontImg').src = frontSrc;
+  document.getElementById('c2FlipBackImg').src = backSrc;
+  document.getElementById('c2FlipHint').textContent = 'Tap card to flip';
+  document.getElementById('c2Overlay').classList.add('active');
 }
-function closeC2Modal() {
-  document.getElementById('c2Modal').classList.remove('active');
+
+function flipC2Card() {
+  c2Flipped = !c2Flipped;
+  document.getElementById('c2FlipInner').classList.toggle('flipped', c2Flipped);
+  document.getElementById('c2FlipHint').textContent = c2Flipped ? 'Tap to flip back' : 'Tap card to flip';
 }
-document.getElementById('c2Modal').addEventListener('click', function(e) {
-  if (e.target === this) closeC2Modal();
+
+function closeC2Overlay() {
+  document.getElementById('c2Overlay').classList.remove('active');
+}
+
+document.getElementById('c2Overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeC2Overlay();
 });
 
 /* ══════════════════════════════════════
-   CONCEPT 3 – WOU (WE OPEN UP)
+   CONCEPT 3 – WOU SHUFFLE & FLIP
    ══════════════════════════════════════ */
-const c3Data = [
-  {
-    name: '💭 Feelings',
-    color: '#ee5a24',
-    gradient: 'linear-gradient(135deg, #ff6b6b, #ee5a24)',
-    cards: [
-      'What\'s something that made you really happy recently?',
-      'When was the last time you felt nervous? What happened?',
-      'What makes you feel safe?',
-      'Is there something you\'ve been wanting to talk about but haven\'t?',
-      'What\'s one thing that always cheers you up?',
-      'When do you feel most misunderstood?',
-      'What emotion do you find hardest to express?',
-      'Describe a moment when you felt truly proud of yourself.'
-    ]
-  },
-  {
-    name: '🏠 Home Life',
-    color: '#10ac84',
-    gradient: 'linear-gradient(135deg, #1dd1a1, #10ac84)',
-    cards: [
-      'What\'s your favourite thing about our home?',
-      'If you could change one rule at home, what would it be?',
-      'What\'s a family tradition you love?',
-      'What does a perfect weekend at home look like to you?',
-      'Is there something at home that stresses you out?',
-      'What\'s one thing we could do more of together?',
-      'What\'s a chore you secretly don\'t mind doing?',
-      'If we could redesign your room, what would you change?'
-    ]
-  },
-  {
-    name: '🎯 Dreams & Goals',
-    color: '#2e86de',
-    gradient: 'linear-gradient(135deg, #54a0ff, #2e86de)',
-    cards: [
-      'Where do you see yourself in 5 years?',
-      'What\'s a skill you really want to learn?',
-      'If you could do any job in the world, what would it be?',
-      'What\'s one goal you\'re working towards right now?',
-      'Is there something you\'ve given up on that you wish you hadn\'t?',
-      'Who inspires you and why?',
-      'What\'s something you want to achieve this year?',
-      'If money wasn\'t a problem, what would you do with your life?'
-    ]
-  },
-  {
-    name: '⚡ Spark',
-    color: '#ff9f43',
-    gradient: 'linear-gradient(135deg, #feca57, #ff9f43)',
-    instruction: 'Draw a Spark card after any question to go deeper',
-    cards: [
-      'Tell me more about that — what made it meaningful?',
-      'How did that make you feel at the time?',
-      'What would you do differently if you could?',
-      'Has that changed how you see things now?',
-      'What do you wish the other person knew about that?',
-      'Can you describe that feeling in one word?'
-    ]
-  },
-  {
-    name: '🔄 Swap',
-    color: '#8b5cf6',
-    gradient: 'linear-gradient(135deg, #c56cf0, #8b5cf6)',
-    instruction: 'Answer the last question AS the other person',
-    cards: [
-      'Answer the last question as if you were the other person.',
-      'What do you think the other person would say about this?',
-      'Swap roles — respond how you think they feel.',
-      'Guess what the other person\'s answer would be.'
-    ]
-  }
-];
+const c3CardCount = 22; // wou1-22 are content cards
+const c3BackImg = 'images/c3-wou23.png';
+let c3Order = [];
+let c3Initialized = false;
+
+function initC3() {
+  if (c3Initialized) return;
+  c3Initialized = true;
+  shuffleC3Cards();
+}
 
 function shuffle(arr) {
   const a = [...arr];
@@ -964,65 +852,79 @@ function shuffle(arr) {
   return a;
 }
 
-function showC3Category(idx) {
-  const cat = c3Data[idx];
-  document.getElementById('c3Categories').style.display = 'none';
-  const view = document.getElementById('c3CardsView');
-  view.classList.add('active');
-  document.getElementById('c3CardsTitle').textContent = cat.name;
-  document.getElementById('c3CardsTitle').style.color = cat.color;
+function shuffleC3Cards() {
+  // Generate shuffled order
+  c3Order = shuffle(Array.from({ length: c3CardCount }, (_, i) => i + 1));
 
-  const spread = document.getElementById('c3CardSpread');
-  spread.innerHTML = '';
-  const shuffled = shuffle(cat.cards);
-  shuffled.forEach((text, i) => {
-    const card = document.createElement('div');
-    card.className = 'c3-card';
-    card.style.background = cat.gradient;
-    card.innerHTML = `<span class="card-number">#${i + 1}</span>${text}`;
-    card.onclick = () => openC3Zoom(cat, text);
-    // Add slight random rotation for a "spread" feel
-    const rot = (Math.random() - 0.5) * 6;
-    card.style.transform = `rotate(${rot}deg)`;
-    card.onmouseenter = () => { card.style.transform = 'translateY(-4px) rotate(-1deg)'; };
-    card.onmouseleave = () => { card.style.transform = `rotate(${rot}deg)`; };
-    spread.appendChild(card);
+  const area = document.getElementById('c3CardArea');
+  area.innerHTML = '';
+
+  c3Order.forEach((cardNum, idx) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'c3-card-wrapper';
+
+    // Randomize deal animation origin
+    const angle = Math.random() * 360;
+    const dist = 150 + Math.random() * 200;
+    const dx = Math.cos(angle * Math.PI / 180) * dist;
+    const dy = Math.sin(angle * Math.PI / 180) * dist;
+    const dr = (Math.random() - 0.5) * 720;
+    wrapper.style.setProperty('--deal-x', dx + 'px');
+    wrapper.style.setProperty('--deal-y', dy + 'px');
+    wrapper.style.setProperty('--deal-r', dr + 'deg');
+    wrapper.style.animationDelay = (idx * 0.06) + 's';
+
+    const inner = document.createElement('div');
+    inner.className = 'c3-card-inner';
+
+    // Front face (card back = face-down)
+    const front = document.createElement('div');
+    front.className = 'c3-card-face';
+    front.innerHTML = `<img src="${c3BackImg}" alt="Card back">`;
+
+    // Back face (actual card content = revealed)
+    const back = document.createElement('div');
+    back.className = 'c3-card-back-face';
+    const cardSrc = `images/c3-wou${cardNum}.png`;
+    back.innerHTML = `<img src="${cardSrc}" alt="WOU Card">`;
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    wrapper.appendChild(inner);
+
+    // Click to flip
+    wrapper.onclick = function() {
+      const cardInner = this.querySelector('.c3-card-inner');
+      if (!cardInner.classList.contains('revealed')) {
+        cardInner.classList.add('revealed');
+        // Second click zooms in
+        wrapper.onclick = function() {
+          openC3Zoom(cardSrc);
+        };
+      }
+    };
+
+    area.appendChild(wrapper);
   });
 }
 
-function backToC3Categories() {
-  document.getElementById('c3Categories').style.display = 'flex';
-  document.getElementById('c3CardsView').classList.remove('active');
+function openC3Zoom(src) {
+  document.getElementById('c3ZoomImg').src = src;
+  document.getElementById('c3ZoomOverlay').classList.add('active');
 }
 
-function openC3Zoom(cat, text) {
-  const overlay = document.getElementById('c3Zoom');
-  const card = document.getElementById('c3ZoomCard');
-  card.style.background = cat.gradient;
-  document.getElementById('c3ZoomType').textContent = cat.name;
-  document.getElementById('c3ZoomText').textContent = text;
-
-  // Update instruction based on card type
-  const instrEl = card.querySelector('.zoom-instruction');
-  if (cat.instruction) {
-    instrEl.textContent = cat.instruction;
-  } else {
-    instrEl.textContent = 'Both answer this question out loud';
-  }
-
-  overlay.classList.add('active');
-}
 function closeC3Zoom() {
-  document.getElementById('c3Zoom').classList.remove('active');
+  document.getElementById('c3ZoomOverlay').classList.remove('active');
 }
-document.getElementById('c3Zoom').addEventListener('click', function(e) {
+
+document.getElementById('c3ZoomOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeC3Zoom();
 });
 
-// Keyboard support for closing modals
+// Keyboard support
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    closeC2Modal();
+    closeC2Overlay();
     closeC3Zoom();
   }
 });
