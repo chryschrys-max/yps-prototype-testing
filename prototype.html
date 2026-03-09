@@ -222,90 +222,102 @@
      CONCEPT 1 – BEDTIME WIND-DOWN
      ════════════════════════════════════════ */
   #concept1 { padding: 20px; }
-  .c1-layout { display: flex; gap: 24px; max-width: 1400px; margin: 0 auto; min-height: calc(100vh - 40px); }
+  .c1-layout { display: flex; gap: 20px; max-width: 1500px; margin: 0 auto; min-height: calc(100vh - 40px); }
 
   .c1-howto {
-    width: 280px; flex-shrink: 0;
+    width: 240px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg); padding: 28px;
-    align-self: stretch; position: sticky; top: 20px;
+    border-radius: var(--radius-lg); padding: 24px;
+    position: sticky; top: 20px;
     backdrop-filter: blur(20px); height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
-  .c1-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-teal); margin-bottom: 18px; font-weight: 600; }
-  .c1-howto ol { padding-left: 18px; }
-  .c1-howto li { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
+  .c1-howto h2 { font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-teal); margin-bottom: 16px; font-weight: 600; }
+  .c1-howto ol { padding-left: 16px; }
+  .c1-howto li { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.55; }
   .c1-howto li strong { color: var(--text-primary); font-weight: 600; }
 
-  .c1-center { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+  .c1-center { flex: 1; display: flex; flex-direction: column; gap: 16px; }
   .c1-board-title {
     text-align: center; font-family: var(--font-display);
-    font-size: 1.8rem; color: var(--accent-blue);
+    font-size: 1.6rem; color: #3b82a0;
     font-weight: 700; letter-spacing: -0.02em;
   }
 
+  /* Whiteboard wrapper */
+  .c1-whiteboard {
+    display: flex; gap: 16px; flex: 1; align-items: flex-start;
+  }
+  .c1-board-area {
+    flex: 1; display: flex; flex-direction: column; gap: 16px;
+  }
+
   .c1-board {
-    background: var(--bg-glass); border: 1px solid var(--border-subtle);
+    background: #ffffff; border: 2px solid #e0e0e0;
     border-radius: var(--radius-lg); padding: 20px;
     display: flex; gap: 16px; min-height: 320px;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
   }
   .board-col {
-    flex: 1; border: 2px dashed rgba(96,165,250,0.2); border-radius: var(--radius-md);
-    padding: 16px; min-height: 320px;
+    flex: 1; border: 2px dashed rgba(100,160,200,0.3); border-radius: var(--radius-md);
+    padding: 16px; min-height: 280px;
     transition: background 0.3s, border-color 0.3s;
     display: flex; flex-direction: column;
+    background: rgba(240,247,255,0.5);
   }
-  .board-col.drag-over { background: rgba(96,165,250,0.08); border-color: var(--accent-blue); }
+  .board-col.drag-over { background: rgba(96,165,250,0.12); border-color: #5ba3d9; }
   .board-col h3 {
-    font-family: var(--font-display); font-size: 0.85rem;
+    font-family: var(--font-display); font-size: 0.82rem;
     text-transform: uppercase; letter-spacing: 2px;
-    color: var(--accent-blue); margin-bottom: 12px; text-align: center; font-weight: 600;
+    color: #3b82a0; margin-bottom: 12px; text-align: center; font-weight: 600;
   }
   .board-col .magnets-in-section { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; align-content: flex-start; }
-  .board-col.parent-col { border-style: none; background: transparent; }
-  .board-col.parent-col h3 { color: var(--text-muted); }
+  .board-col.parent-col { border-style: none; background: rgba(255,248,240,0.5); }
+  .board-col.parent-col h3 { color: #999; }
   .parent-input {
-    width: 100%; border: none; border-bottom: 1px dashed rgba(255,255,255,0.15);
+    width: 100%; border: none; border-bottom: 1px dashed rgba(0,0,0,0.15);
     background: transparent; font-family: var(--font-body);
-    font-size: 0.9rem; padding: 10px 4px; color: var(--text-primary);
+    font-size: 0.9rem; padding: 10px 4px; color: #333;
     outline: none; margin-bottom: 8px; transition: border-color 0.3s;
   }
-  .parent-input:focus { border-color: var(--accent-blue); }
-  .parent-input::placeholder { color: var(--text-muted); font-style: italic; }
+  .parent-input:focus { border-color: #5ba3d9; }
+  .parent-input::placeholder { color: #bbb; font-style: italic; }
 
   /* Sleep tracker */
   .c1-tracking {
-    background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg); padding: 20px; text-align: center;
-    backdrop-filter: blur(10px);
+    background: #ffffff; border: 2px solid #e0e0e0;
+    border-radius: var(--radius-lg); padding: 16px; text-align: center;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
   }
-  .c1-tracking h3 { font-family: var(--font-display); font-size: 0.85rem; color: var(--accent-blue); margin-bottom: 14px; font-weight: 600; letter-spacing: 0.5px; }
-  .tracking-week { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .c1-tracking h3 { font-family: var(--font-display); font-size: 0.82rem; color: #3b82a0; margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px; }
+  .tracking-week { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
   .day-slot {
-    width: 90px; height: 100px; border: 2px dashed rgba(96,165,250,0.15);
+    width: 80px; height: 90px; border: 2px dashed rgba(100,160,200,0.25);
     border-radius: var(--radius-sm); display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    font-size: 0.85rem; color: var(--text-muted);
-    transition: all 0.3s; background: var(--bg-card);
+    font-size: 0.8rem; color: #aaa;
+    transition: all 0.3s; background: rgba(240,247,255,0.5);
   }
-  .day-slot.drag-over { background: rgba(96,165,250,0.08); border-color: var(--accent-blue); }
-  .day-slot .day-label { font-weight: 700; margin-bottom: 4px; color: var(--accent-blue); font-size: 0.75rem; letter-spacing: 1px; }
+  .day-slot.drag-over { background: rgba(96,165,250,0.12); border-color: #5ba3d9; }
+  .day-slot .day-label { font-weight: 700; margin-bottom: 4px; color: #3b82a0; font-size: 0.7rem; letter-spacing: 1px; }
   .day-slot .placed-feeling { display: flex; align-items: center; justify-content: center; }
-  .day-slot .placed-feeling img { width: 54px; height: 54px; border-radius: 8px; }
+  .day-slot .placed-feeling img { width: 48px; height: 48px; border-radius: 8px; }
 
-  /* Magnet tray */
+  /* Magnet tray – right sidebar */
   .c1-tray {
+    width: 320px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg); padding: 20px; text-align: center;
     backdrop-filter: blur(10px);
+    position: sticky; top: 20px;
+    height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
-  .c1-tray h3 { font-family: var(--font-display); font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
-  .magnet-group { margin-bottom: 20px; }
-  .magnet-group-label { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1.5px; }
-  .magnet-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .c1-tray h3 { font-family: var(--font-display); font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+  .magnet-group { margin-bottom: 18px; }
+  .magnet-group-label { font-size: 0.68rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .magnet-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 
   .magnet-img {
-    width: 100px; height: 100px; border-radius: var(--radius-sm);
+    width: 80px; height: 80px; border-radius: var(--radius-sm);
     cursor: grab; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     object-fit: cover; border: 2px solid transparent;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -313,11 +325,11 @@
   }
   .magnet-img:hover { transform: scale(1.1) translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
   .magnet-img.dragging { opacity: 0.4; transform: scale(0.9); }
-  .magnet-img.placed { width: 76px; height: 76px; cursor: pointer; border-radius: 10px; }
+  .magnet-img.placed { width: 68px; height: 68px; cursor: pointer; border-radius: 10px; }
   .magnet-img.placed:hover { transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent-pink); }
 
   .feeling-img {
-    width: 80px; height: 80px; border-radius: var(--radius-sm);
+    width: 64px; height: 64px; border-radius: var(--radius-sm);
     cursor: grab; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     touch-action: none;
@@ -619,9 +631,11 @@
   /* ── Responsive ── */
   @media (max-width: 768px) {
     .c1-layout, .c2-layout, .c3-layout { flex-direction: column; }
-    .c1-howto, .c2-howto, .c3-howto { width: 100%; position: static; }
+    .c1-howto, .c2-howto, .c3-howto { width: 100%; position: static; height: auto; }
     .concepts-grid { flex-direction: column; align-items: center; }
     .concept-card { width: 100%; max-width: 360px; }
+    .c1-whiteboard { flex-direction: column; }
+    .c1-tray { width: 100%; position: static; height: auto; }
     .c1-board { flex-direction: column; }
     .c2-flip-container { width: 340px; }
     #landing h1 { font-size: 2.2rem; }
@@ -695,71 +709,76 @@
     <div class="c1-center">
       <div class="c1-board-title">Better Sleep for Better School Days</div>
 
-      <div class="c1-board">
-        <!-- Wind-Down column -->
-        <div class="board-col" data-section="wind-down">
-          <h3>Wind-Down</h3>
-          <div class="magnets-in-section"></div>
-        </div>
-        <!-- Room Setup column -->
-        <div class="board-col" data-section="room-setup">
-          <h3>My Room Setup</h3>
-          <div class="magnets-in-section"></div>
-        </div>
-        <!-- Parent column -->
-        <div class="board-col parent-col">
-          <h3>Parent</h3>
-          <input class="parent-input" type="text" placeholder="e.g. Set alarm">
-          <input class="parent-input" type="text" placeholder="e.g. Check in">
-          <input class="parent-input" type="text" placeholder="e.g. Goodnight routine">
-        </div>
-      </div>
+      <div class="c1-whiteboard">
+        <!-- Left: Board + Sleep Tracker -->
+        <div class="c1-board-area">
+          <div class="c1-board">
+            <!-- Wind-Down column -->
+            <div class="board-col" data-section="wind-down">
+              <h3>Wind-Down</h3>
+              <div class="magnets-in-section"></div>
+            </div>
+            <!-- Room Setup column -->
+            <div class="board-col" data-section="room-setup">
+              <h3>My Room Setup</h3>
+              <div class="magnets-in-section"></div>
+            </div>
+            <!-- Parent column -->
+            <div class="board-col parent-col">
+              <h3>Parent</h3>
+              <input class="parent-input" type="text" placeholder="e.g. Set alarm">
+              <input class="parent-input" type="text" placeholder="e.g. Check in">
+              <input class="parent-input" type="text" placeholder="e.g. Goodnight routine">
+            </div>
+          </div>
 
-      <!-- Sleep Tracking -->
-      <div class="c1-tracking">
-        <h3>How was your sleep?</h3>
-        <div class="tracking-week">
-          <div class="day-slot" data-day="mon">
-            <span class="day-label">Mon</span><span class="placed-feeling"></span>
+          <!-- Sleep Tracking -->
+          <div class="c1-tracking">
+            <h3>How was your sleep?</h3>
+            <div class="tracking-week">
+              <div class="day-slot" data-day="mon">
+                <span class="day-label">Mon</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="tue">
+                <span class="day-label">Tue</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="wed">
+                <span class="day-label">Wed</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="thu">
+                <span class="day-label">Thu</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="fri">
+                <span class="day-label">Fri</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="sat">
+                <span class="day-label">Sat</span><span class="placed-feeling"></span>
+              </div>
+              <div class="day-slot" data-day="sun">
+                <span class="day-label">Sun</span><span class="placed-feeling"></span>
+              </div>
+            </div>
           </div>
-          <div class="day-slot" data-day="tue">
-            <span class="day-label">Tue</span><span class="placed-feeling"></span>
-          </div>
-          <div class="day-slot" data-day="wed">
-            <span class="day-label">Wed</span><span class="placed-feeling"></span>
-          </div>
-          <div class="day-slot" data-day="thu">
-            <span class="day-label">Thu</span><span class="placed-feeling"></span>
-          </div>
-          <div class="day-slot" data-day="fri">
-            <span class="day-label">Fri</span><span class="placed-feeling"></span>
-          </div>
-          <div class="day-slot" data-day="sat">
-            <span class="day-label">Sat</span><span class="placed-feeling"></span>
-          </div>
-          <div class="day-slot" data-day="sun">
-            <span class="day-label">Sun</span><span class="placed-feeling"></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Magnet Tray -->
-      <div class="c1-tray">
-        <h3>Magnets</h3>
-
-        <div class="magnet-group">
-          <div class="magnet-group-label">Wind-Down Activities</div>
-          <div class="magnet-row" id="c1WindDownRow"></div>
         </div>
 
-        <div class="magnet-group">
-          <div class="magnet-group-label">Room Setup</div>
-          <div class="magnet-row" id="c1RoomSetupRow"></div>
-        </div>
+        <!-- Right: Magnet Tray sidebar -->
+        <div class="c1-tray">
+          <h3>Magnets</h3>
 
-        <div class="magnet-group">
-          <div class="magnet-group-label">How Do You Feel?</div>
-          <div class="magnet-row" id="c1FeelingRow"></div>
+          <div class="magnet-group">
+            <div class="magnet-group-label">Wind-Down Activities</div>
+            <div class="magnet-row" id="c1WindDownRow"></div>
+          </div>
+
+          <div class="magnet-group">
+            <div class="magnet-group-label">Room Setup</div>
+            <div class="magnet-row" id="c1RoomSetupRow"></div>
+          </div>
+
+          <div class="magnet-group">
+            <div class="magnet-group-label">How Do You Feel?</div>
+            <div class="magnet-row" id="c1FeelingRow"></div>
+          </div>
         </div>
       </div>
     </div>
