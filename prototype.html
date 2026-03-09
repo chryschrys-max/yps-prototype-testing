@@ -551,15 +551,15 @@
   }
   .c3-side-stack:hover { transform: translateY(-6px) scale(1.04); }
   .c3-side-stack img {
-    width: 120px; border-radius: 12px;
+    width: 156px; border-radius: 15px;
     box-shadow: 0 8px 30px rgba(0,0,0,0.4);
     position: relative;
   }
   .c3-stack-wrapper {
-    position: relative; width: 120px; height: 170px;
+    position: relative; width: 156px; height: 221px;
   }
   .c3-stack-wrapper img {
-    position: absolute; width: 120px; border-radius: 12px;
+    position: absolute; width: 156px; border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   }
   .c3-stack-wrapper img:nth-child(1) { top: 0; left: 0; z-index: 3; }
@@ -1247,26 +1247,18 @@ function shuffleC3Cards() {
 function openC3Zoom(questionSrc) {
   const container = document.getElementById('c3ZoomCards');
 
-  // Show question card with swap & spark stacks
+  // Show question card with combined swap & spark pile
   container.innerHTML = `
-    <div class="c3-side-stack" onclick="drawC3Card('swap', '${questionSrc}')">
-      <div class="c3-stack-wrapper">
-        <img src="${c3BackImg}" alt="Swap stack">
-        <img src="${c3BackImg}" alt="">
-        <img src="${c3BackImg}" alt="">
-      </div>
-      <span class="c3-stack-label">Swap</span>
-    </div>
     <div class="c3-zoom-question">
       <img src="${questionSrc}" alt="Question Card">
     </div>
-    <div class="c3-side-stack" onclick="drawC3Card('spark', '${questionSrc}')">
+    <div class="c3-side-stack" onclick="drawC3Card('random', '${questionSrc}')">
       <div class="c3-stack-wrapper">
-        <img src="${c3BackImg}" alt="Spark stack">
+        <img src="${c3BackImg}" alt="Swap &amp; Spark pile">
         <img src="${c3BackImg}" alt="">
         <img src="${c3BackImg}" alt="">
       </div>
-      <span class="c3-stack-label">Spark</span>
+      <span class="c3-stack-label">Swap / Spark</span>
     </div>
   `;
 
@@ -1274,8 +1266,9 @@ function openC3Zoom(questionSrc) {
 }
 
 function drawC3Card(type, questionSrc) {
-  const pool = type === 'swap' ? c3SwapCards : c3SparkCards;
-  const pick = pool[Math.floor(Math.random() * pool.length)];
+  // Combine both pools and pick randomly
+  const allCards = [...c3SwapCards, ...c3SparkCards];
+  const pick = allCards[Math.floor(Math.random() * allCards.length)];
   const drawnSrc = `images/c3-wou${pick}.png`;
   const container = document.getElementById('c3ZoomCards');
 
@@ -1285,7 +1278,7 @@ function drawC3Card(type, questionSrc) {
       <img src="${questionSrc}" alt="Question Card">
     </div>
     <div class="c3-zoom-drawn">
-      <img src="${drawnSrc}" alt="${type === 'swap' ? 'Swap' : 'Spark'} Card">
+      <img src="${drawnSrc}" alt="Swap / Spark Card">
     </div>
   `;
 }
