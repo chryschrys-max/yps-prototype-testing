@@ -524,23 +524,87 @@
     background: rgba(0,0,0,0.85);
     z-index: 200; align-items: center; justify-content: center;
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    flex-direction: column; gap: 24px;
   }
   .c3-zoom-overlay.active { display: flex; }
-  .c3-zoom-img {
-    max-width: 520px; width: 90%;
+
+  /* Layout for cards area in zoom */
+  .c3-zoom-cards {
+    display: flex; align-items: center; justify-content: center;
+    gap: 28px; width: 100%; max-width: 900px; padding: 0 20px;
+  }
+
+  /* Question card in zoom */
+  .c3-zoom-question {
+    max-width: 340px; width: 100%;
     border-radius: var(--radius-lg);
     box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-    animation: c2ZoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: c3CardSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .c3-zoom-question img { width: 100%; border-radius: var(--radius-lg); display: block; }
+
+  /* Swap & Spark stacks */
+  .c3-side-stack {
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    cursor: pointer; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: c3StackFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  }
+  .c3-side-stack:hover { transform: translateY(-6px) scale(1.04); }
+  .c3-side-stack img {
+    width: 120px; border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    position: relative;
+  }
+  .c3-stack-wrapper {
+    position: relative; width: 120px; height: 170px;
+  }
+  .c3-stack-wrapper img {
+    position: absolute; width: 120px; border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .c3-stack-wrapper img:nth-child(1) { top: 0; left: 0; z-index: 3; }
+  .c3-stack-wrapper img:nth-child(2) { top: 4px; left: 3px; z-index: 2; opacity: 0.7; }
+  .c3-stack-wrapper img:nth-child(3) { top: 8px; left: 6px; z-index: 1; opacity: 0.4; }
+  .c3-stack-label {
+    font-family: var(--font-display); font-size: 0.85rem;
+    color: rgba(255,255,255,0.7); font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Drawn card (after picking swap/spark) */
+  .c3-zoom-drawn {
+    max-width: 300px; width: 100%;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: c3DrawnCardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .c3-zoom-drawn img { width: 100%; border-radius: var(--radius-lg); display: block; }
+
+  /* Put down / close button */
   .c3-zoom-close {
-    position: fixed; top: 24px; right: 24px;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    width: 44px; height: 44px; border-radius: 50%;
-    font-size: 1.2rem; color: var(--text-primary); z-index: 210;
-    display: flex; align-items: center; justify-content: center;
+    padding: 12px 32px; border-radius: 50px;
+    font-size: 0.95rem; color: var(--text-primary); z-index: 210;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
     backdrop-filter: blur(20px); transition: all 0.3s;
+    font-family: var(--font-display); font-weight: 500;
+    cursor: pointer;
   }
-  .c3-zoom-close:hover { background: rgba(255,255,255,0.15); transform: rotate(90deg); }
+  .c3-zoom-close:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
+
+  @keyframes c3CardSlideIn {
+    from { opacity: 0; transform: scale(0.8) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes c3StackFadeIn {
+    from { opacity: 0; transform: scale(0.7) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes c3DrawnCardIn {
+    from { opacity: 0; transform: scale(0.5) rotate(-8deg); }
+    60% { transform: scale(1.05) rotate(2deg); }
+    to { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
 
   /* ── Hover card glow on concept pages ── */
   .c3-card-wrapper:hover .c3-card-face,
@@ -594,7 +658,7 @@
       <div class="card-banner"><img src="images/Concept-2.png" alt="Concept 2"></div>
       <div class="card-body">
         <div class="label">Concept 2</div>
-        <h2>Peer Challenge</h2>
+        <h2>Hook U Up</h2>
         <p>Pick a challenge deck with a buddy. Complete 14 daily challenges together without breaking the streak.</p>
         <div class="card-arrow">&#8594;</div>
       </div>
@@ -779,8 +843,10 @@
 
 <!-- C3 Zoom overlay -->
 <div class="c3-zoom-overlay" id="c3ZoomOverlay">
-  <button class="c3-zoom-close" onclick="closeC3Zoom()">&#10005;</button>
-  <img class="c3-zoom-img" id="c3ZoomImg" src="" alt="Card">
+  <div class="c3-zoom-cards" id="c3ZoomCards">
+    <!-- Populated dynamically -->
+  </div>
+  <button class="c3-zoom-close" onclick="closeC3Zoom()">Put down cards</button>
 </div>
 
 <script>
@@ -1108,7 +1174,9 @@ document.getElementById('c2Overlay').addEventListener('click', function(e) {
 /* ══════════════════════════════════════
    CONCEPT 3 – WOU SHUFFLE & FLIP
    ══════════════════════════════════════ */
-const c3CardCount = 22; // wou1-22 are content cards
+const c3QuestionCards = Array.from({ length: 16 }, (_, i) => i + 1); // wou1-16
+const c3SwapCards = [17, 18];
+const c3SparkCards = [19, 20, 21, 22];
 const c3BackImg = 'images/c3-wou23.png';
 let c3Order = [];
 let c3Initialized = false;
@@ -1129,8 +1197,7 @@ function shuffle(arr) {
 }
 
 function shuffleC3Cards() {
-  // Generate shuffled order
-  c3Order = shuffle(Array.from({ length: c3CardCount }, (_, i) => i + 1));
+  c3Order = shuffle([...c3QuestionCards]);
 
   const area = document.getElementById('c3CardArea');
   area.innerHTML = '';
@@ -1139,7 +1206,6 @@ function shuffleC3Cards() {
     const wrapper = document.createElement('div');
     wrapper.className = 'c3-card-wrapper';
 
-    // Randomize deal animation origin
     const angle = Math.random() * 360;
     const dist = 150 + Math.random() * 200;
     const dx = Math.cos(angle * Math.PI / 180) * dist;
@@ -1153,12 +1219,10 @@ function shuffleC3Cards() {
     const inner = document.createElement('div');
     inner.className = 'c3-card-inner';
 
-    // Front face (card back = face-down)
     const front = document.createElement('div');
     front.className = 'c3-card-face';
     front.innerHTML = `<img src="${c3BackImg}" alt="Card back">`;
 
-    // Back face (actual card content = revealed)
     const back = document.createElement('div');
     back.className = 'c3-card-back-face';
     const cardSrc = `images/c3-wou${cardNum}.png`;
@@ -1168,12 +1232,10 @@ function shuffleC3Cards() {
     inner.appendChild(back);
     wrapper.appendChild(inner);
 
-    // Click to flip
     wrapper.onclick = function() {
       const cardInner = this.querySelector('.c3-card-inner');
       if (!cardInner.classList.contains('revealed')) {
         cardInner.classList.add('revealed');
-        // Second click zooms in
         wrapper.onclick = function() {
           openC3Zoom(cardSrc);
         };
@@ -1184,9 +1246,50 @@ function shuffleC3Cards() {
   });
 }
 
-function openC3Zoom(src) {
-  document.getElementById('c3ZoomImg').src = src;
+function openC3Zoom(questionSrc) {
+  const container = document.getElementById('c3ZoomCards');
+
+  // Show question card with swap & spark stacks
+  container.innerHTML = `
+    <div class="c3-side-stack" onclick="drawC3Card('swap', '${questionSrc}')">
+      <div class="c3-stack-wrapper">
+        <img src="${c3BackImg}" alt="Swap stack">
+        <img src="${c3BackImg}" alt="">
+        <img src="${c3BackImg}" alt="">
+      </div>
+      <span class="c3-stack-label">Swap</span>
+    </div>
+    <div class="c3-zoom-question">
+      <img src="${questionSrc}" alt="Question Card">
+    </div>
+    <div class="c3-side-stack" onclick="drawC3Card('spark', '${questionSrc}')">
+      <div class="c3-stack-wrapper">
+        <img src="${c3BackImg}" alt="Spark stack">
+        <img src="${c3BackImg}" alt="">
+        <img src="${c3BackImg}" alt="">
+      </div>
+      <span class="c3-stack-label">Spark</span>
+    </div>
+  `;
+
   document.getElementById('c3ZoomOverlay').classList.add('active');
+}
+
+function drawC3Card(type, questionSrc) {
+  const pool = type === 'swap' ? c3SwapCards : c3SparkCards;
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  const drawnSrc = `images/c3-wou${pick}.png`;
+  const container = document.getElementById('c3ZoomCards');
+
+  // Show both cards side by side
+  container.innerHTML = `
+    <div class="c3-zoom-question">
+      <img src="${questionSrc}" alt="Question Card">
+    </div>
+    <div class="c3-zoom-drawn">
+      <img src="${drawnSrc}" alt="${type === 'swap' ? 'Swap' : 'Spark'} Card">
+    </div>
+  `;
 }
 
 function closeC3Zoom() {
