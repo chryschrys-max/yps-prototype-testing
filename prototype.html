@@ -231,9 +231,9 @@
     position: sticky; top: 20px;
     backdrop-filter: blur(20px); height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
-  .c1-howto h2 { font-family: var(--font-display); font-size: 1.05rem; color: var(--accent-teal); margin-bottom: 16px; font-weight: 600; }
+  .c1-howto h2 { font-family: var(--font-display); font-size: 1.25rem; color: var(--accent-teal); margin-bottom: 16px; font-weight: 600; }
   .c1-howto ol { padding-left: 16px; }
-  .c1-howto li { font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.55; }
+  .c1-howto li { font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.6; }
   .c1-howto li strong { color: var(--text-primary); font-weight: 600; }
 
   .c1-center { flex: 1; display: flex; flex-direction: column; gap: 16px; }
@@ -259,7 +259,7 @@
   }
   .board-col {
     flex: 1; border: 2px dashed rgba(100,160,200,0.3); border-radius: var(--radius-md);
-    padding: 16px; min-height: 280px;
+    padding: 16px; min-height: 336px;
     transition: background 0.3s, border-color 0.3s;
     display: flex; flex-direction: column;
     background: rgba(240,247,255,0.5);
@@ -304,20 +304,28 @@
 
   /* Magnet tray – right sidebar */
   .c1-tray {
-    width: 320px; flex-shrink: 0;
+    width: 350px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg); padding: 20px; text-align: center;
     backdrop-filter: blur(10px);
     position: sticky; top: 20px;
     height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
-  .c1-tray h3 { font-family: var(--font-display); font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+  .c1-tray h3 { font-family: var(--font-display); font-size: 0.82rem; color: #fff; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
   .magnet-group { margin-bottom: 18px; }
-  .magnet-group-label { font-size: 0.68rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .magnet-group-label { font-size: 0.68rem; font-weight: 600; color: #fff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; }
+
+  /* Feeling magnets below sleep tracker */
+  .c1-feeling-tray {
+    background: var(--bg-glass); border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg); padding: 16px; text-align: center;
+    backdrop-filter: blur(10px);
+  }
+  .c1-feeling-tray .magnet-group-label { color: #fff; margin-bottom: 10px; }
   .magnet-row { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
 
   .magnet-img {
-    width: 80px; height: 80px; border-radius: var(--radius-sm);
+    width: 96px; height: 96px; border-radius: var(--radius-sm);
     cursor: grab; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     object-fit: cover; border: 2px solid transparent;
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -325,11 +333,11 @@
   }
   .magnet-img:hover { transform: scale(1.1) translateY(-4px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
   .magnet-img.dragging { opacity: 0.4; transform: scale(0.9); }
-  .magnet-img.placed { width: 68px; height: 68px; cursor: pointer; border-radius: 10px; }
+  .magnet-img.placed { width: 82px; height: 82px; cursor: pointer; border-radius: 10px; }
   .magnet-img.placed:hover { transform: scale(1.1); box-shadow: 0 0 0 2px var(--accent-pink); }
 
   .feeling-img {
-    width: 64px; height: 64px; border-radius: var(--radius-sm);
+    width: 77px; height: 77px; border-radius: var(--radius-sm);
     cursor: grab; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     object-fit: cover; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
     touch-action: none;
@@ -636,6 +644,7 @@
     .concept-card { width: 100%; max-width: 360px; }
     .c1-whiteboard { flex-direction: column; }
     .c1-tray { width: 100%; position: static; height: auto; }
+    .c1-feeling-tray { width: 100%; }
     .c1-board { flex-direction: column; }
     .c2-flip-container { width: 340px; }
     #landing h1 { font-size: 2.2rem; }
@@ -759,6 +768,12 @@
               </div>
             </div>
           </div>
+
+          <!-- Feeling magnets below sleep tracker -->
+          <div class="c1-feeling-tray">
+            <div class="magnet-group-label">How Do You Feel?</div>
+            <div class="magnet-row" id="c1FeelingRow"></div>
+          </div>
         </div>
 
         <!-- Right: Magnet Tray sidebar -->
@@ -773,11 +788,6 @@
           <div class="magnet-group">
             <div class="magnet-group-label">Room Setup</div>
             <div class="magnet-row" id="c1RoomSetupRow"></div>
-          </div>
-
-          <div class="magnet-group">
-            <div class="magnet-group-label">How Do You Feel?</div>
-            <div class="magnet-row" id="c1FeelingRow"></div>
           </div>
         </div>
       </div>
