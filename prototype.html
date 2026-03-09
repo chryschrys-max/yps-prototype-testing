@@ -228,8 +228,8 @@
     width: 280px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg); padding: 28px;
-    align-self: flex-start; position: sticky; top: 20px;
-    backdrop-filter: blur(20px);
+    align-self: stretch; position: sticky; top: 20px;
+    backdrop-filter: blur(20px); height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
   .c1-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-teal); margin-bottom: 18px; font-weight: 600; }
   .c1-howto ol { padding-left: 18px; }
@@ -335,8 +335,8 @@
     width: 280px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg); padding: 28px;
-    align-self: flex-start; position: sticky; top: 20px;
-    backdrop-filter: blur(20px);
+    align-self: stretch; position: sticky; top: 20px;
+    backdrop-filter: blur(20px); height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
   .c2-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-orange); margin-bottom: 18px; font-weight: 600; }
   .c2-howto ol { padding-left: 18px; }
@@ -439,8 +439,8 @@
     width: 280px; flex-shrink: 0;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg); padding: 28px;
-    align-self: flex-start; position: sticky; top: 20px;
-    backdrop-filter: blur(20px);
+    align-self: stretch; position: sticky; top: 20px;
+    backdrop-filter: blur(20px); height: calc(100vh - 40px); overflow-y: auto; box-sizing: border-box;
   }
   .c3-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-purple); margin-bottom: 18px; font-weight: 600; }
   .c3-howto ol { padding-left: 18px; }
@@ -1175,7 +1175,8 @@ document.getElementById('c2Overlay').addEventListener('click', function(e) {
 const c3QuestionCards = Array.from({ length: 16 }, (_, i) => i + 1); // wou1-16
 const c3SwapCards = [17, 18];
 const c3SparkCards = [19, 20, 21, 22];
-const c3BackImg = 'images/c3-wou23.png';
+const c3BackImg = 'images/questions-cover.png';
+const c3StackCover = 'images/c3-wou23.png';
 let c3Order = [];
 let c3Initialized = false;
 
@@ -1254,9 +1255,9 @@ function openC3Zoom(questionSrc) {
     </div>
     <div class="c3-side-stack" onclick="drawC3Card('random', '${questionSrc}')">
       <div class="c3-stack-wrapper">
-        <img src="${c3BackImg}" alt="Swap &amp; Spark pile">
-        <img src="${c3BackImg}" alt="">
-        <img src="${c3BackImg}" alt="">
+        <img src="${c3StackCover}" alt="Swap &amp; Spark pile">
+        <img src="${c3StackCover}" alt="">
+        <img src="${c3StackCover}" alt="">
       </div>
       <span class="c3-stack-label">Swap / Spark</span>
     </div>
