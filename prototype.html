@@ -708,6 +708,80 @@
   .c2-close-btn:hover { background: rgba(255,255,255,0.15); transform: rotate(90deg); }
 
   /* ════════════════════════════════════════
+     CONCEPT 3 – WOU INTRO
+     ════════════════════════════════════════ */
+  #concept3-intro { padding: 48px 24px; }
+  .c3-intro-layout { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .c3-intro-title {
+    font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff, #c4a1ff, #ff8ec4);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+  .c3-intro-subtitle {
+    font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 56px; font-weight: 400;
+    max-width: 520px; margin-left: auto; margin-right: auto;
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+  @keyframes c3IntroFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Three card stacks side by side */
+  .c3-intro-stacks {
+    display: flex; gap: 40px; justify-content: center; margin-bottom: 56px;
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+  .c3-intro-stack {
+    flex: 0 0 240px; text-align: center;
+  }
+  .c3-intro-stack h3 {
+    font-family: var(--font-display); font-size: 1.1rem; color: var(--text-primary);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .c3-intro-stack p {
+    font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;
+  }
+
+  /* Stacked card visual */
+  .c3-intro-stack-visual {
+    position: relative; width: 160px; height: 224px;
+    margin: 0 auto 20px; perspective: 800px;
+  }
+  .c3-intro-stack-visual img {
+    position: absolute; width: 160px; border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .c3-intro-stack-visual img:nth-child(1) { top: 0; left: 0; z-index: 3; }
+  .c3-intro-stack-visual img:nth-child(2) { top: 5px; left: 4px; z-index: 2; opacity: 0.7; }
+  .c3-intro-stack-visual img:nth-child(3) { top: 10px; left: 8px; z-index: 1; opacity: 0.4; }
+  .c3-intro-stack:hover .c3-intro-stack-visual img:nth-child(1) {
+    transform: translateY(-8px) rotate(-3deg);
+  }
+  .c3-intro-stack:hover .c3-intro-stack-visual img:nth-child(2) {
+    transform: translateX(6px) rotate(2deg);
+  }
+
+  /* Let's Play button */
+  .c3-intro-play-btn {
+    background: linear-gradient(135deg, #c4a1ff, #ff8ec4);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 18px 56px; font-size: 1.15rem; font-weight: 700;
+    font-family: var(--font-display); cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 6px 30px rgba(196, 161, 255, 0.4);
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+  }
+  .c3-intro-play-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+    box-shadow: 0 12px 48px rgba(196, 161, 255, 0.55);
+  }
+  .c3-intro-play-btn:active { transform: scale(0.97); }
+
+  /* ════════════════════════════════════════
      CONCEPT 3 – WOU (WE OPEN UP)
      ════════════════════════════════════════ */
   #concept3 { padding: 20px; }
@@ -720,10 +794,21 @@
     align-self: stretch; position: sticky; top: 20px;
     backdrop-filter: blur(20px); height: calc(100dvh - 40px); overflow-y: auto; box-sizing: border-box;
   }
-  .c3-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-purple); margin-bottom: 18px; font-weight: 600; }
-  .c3-howto ol { padding-left: 18px; }
-  .c3-howto li { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.6; }
-  .c3-howto li strong { color: var(--text-primary); font-weight: 600; }
+  .c3-howto h2 { font-family: var(--font-display); font-size: 1.15rem; color: var(--accent-purple); margin-bottom: 20px; font-weight: 600; }
+  .c3-howto-who {
+    font-family: var(--font-display); font-size: 0.9rem; font-weight: 700;
+    color: var(--accent-purple); margin: 18px 0 8px; text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .c3-howto-who.parent { color: #ff8ec4; }
+  .c3-howto-text { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.6; }
+  .c3-back-intro-btn {
+    display: block; margin-top: 24px; background: none; border: 1px solid var(--border-subtle);
+    color: var(--text-secondary); padding: 10px 20px; border-radius: 50px;
+    font-size: 0.82rem; font-family: var(--font-display); cursor: pointer;
+    transition: all 0.3s; width: 100%;
+  }
+  .c3-back-intro-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
 
   .c3-center { flex: 1; }
   .c3-title {
@@ -906,6 +991,8 @@
     .c2-flip-container { width: 340px; }
     .c2-deck-box { width: 140px; height: 210px; }
     .c2-intro-decks { gap: 8px; }
+    .c3-intro-stacks { flex-direction: column; align-items: center; gap: 32px; }
+    .c3-intro-stack { flex: none; width: 220px; }
     #landing h1 { font-size: 2.2rem; }
   }
 </style>
@@ -946,7 +1033,7 @@
         <div class="card-arrow">&#8594;</div>
       </div>
     </div>
-    <div class="concept-card stagger-in" style="animation-delay: 0.4s" onclick="showPage('concept3')">
+    <div class="concept-card stagger-in" style="animation-delay: 0.4s" onclick="showPage('concept3-intro')">
       <div class="card-banner"><img src="images/Concept-3.png" alt="Concept 3"></div>
       <div class="card-body">
         <div class="label">Concept 3</div>
@@ -1195,19 +1282,71 @@
 </div>
 
 <!-- ════════════════════════════════════════
+     CONCEPT 3 – WOU INTRO
+     ════════════════════════════════════════ -->
+<div id="concept3-intro" class="page">
+  <div class="c3-intro-layout">
+    <h1 class="c3-intro-title">We Open Up</h1>
+    <p class="c3-intro-subtitle">A card game that turns awkward silence into real conversation — one question at a time.</p>
+
+    <div class="c3-intro-stacks">
+      <!-- Category Cards -->
+      <div class="c3-intro-stack">
+        <div class="c3-intro-stack-visual">
+          <img src="images/questions-cover.png" alt="Category cards">
+          <img src="images/questions-cover.png" alt="">
+          <img src="images/questions-cover.png" alt="">
+        </div>
+        <h3>Category Cards</h3>
+        <p>Pick one. Read it out. Everyone answers. No skipping &mdash; yes, that means parents too.</p>
+      </div>
+
+      <!-- Swap Cards -->
+      <div class="c3-intro-stack">
+        <div class="c3-intro-stack-visual">
+          <img src="images/c3-wou17.png" alt="Swap cards">
+          <img src="images/c3-wou17.png" alt="">
+          <img src="images/c3-wou17.png" alt="">
+        </div>
+        <h3>Swap Cards</h3>
+        <p>Answer as the other person. Your parent becomes you. You become your parent. Then compare. Scarier than it sounds.</p>
+      </div>
+
+      <!-- Spark Cards -->
+      <div class="c3-intro-stack">
+        <div class="c3-intro-stack-visual">
+          <img src="images/c3-wou19.png" alt="Spark cards">
+          <img src="images/c3-wou19.png" alt="">
+          <img src="images/c3-wou19.png" alt="">
+        </div>
+        <h3>Spark Cards</h3>
+        <p>Play one after any card to go one layer deeper. Completely optional. Usually worth it.</p>
+      </div>
+    </div>
+
+    <button class="c3-intro-play-btn" onclick="startC3Game()">Let's Play</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
      CONCEPT 3 – WOU (WE OPEN UP)
      ════════════════════════════════════════ -->
 <div id="concept3" class="page">
   <div class="c3-layout">
     <div class="c3-howto">
-      <h2>How to Play</h2>
-      <ol>
-        <li><strong>Shuffle the category cards</strong> and put the Swap and Spark piles somewhere easy to reach.</li>
-        <li><strong>Take turns picking a card</strong> and reading it out loud. Both of you have a go at answering &mdash; parents included.</li>
-        <li><strong>Want to go deeper after a round?</strong> Throw down a Spark card. No pressure though.</li>
-        <li><strong>Feeling curious about how well you know each other?</strong> Play a Swap card and answer as the other person. Then compare.</li>
-        <li><strong>Go for as many rounds as feels right.</strong> If a question is not for you today, just pass and pick another one. No wrong answers.</li>
-      </ol>
+      <h2>We're Learning Together</h2>
+
+      <h3 class="c3-howto-who">For the teen</h3>
+      <p class="c3-howto-text">Give the cards a shuffle and decide together who goes first. Draw a card, read it out loud, and share your answer. Your parent will answer too, so it is not just you.</p>
+      <p class="c3-howto-text">Feel like going deeper on something? Throw down a Spark card after any round. Feeling curious? Try a Swap card and answer as your parent. Then find out how close you actually were.</p>
+      <p class="c3-howto-text">If anything feels too personal, just say pass and pick another card. Totally fine.</p>
+
+      <h3 class="c3-howto-who parent">For the parent</h3>
+      <p class="c3-howto-text">Answer every question alongside your teen. That is what makes this work. Try to hold back from turning any answer into advice. Just listen and share.</p>
+      <p class="c3-howto-text">When something is funny, let it be funny. That is where the real connection happens.</p>
+      <p class="c3-howto-text">When a Swap card comes up, give it a real go. Answering as your teen might surprise you.</p>
+
+      <button class="c3-back-intro-btn" onclick="backToC3Intro()">&larr; Back to intro</button>
     </div>
 
     <div class="c3-center">
@@ -1243,7 +1382,6 @@ function showPage(id) {
       target.classList.add('active');
       document.getElementById('backBtn').classList.add('visible');
       window.scrollTo(0, 0);
-      if (id === 'concept3') initC3();
     }, 250);
   } else {
     document.getElementById(id).classList.add('active');
@@ -1659,6 +1797,35 @@ document.getElementById('c2Overlay').addEventListener('click', function(e) {
 /* ══════════════════════════════════════
    CONCEPT 3 – WOU SHUFFLE & FLIP
    ══════════════════════════════════════ */
+function startC3Game() {
+  const intro = document.getElementById('concept3-intro');
+  intro.classList.remove('active');
+  intro.classList.add('fade-out');
+  setTimeout(() => {
+    intro.classList.remove('fade-out');
+    intro.style.display = 'none';
+    const target = document.getElementById('concept3');
+    target.style.display = '';
+    target.classList.add('active');
+    window.scrollTo(0, 0);
+    initC3();
+  }, 250);
+}
+
+function backToC3Intro() {
+  const current = document.getElementById('concept3');
+  current.classList.remove('active');
+  current.classList.add('fade-out');
+  setTimeout(() => {
+    current.classList.remove('fade-out');
+    current.style.display = 'none';
+    const intro = document.getElementById('concept3-intro');
+    intro.style.display = '';
+    intro.classList.add('active');
+    window.scrollTo(0, 0);
+  }, 250);
+}
+
 const c3QuestionCards = Array.from({ length: 16 }, (_, i) => i + 1); // wou1-16
 const c3SwapCards = [17, 18];
 const c3SparkCards = [19, 20, 21, 22];
