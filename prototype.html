@@ -550,9 +550,7 @@
     transform-style: preserve-3d;
     will-change: transform;
   }
-  /* Lift up + flip with dynamic shadow shift */
-  .c2-deck-box.flipped .c2-deck-box-inner { transform: rotateY(180deg); }
-  .c2-deck-box.flipped { animation: c2CardLift 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
+  /* Lift up on flip */
   @keyframes c2CardLift {
     0%   { transform: translateY(0) scale(1); }
     40%  { transform: translateY(-24px) scale(1.06); }
@@ -1546,11 +1544,17 @@ const c2Decks = [
       </div>
     `;
     box.onclick = function() {
+      // Ensure opacity stays visible (c2DeckPop forwards fill gets lost otherwise)
+      box.style.opacity = '1';
       const inner = box.querySelector('.c2-deck-box-inner');
       inner.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
       box.classList.toggle('flipped');
       inner.style.transform = box.classList.contains('flipped') ? 'rotateY(180deg)' : '';
-      setTimeout(() => { inner.style.transition = ''; }, 800);
+      // Lift animation on the outer box
+      box.style.animation = 'none';
+      box.offsetHeight; // force reflow
+      box.style.animation = 'c2CardLift 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
+      setTimeout(() => { inner.style.transition = ''; box.style.animation = ''; }, 800);
     };
 
     // 3D tilt on mouse move (front face only)
