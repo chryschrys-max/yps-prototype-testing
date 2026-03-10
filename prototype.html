@@ -223,105 +223,157 @@
      ════════════════════════════════════════ */
   #concept1-intro { padding: 40px 24px; }
   .c1-intro-layout {
-    max-width: 900px; margin: 0 auto; text-align: center;
+    max-width: 1100px; margin: 0 auto; text-align: center;
   }
   .c1-intro-title {
-    font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800; margin-bottom: 12px; letter-spacing: -0.02em;
+    font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; margin-bottom: 16px; letter-spacing: -0.03em;
     background: linear-gradient(135deg, #fff, #5ee7d5, #7cc4fa);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+  .c1-intro-scene {
+    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; font-weight: 400;
+    line-height: 1.6;
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  }
+  .c1-intro-scene em {
+    color: var(--accent-teal); font-style: normal; font-weight: 600;
   }
   .c1-intro-subtitle {
-    font-size: 1.05rem; color: var(--text-secondary); margin-bottom: 48px; font-weight: 300;
+    font-size: 1rem; color: var(--text-muted); margin-bottom: 52px; font-weight: 300;
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
   }
+  @keyframes c1IntroFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   .c1-anatomy-wrapper {
     position: relative; display: inline-block; margin: 0 auto 48px; max-width: 100%;
+    opacity: 0; animation: c1BoardReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
   }
+  @keyframes c1BoardReveal {
+    from { opacity: 0; transform: scale(0.9) translateY(40px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
   .c1-anatomy-board {
     background: #ffffff; border: 2px solid #e0e0e0;
-    border-radius: var(--radius-lg); padding: 28px;
-    display: flex; gap: 16px; min-height: 300px; width: 780px; max-width: 100%;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    border-radius: var(--radius-lg); padding: 36px;
+    display: flex; gap: 20px; min-height: 360px; width: 960px; max-width: 100%;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
     position: relative;
   }
   .c1-anatomy-col {
     flex: 1; border: 2px dashed rgba(100,160,200,0.3); border-radius: var(--radius-md);
-    padding: 20px 16px; display: flex; flex-direction: column; align-items: center;
-    background: rgba(240,247,255,0.5); min-height: 240px;
+    padding: 28px 20px; display: flex; flex-direction: column; align-items: center;
+    background: rgba(240,247,255,0.5); min-height: 280px;
   }
   .c1-anatomy-col.parent-style { border-style: none; background: rgba(255,248,240,0.5); }
   .c1-anatomy-col h3 {
-    font-family: var(--font-display); font-size: 0.82rem;
+    font-family: var(--font-display); font-size: 1rem;
     text-transform: uppercase; letter-spacing: 2px;
-    color: #3b82a0; margin-bottom: 12px; font-weight: 600;
+    color: #3b82a0; margin-bottom: 16px; font-weight: 700;
   }
-  .c1-anatomy-col.parent-style h3 { color: #999; }
+  .c1-anatomy-col.parent-style h3 { color: #b08d57; }
   .c1-anatomy-col p {
-    font-size: 0.78rem; color: #777; line-height: 1.5; text-align: center;
+    font-size: 0.95rem; color: #555; line-height: 1.7; text-align: center;
   }
 
   /* Quirky annotation arrows */
   .c1-annotation {
-    position: absolute; display: flex; align-items: flex-start; gap: 6px;
+    position: absolute; display: flex; flex-direction: column; align-items: center; gap: 4px;
     pointer-events: none; z-index: 10;
   }
   .c1-annotation-text {
-    font-family: var(--font-display); font-size: 0.82rem; font-weight: 600;
+    font-family: var(--font-display); font-size: 0.92rem; font-weight: 600;
     color: var(--accent-teal); white-space: nowrap;
-    background: rgba(12, 14, 43, 0.85); padding: 6px 14px; border-radius: 20px;
-    border: 1px solid rgba(94, 231, 213, 0.3);
+    background: rgba(12, 14, 43, 0.9); padding: 8px 18px; border-radius: 24px;
+    border: 1px solid rgba(94, 231, 213, 0.35);
     backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(94, 231, 213, 0.15);
   }
   .c1-annotation-arrow {
-    font-size: 1.8rem; line-height: 1; color: var(--accent-teal);
+    font-size: 2.2rem; line-height: 1; color: var(--accent-teal);
     animation: arrowBounce 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 2px 8px rgba(94, 231, 213, 0.3));
   }
-  .c1-annotation:nth-child(2) .c1-annotation-arrow { animation-delay: 0.2s; }
-  .c1-annotation:nth-child(3) .c1-annotation-arrow { animation-delay: 0.4s; }
-  .c1-annotation:nth-child(4) .c1-annotation-arrow { animation-delay: 0.6s; }
+  .c1-annotation.parent-annotation .c1-annotation-text {
+    color: var(--accent-peach);
+    border-color: rgba(255, 209, 164, 0.35);
+    box-shadow: 0 4px 20px rgba(255, 209, 164, 0.15);
+  }
+  .c1-annotation.parent-annotation .c1-annotation-arrow {
+    color: var(--accent-peach);
+    filter: drop-shadow(0 2px 8px rgba(255, 209, 164, 0.3));
+  }
+  .c1-annotation:nth-child(2) .c1-annotation-arrow { animation-delay: 0.3s; }
+  .c1-annotation:nth-child(3) .c1-annotation-arrow { animation-delay: 0.6s; }
+  .c1-annotation:nth-child(4) .c1-annotation-arrow { animation-delay: 0.9s; }
   @keyframes arrowBounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
+    50% { transform: translateY(8px); }
+  }
+
+  /* Staggered annotation reveal */
+  .c1-anatomy-wrapper .c1-annotation {
+    opacity: 0; animation: annotationPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .c1-anatomy-wrapper .c1-annotation:nth-child(1) { animation-delay: 1s; }
+  .c1-anatomy-wrapper .c1-annotation:nth-child(2) { animation-delay: 1.3s; }
+  .c1-anatomy-wrapper .c1-annotation:nth-child(3) { animation-delay: 1.6s; }
+  @keyframes annotationPop {
+    from { opacity: 0; transform: translateY(-10px) scale(0.8); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   /* Tracking preview */
+  .c1-anatomy-tracking-wrap {
+    position: relative; display: inline-block; width: 100%; margin-top: 20px;
+    opacity: 0; animation: c1BoardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s forwards;
+  }
+  .c1-anatomy-tracking-wrap .c1-annotation {
+    animation-delay: 1.9s !important;
+  }
   .c1-anatomy-tracking {
     background: #ffffff; border: 2px solid #e0e0e0;
-    border-radius: var(--radius-lg); padding: 16px; text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin-top: 16px; width: 780px; max-width: 100%;
+    border-radius: var(--radius-lg); padding: 20px; text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.1); width: 960px; max-width: 100%;
     display: inline-block;
   }
   .c1-anatomy-tracking h3 {
-    font-family: var(--font-display); font-size: 0.82rem; color: #3b82a0;
-    margin-bottom: 12px; font-weight: 600; letter-spacing: 0.5px;
+    font-family: var(--font-display); font-size: 1rem; color: #3b82a0;
+    margin-bottom: 14px; font-weight: 700; letter-spacing: 0.5px;
   }
   .c1-anatomy-days {
-    display: flex; justify-content: center; gap: 8px; flex-wrap: wrap;
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
   }
   .c1-anatomy-day {
-    width: 70px; height: 70px; border: 2px dashed rgba(100,160,200,0.25);
+    width: 90px; height: 90px; border: 2px dashed rgba(100,160,200,0.25);
     border-radius: var(--radius-sm); display: flex; align-items: center;
-    justify-content: center; font-size: 0.7rem; font-weight: 700;
+    justify-content: center; font-size: 0.82rem; font-weight: 700;
     color: #3b82a0; letter-spacing: 1px; background: rgba(240,247,255,0.5);
   }
 
   /* CTA button */
   .c1-plan-btn {
-    display: inline-block; margin-top: 40px;
+    display: inline-block; margin-top: 48px;
     background: linear-gradient(135deg, #5ee7d5, #7cc4fa);
     color: #0c0e2b; border: none; border-radius: 50px;
-    padding: 18px 52px; font-size: 1.15rem; font-weight: 700;
+    padding: 22px 64px; font-size: 1.3rem; font-weight: 700;
     font-family: var(--font-display); letter-spacing: -0.01em;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     box-shadow: 0 4px 24px rgba(94, 231, 213, 0.35);
     position: relative; overflow: hidden;
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
   }
   .c1-plan-btn::before {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, transparent, rgba(255,255,255,0.25));
     opacity: 0; transition: opacity 0.3s;
   }
-  .c1-plan-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 40px rgba(94, 231, 213, 0.45); }
+  .c1-plan-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 48px rgba(94, 231, 213, 0.5); }
   .c1-plan-btn:hover::before { opacity: 1; }
   .c1-plan-btn:active { transform: scale(0.97); }
 
@@ -812,21 +864,22 @@
 <div id="concept1-intro" class="page">
   <div class="c1-intro-layout">
     <h1 class="c1-intro-title">Lights Out, Level Up</h1>
-    <p class="c1-intro-subtitle">Your fridge-ready magnetic board — here's what you'll get in the package</p>
+    <p class="c1-intro-scene">Imagine a <em>magnetic board on your fridge</em>. You and your parent each get magnets to build a bedtime routine together &mdash; no apps, no screens, just a board you walk past every day.</p>
+    <p class="c1-intro-subtitle">Here's how the board breaks down &darr;</p>
 
     <div class="c1-anatomy-wrapper">
       <!-- Annotation arrows -->
-      <div class="c1-annotation" style="top: -38px; left: 8%;">
+      <div class="c1-annotation" style="top: -48px; left: 10%;">
         <span class="c1-annotation-text">Teen picks wind-down activities</span>
-        <span class="c1-annotation-arrow">↓</span>
+        <span class="c1-annotation-arrow">&darr;</span>
       </div>
-      <div class="c1-annotation" style="top: -38px; left: 40%;">
+      <div class="c1-annotation" style="top: -48px; left: 42%;">
         <span class="c1-annotation-text">Teen sets up room for sleep</span>
-        <span class="c1-annotation-arrow">↓</span>
+        <span class="c1-annotation-arrow">&darr;</span>
       </div>
-      <div class="c1-annotation" style="top: -38px; right: 2%;">
+      <div class="c1-annotation parent-annotation" style="top: -48px; right: 4%;">
         <span class="c1-annotation-text">Parent commits here</span>
-        <span class="c1-annotation-arrow">↓</span>
+        <span class="c1-annotation-arrow">&darr;</span>
       </div>
 
       <!-- Board anatomy -->
@@ -837,31 +890,31 @@
         </div>
         <div class="c1-anatomy-col">
           <h3>My Room Setup</h3>
-          <p>Set your ideal sleep environment. Think curtains closed, phone outside, cool room — whatever works for you.</p>
+          <p>Set your ideal sleep environment. Think curtains closed, phone outside, cool room &mdash; whatever works for you.</p>
         </div>
         <div class="c1-anatomy-col parent-style">
           <h3>Parent</h3>
           <p>Parents write what they'll do to support bedtime. A quick check-in, a reminder, whatever feels manageable.</p>
         </div>
       </div>
+    </div>
 
-      <!-- Tracking preview -->
-      <div style="position: relative; display: inline-block; width: 100%; margin-top: 16px;">
-        <div class="c1-annotation" style="top: -32px; left: 50%; transform: translateX(-50%);">
-          <span class="c1-annotation-text">Track sleep feelings each night</span>
-          <span class="c1-annotation-arrow">↓</span>
-        </div>
-        <div class="c1-anatomy-tracking">
-          <h3>How was your sleep?</h3>
-          <div class="c1-anatomy-days">
-            <div class="c1-anatomy-day">Mon</div>
-            <div class="c1-anatomy-day">Tue</div>
-            <div class="c1-anatomy-day">Wed</div>
-            <div class="c1-anatomy-day">Thu</div>
-            <div class="c1-anatomy-day">Fri</div>
-            <div class="c1-anatomy-day">Sat</div>
-            <div class="c1-anatomy-day">Sun</div>
-          </div>
+    <!-- Tracking preview -->
+    <div class="c1-anatomy-tracking-wrap">
+      <div class="c1-annotation" style="top: -44px; left: 50%; transform: translateX(-50%);">
+        <span class="c1-annotation-text">Track how sleep feels each night</span>
+        <span class="c1-annotation-arrow">&darr;</span>
+      </div>
+      <div class="c1-anatomy-tracking">
+        <h3>How was your sleep?</h3>
+        <div class="c1-anatomy-days">
+          <div class="c1-anatomy-day">Mon</div>
+          <div class="c1-anatomy-day">Tue</div>
+          <div class="c1-anatomy-day">Wed</div>
+          <div class="c1-anatomy-day">Thu</div>
+          <div class="c1-anatomy-day">Fri</div>
+          <div class="c1-anatomy-day">Sat</div>
+          <div class="c1-anatomy-day">Sun</div>
         </div>
       </div>
     </div>
