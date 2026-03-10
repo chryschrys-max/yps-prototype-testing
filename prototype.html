@@ -221,9 +221,16 @@
   /* ════════════════════════════════════════
      CONCEPT 1 – INTRO / ANATOMY PAGE
      ════════════════════════════════════════ */
-  #concept1-intro { padding: 40px 24px; }
+  #concept1-intro { padding: 0; }
   .c1-intro-layout {
     max-width: 1100px; margin: 0 auto; text-align: center;
+  }
+
+  /* Hero section — first thing users see */
+  .c1-intro-hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px 60px;
   }
   .c1-intro-title {
     font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
@@ -232,17 +239,43 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
   }
-  .c1-intro-scene {
-    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; font-weight: 400;
-    line-height: 1.6;
+  .c1-intro-desc {
+    font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px;
+    font-weight: 400; line-height: 1.6; max-width: 520px;
     opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  }
+  .c1-intro-image-wrap {
+    width: 100%; max-width: 720px; margin-bottom: 48px;
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+  .c1-intro-image {
+    width: 100%; height: auto; border-radius: var(--radius-lg);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .c1-howto-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #5ee7d5, #7cc4fa);
+    color: #0c0e2b; border: none; border-radius: 50px;
+    padding: 18px 56px; font-size: 1.2rem; font-weight: 700;
+    font-family: var(--font-display); letter-spacing: -0.01em;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(94, 231, 213, 0.3);
+    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+  }
+  .c1-howto-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 48px rgba(94, 231, 213, 0.5); }
+  .c1-howto-btn:active { transform: scale(0.97); }
+
+  /* Details section — scrolls into view */
+  .c1-intro-details {
+    padding: 80px 24px 60px; scroll-margin-top: 0;
+  }
+  .c1-intro-scene {
+    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 48px; font-weight: 400;
+    line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;
   }
   .c1-intro-scene em {
     color: var(--accent-teal); font-style: normal; font-weight: 600;
-  }
-  .c1-intro-subtitle {
-    font-size: 1rem; color: var(--text-muted); margin-bottom: 52px; font-weight: 300;
-    opacity: 0; animation: c1IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
   }
   @keyframes c1IntroFadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -251,7 +284,6 @@
 
   .c1-anatomy-wrapper {
     position: relative; display: inline-block; margin: 0 auto 48px; max-width: 100%;
-    opacity: 0; animation: c1BoardReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
   }
   @keyframes c1BoardReveal {
     from { opacity: 0; transform: scale(0.9) translateY(40px); }
@@ -1063,63 +1095,74 @@
      ════════════════════════════════════════ -->
 <div id="concept1-intro" class="page">
   <div class="c1-intro-layout">
-    <h1 class="c1-intro-title">Lights Out, Level Up</h1>
-    <p class="c1-intro-scene">Imagine a <em>magnetic board on your fridge</em>. You and your parent each get magnets to build a bedtime routine together &mdash; no apps, no screens, just a board you walk past every day.</p>
-    <p class="c1-intro-subtitle"></p>
-
-    <div class="c1-anatomy-wrapper">
-      <!-- Annotation arrows -->
-      <div class="c1-annotation" style="top: -48px; left: 10%;">
-        <span class="c1-annotation-text">Teen picks wind-down activities</span>
-        <span class="c1-annotation-arrow">&darr;</span>
+    <!-- HERO: first thing user sees -->
+    <div class="c1-intro-hero">
+      <h1 class="c1-intro-title">Lights Out, Level Up</h1>
+      <p class="c1-intro-desc">A magnetic board you and your parent use to build a bedtime routine together. Stick it on the fridge, pick your magnets, and track how you sleep.</p>
+      <div class="c1-intro-image-wrap">
+        <img src="images/c1-board design.png" alt="Lights Out, Level Up — magnetic board" class="c1-intro-image" />
       </div>
-      <div class="c1-annotation" style="top: -48px; left: 42%;">
-        <span class="c1-annotation-text">Teen sets up room for sleep</span>
-        <span class="c1-annotation-arrow">&darr;</span>
-      </div>
-      <div class="c1-annotation parent-annotation" style="top: -48px; right: 4%;">
-        <span class="c1-annotation-text">Parent commits here</span>
-        <span class="c1-annotation-arrow">&darr;</span>
-      </div>
-
-      <!-- Board anatomy -->
-      <div class="c1-anatomy-board">
-        <div class="c1-anatomy-col">
-          <h3>Wind-Down</h3>
-          <p>Pick the magnets that actually help you relax before bed. Warm drink? Chill music? Go with what feels right.</p>
-        </div>
-        <div class="c1-anatomy-col">
-          <h3>My Room Setup</h3>
-          <p>Set your ideal sleep environment. Think curtains closed, phone outside, cool room &mdash; whatever works for you.</p>
-        </div>
-        <div class="c1-anatomy-col parent-style">
-          <h3>Parent</h3>
-          <p>Parents write what they'll do to support bedtime. A quick check-in, a reminder, whatever feels manageable.</p>
-        </div>
-      </div>
+      <button class="c1-howto-btn" onclick="document.getElementById('c1-details').scrollIntoView({behavior:'smooth'})">How to Play</button>
     </div>
 
-    <!-- Tracking preview -->
-    <div class="c1-anatomy-tracking-wrap">
-      <div class="c1-annotation" style="top: -44px; left: 50%; transform: translateX(-50%);">
-        <span class="c1-annotation-text">Track how sleep feels each night</span>
-        <span class="c1-annotation-arrow">&darr;</span>
-      </div>
-      <div class="c1-anatomy-tracking">
-        <h3>How was your sleep?</h3>
-        <div class="c1-anatomy-days">
-          <div class="c1-anatomy-day">Mon</div>
-          <div class="c1-anatomy-day">Tue</div>
-          <div class="c1-anatomy-day">Wed</div>
-          <div class="c1-anatomy-day">Thu</div>
-          <div class="c1-anatomy-day">Fri</div>
-          <div class="c1-anatomy-day">Sat</div>
-          <div class="c1-anatomy-day">Sun</div>
+    <!-- DETAILS: scrolls into view -->
+    <div class="c1-intro-details" id="c1-details">
+      <p class="c1-intro-scene">Imagine a <em>magnetic board on your fridge</em>. You and your parent each get magnets to build a bedtime routine together &mdash; no apps, no screens, just a board you walk past every day.</p>
+
+      <div class="c1-anatomy-wrapper">
+        <!-- Annotation arrows -->
+        <div class="c1-annotation" style="top: -48px; left: 10%;">
+          <span class="c1-annotation-text">Teen picks wind-down activities</span>
+          <span class="c1-annotation-arrow">&darr;</span>
+        </div>
+        <div class="c1-annotation" style="top: -48px; left: 42%;">
+          <span class="c1-annotation-text">Teen sets up room for sleep</span>
+          <span class="c1-annotation-arrow">&darr;</span>
+        </div>
+        <div class="c1-annotation parent-annotation" style="top: -48px; right: 4%;">
+          <span class="c1-annotation-text">Parent commits here</span>
+          <span class="c1-annotation-arrow">&darr;</span>
+        </div>
+
+        <!-- Board anatomy -->
+        <div class="c1-anatomy-board">
+          <div class="c1-anatomy-col">
+            <h3>Wind-Down</h3>
+            <p>Pick the magnets that actually help you relax before bed. Warm drink? Chill music? Go with what feels right.</p>
+          </div>
+          <div class="c1-anatomy-col">
+            <h3>My Room Setup</h3>
+            <p>Set your ideal sleep environment. Think curtains closed, phone outside, cool room &mdash; whatever works for you.</p>
+          </div>
+          <div class="c1-anatomy-col parent-style">
+            <h3>Parent</h3>
+            <p>Parents write what they'll do to support bedtime. A quick check-in, a reminder, whatever feels manageable.</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <button class="c1-plan-btn" onclick="showC1Board()">Let's plan bedtime!</button>
+      <!-- Tracking preview -->
+      <div class="c1-anatomy-tracking-wrap">
+        <div class="c1-annotation" style="top: -44px; left: 50%; transform: translateX(-50%);">
+          <span class="c1-annotation-text">Track how sleep feels each night</span>
+          <span class="c1-annotation-arrow">&darr;</span>
+        </div>
+        <div class="c1-anatomy-tracking">
+          <h3>How was your sleep?</h3>
+          <div class="c1-anatomy-days">
+            <div class="c1-anatomy-day">Mon</div>
+            <div class="c1-anatomy-day">Tue</div>
+            <div class="c1-anatomy-day">Wed</div>
+            <div class="c1-anatomy-day">Thu</div>
+            <div class="c1-anatomy-day">Fri</div>
+            <div class="c1-anatomy-day">Sat</div>
+            <div class="c1-anatomy-day">Sun</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="c1-plan-btn" onclick="showC1Board()">Let's plan bedtime!</button>
+    </div>
   </div>
 </div>
 
