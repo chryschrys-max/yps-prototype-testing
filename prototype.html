@@ -540,24 +540,60 @@
      CONCEPT 2 – PEER CHALLENGE (HOOK U UP)
      ════════════════════════════════════════ */
   /* ── Concept 2 Intro / Deck Selection ── */
-  #concept2-intro { padding: 48px 24px; }
+  #concept2-intro { padding: 0; }
   .c2-intro-layout { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+  /* Hero */
+  .c2-intro-hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px 60px;
+  }
   .c2-intro-title {
     font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;
+    font-weight: 800; margin-bottom: 16px; letter-spacing: -0.03em;
     background: linear-gradient(135deg, #fff, #ffa05c, #ff6b6b);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
   }
+  .c2-intro-desc {
+    font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px;
+    font-weight: 400; line-height: 1.6; max-width: 520px;
+    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  }
+  .c2-intro-image-wrap {
+    width: 100%; max-width: 720px; margin-bottom: 48px;
+    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+  .c2-intro-image {
+    width: 100%; height: auto; border-radius: var(--radius-lg);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .c2-howto-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #ffa05c, #ff6b6b);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 18px 56px; font-size: 1.2rem; font-weight: 700;
+    font-family: var(--font-display); letter-spacing: -0.01em;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(255, 160, 92, 0.3);
+    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+  }
+  .c2-howto-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 48px rgba(255, 160, 92, 0.5); }
+  .c2-howto-btn:active { transform: scale(0.97); }
+
+  /* Details */
+  .c2-intro-details {
+    padding: 80px 24px 60px; scroll-margin-top: 0;
+  }
   .c2-intro-scene {
-    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; font-weight: 400;
+    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 48px; font-weight: 400;
     line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;
-    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
   .c2-intro-scene em { color: var(--accent-orange); font-style: normal; font-weight: 600; }
   .c2-intro-subtitle {
     font-size: 1rem; color: var(--text-secondary); margin-top: 16px; margin-bottom: 48px; font-weight: 400;
-    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
   }
   @keyframes c2IntroFadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -652,7 +688,6 @@
   .c2-deck-open-btn:active { transform: scale(0.97); }
   .c2-deck-tap-hint {
     font-size: 0.85rem; color: #fff; margin-bottom: 16px; font-weight: 300;
-    opacity: 0; animation: c2IntroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
   }
   .c2-intro-decks {
     margin-top: 24px;
@@ -748,25 +783,61 @@
   /* ════════════════════════════════════════
      CONCEPT 3 – WOU INTRO
      ════════════════════════════════════════ */
-  #concept3-intro { padding: 48px 24px; }
+  #concept3-intro { padding: 0; }
   .c3-intro-layout { max-width: 1100px; margin: 0 auto; text-align: center; }
+
+  /* Hero */
+  .c3-intro-hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 24px 60px;
+  }
   .c3-intro-title {
     font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;
+    font-weight: 800; margin-bottom: 16px; letter-spacing: -0.03em;
     background: linear-gradient(135deg, #fff, #c4a1ff, #ff8ec4);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
   }
+  .c3-intro-desc {
+    font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px;
+    font-weight: 400; line-height: 1.6; max-width: 520px;
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+  }
+  .c3-intro-image-wrap {
+    width: 100%; max-width: 720px; margin-bottom: 48px;
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+  .c3-intro-image {
+    width: 100%; height: auto; border-radius: var(--radius-lg);
+    box-shadow: 0 20px 80px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .c3-howto-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #c4a1ff, #ff8ec4);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 18px 56px; font-size: 1.2rem; font-weight: 700;
+    font-family: var(--font-display); letter-spacing: -0.01em;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 32px rgba(196, 161, 255, 0.3);
+    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+  }
+  .c3-howto-btn:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 12px 48px rgba(196, 161, 255, 0.5); }
+  .c3-howto-btn:active { transform: scale(0.97); }
+
+  /* Details */
+  .c3-intro-details {
+    padding: 80px 24px 60px; scroll-margin-top: 0;
+  }
   .c3-intro-scene {
-    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 8px; font-weight: 400;
+    font-size: 1.2rem; color: var(--text-primary); margin-bottom: 48px; font-weight: 400;
     line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;
-    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
   }
   .c3-intro-scene em { color: var(--accent-purple); font-style: normal; font-weight: 600; }
   .c3-intro-subtitle {
     font-size: 1rem; color: var(--text-secondary); margin-bottom: 56px; font-weight: 400;
     max-width: 520px; margin-left: auto; margin-right: auto;
-    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
   }
   @keyframes c3IntroFadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -776,7 +847,6 @@
   /* Three card stacks side by side */
   .c3-intro-stacks {
     display: flex; gap: 40px; justify-content: center; margin-bottom: 56px;
-    opacity: 0; animation: c3IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
   }
   .c3-intro-stack {
     flex: 0 0 300px; text-align: center;
@@ -1278,11 +1348,23 @@
      ════════════════════════════════════════ -->
 <div id="concept2-intro" class="page">
   <div class="c2-intro-layout">
-    <h1 class="c2-intro-title">Hook U Up</h1>
-    <p class="c2-intro-scene">Imagine picking a <em>14-day challenge deck</em> with a friend. Every day you flip a card, do the challenge, and upload proof before midnight &mdash; no breaks, no excuses. Miss a day and the&nbsp;streak&nbsp;resets.</p>
-    <p class="c2-intro-subtitle"><strong>Challenge your friend today!</strong></p>
-    <p class="c2-deck-tap-hint">Tap a deck to flip it over and see the goal</p>
-    <div class="c2-intro-decks" id="c2IntroDecks"></div>
+    <!-- HERO -->
+    <div class="c2-intro-hero">
+      <h1 class="c2-intro-title">Hook U Up</h1>
+      <p class="c2-intro-desc">A 14-day challenge deck you do with a friend. Pick a topic, flip a card each day, and prove you did it before midnight.</p>
+      <div class="c2-intro-image-wrap">
+        <img src="images/c2-intro.png" alt="Hook U Up — challenge card decks" class="c2-intro-image" />
+      </div>
+      <button class="c2-howto-btn" onclick="document.getElementById('c2-details').scrollIntoView({behavior:'smooth'})">How to Play</button>
+    </div>
+
+    <!-- DETAILS -->
+    <div class="c2-intro-details" id="c2-details">
+      <p class="c2-intro-scene">Imagine picking a <em>14-day challenge deck</em> with a friend. Every day you flip a card, do the challenge, and upload proof before midnight &mdash; no breaks, no excuses. Miss a day and the&nbsp;streak&nbsp;resets.</p>
+      <p class="c2-intro-subtitle"><strong>Challenge your friend today!</strong></p>
+      <p class="c2-deck-tap-hint">Tap a deck to flip it over and see the goal</p>
+      <div class="c2-intro-decks" id="c2IntroDecks"></div>
+    </div>
   </div>
 </div>
 
@@ -1343,46 +1425,58 @@
      ════════════════════════════════════════ -->
 <div id="concept3-intro" class="page">
   <div class="c3-intro-layout">
-    <h1 class="c3-intro-title">We Open Up</h1>
-    <p class="c3-intro-scene">Imagine sitting down with your parent. <em>No agenda, no lecture.</em> Just a deck of cards and a simple rule: draw one, read it out loud, and both of you answer honestly.</p>
-    <p class="c3-intro-subtitle">A card game that turns awkward silence into real conversation &mdash; one question at a time.</p>
-
-    <div class="c3-intro-stacks">
-      <!-- Category Cards -->
-      <div class="c3-intro-stack">
-        <div class="c3-intro-stack-visual">
-          <img src="images/questions-cover.png" alt="Category cards">
-          <img src="images/questions-cover.png" alt="">
-          <img src="images/questions-cover.png" alt="">
-        </div>
-        <h3>Category Cards</h3>
-        <p>Pick one. Read it out. Everyone answers. No skipping &mdash; yes, that means parents too.</p>
+    <!-- HERO -->
+    <div class="c3-intro-hero">
+      <h1 class="c3-intro-title">We Open Up</h1>
+      <p class="c3-intro-desc">A card game for you and your parent. Draw a question, both answer honestly, and turn awkward silence into real conversation.</p>
+      <div class="c3-intro-image-wrap">
+        <img src="images/c3-intro.png" alt="We Open Up — conversation card game" class="c3-intro-image" />
       </div>
-
-      <!-- Swap Cards -->
-      <div class="c3-intro-stack">
-        <div class="c3-intro-stack-visual">
-          <img src="images/c3-wou17.png" alt="Swap cards">
-          <img src="images/c3-wou17.png" alt="">
-          <img src="images/c3-wou17.png" alt="">
-        </div>
-        <h3>Swap Cards</h3>
-        <p>Answer as the other person. Your parent becomes you. You become your parent. Then compare. Scarier than it sounds.</p>
-      </div>
-
-      <!-- Spark Cards -->
-      <div class="c3-intro-stack">
-        <div class="c3-intro-stack-visual">
-          <img src="images/c3-wou19.png" alt="Spark cards">
-          <img src="images/c3-wou19.png" alt="">
-          <img src="images/c3-wou19.png" alt="">
-        </div>
-        <h3>Spark Cards</h3>
-        <p>Play one after any card to go one layer deeper. Completely optional. Usually worth it.</p>
-      </div>
+      <button class="c3-howto-btn" onclick="document.getElementById('c3-details').scrollIntoView({behavior:'smooth'})">How to Play</button>
     </div>
 
-    <button class="c3-intro-play-btn" onclick="startC3Game()">Let's Play</button>
+    <!-- DETAILS -->
+    <div class="c3-intro-details" id="c3-details">
+      <p class="c3-intro-scene">Imagine sitting down with your parent. <em>No agenda, no lecture.</em> Just a deck of cards and a simple rule: draw one, read it out loud, and both of you answer honestly.</p>
+      <p class="c3-intro-subtitle">A card game that turns awkward silence into real conversation &mdash; one question at a time.</p>
+
+      <div class="c3-intro-stacks">
+        <!-- Category Cards -->
+        <div class="c3-intro-stack">
+          <div class="c3-intro-stack-visual">
+            <img src="images/questions-cover.png" alt="Category cards">
+            <img src="images/questions-cover.png" alt="">
+            <img src="images/questions-cover.png" alt="">
+          </div>
+          <h3>Category Cards</h3>
+          <p>Pick one. Read it out. Everyone answers. No skipping &mdash; yes, that means parents too.</p>
+        </div>
+
+        <!-- Swap Cards -->
+        <div class="c3-intro-stack">
+          <div class="c3-intro-stack-visual">
+            <img src="images/c3-wou17.png" alt="Swap cards">
+            <img src="images/c3-wou17.png" alt="">
+            <img src="images/c3-wou17.png" alt="">
+          </div>
+          <h3>Swap Cards</h3>
+          <p>Answer as the other person. Your parent becomes you. You become your parent. Then compare. Scarier than it sounds.</p>
+        </div>
+
+        <!-- Spark Cards -->
+        <div class="c3-intro-stack">
+          <div class="c3-intro-stack-visual">
+            <img src="images/c3-wou19.png" alt="Spark cards">
+            <img src="images/c3-wou19.png" alt="">
+            <img src="images/c3-wou19.png" alt="">
+          </div>
+          <h3>Spark Cards</h3>
+          <p>Play one after any card to go one layer deeper. Completely optional. Usually worth it.</p>
+        </div>
+      </div>
+
+      <button class="c3-intro-play-btn" onclick="startC3Game()">Let's Play</button>
+    </div>
   </div>
 </div>
 
@@ -1822,7 +1916,9 @@ function backToC2Intro() {
     const intro = document.getElementById('concept2-intro');
     intro.style.display = '';
     intro.classList.add('active');
-    window.scrollTo(0, 0);
+    // Scroll to the decks section, not the top
+    const details = document.getElementById('c2-details');
+    if (details) details.scrollIntoView({ behavior: 'smooth' });
   }, 250);
 }
 
