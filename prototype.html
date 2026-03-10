@@ -507,6 +507,93 @@
   /* ════════════════════════════════════════
      CONCEPT 2 – PEER CHALLENGE (HOOK U UP)
      ════════════════════════════════════════ */
+  /* ── Concept 2 Intro / Deck Selection ── */
+  #concept2-intro { padding: 48px 24px; }
+  .c2-intro-layout { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .c2-intro-title {
+    font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800; margin-bottom: 8px; letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff, #ffa05c, #ff6b6b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+  .c2-intro-subtitle {
+    font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 48px; font-weight: 400;
+    opacity: 0; animation: c2IntroFadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  }
+  @keyframes c2IntroFadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .c2-intro-decks {
+    display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  /* Flippable deck box */
+  .c2-deck-box {
+    width: 260px; height: 380px; perspective: 1200px; cursor: pointer;
+    opacity: 0; animation: c2DeckPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .c2-deck-box:nth-child(1) { animation-delay: 0.4s; }
+  .c2-deck-box:nth-child(2) { animation-delay: 0.5s; }
+  .c2-deck-box:nth-child(3) { animation-delay: 0.6s; }
+  .c2-deck-box:nth-child(4) { animation-delay: 0.7s; }
+  .c2-deck-box:nth-child(5) { animation-delay: 0.8s; }
+  @keyframes c2DeckPop {
+    from { opacity: 0; transform: translateY(40px) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .c2-deck-box-inner {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+  }
+  .c2-deck-box.flipped .c2-deck-box-inner { transform: rotateY(180deg); }
+  .c2-deck-box-front, .c2-deck-box-back {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+    border: 1px solid var(--border-subtle);
+  }
+  .c2-deck-box-front {
+    background: var(--bg-secondary);
+    transition: box-shadow 0.4s, transform 0.4s;
+  }
+  .c2-deck-box:not(.flipped):hover .c2-deck-box-front {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(255,138,92,0.3);
+  }
+  .c2-deck-box-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .c2-deck-box-back {
+    transform: rotateY(180deg);
+    background: var(--bg-secondary);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .c2-deck-box-back img {
+    width: 100%; height: auto; border-radius: var(--radius-md);
+    margin-bottom: 20px; max-height: 260px; object-fit: contain;
+  }
+  .c2-deck-open-btn {
+    background: linear-gradient(135deg, #ffa05c, #ff6b6b);
+    color: #fff; border: none; border-radius: 50px;
+    padding: 14px 36px; font-size: 1rem; font-weight: 700;
+    font-family: var(--font-display);
+    cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(255,138,92,0.35);
+  }
+  .c2-deck-open-btn:hover {
+    transform: translateY(-3px) scale(1.04);
+    box-shadow: 0 8px 32px rgba(255,138,92,0.5);
+  }
+  .c2-deck-open-btn:active { transform: scale(0.97); }
+  .c2-deck-tap-hint {
+    font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; font-weight: 300;
+    opacity: 0; animation: c2IntroFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+  }
+
   #concept2 { padding: 20px; }
   .c2-layout { display: flex; gap: 24px; max-width: 1400px; margin: 0 auto; min-height: calc(100dvh - 40px); }
 
@@ -524,22 +611,7 @@
 
   .c2-center { flex: 1; }
 
-  /* Deck covers */
-  .c2-decks { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-  .c2-deck-card {
-    width: 300px; cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    border-radius: var(--radius-lg); overflow: hidden;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    line-height: 0; background: var(--bg-secondary);
-    border: 1px solid var(--border-subtle);
-  }
-  .c2-deck-card:hover { transform: translateY(-10px) scale(1.03); box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.15); }
-  .c2-deck-card img { width: 100%; display: block; }
-
   /* Card grid */
-  .c2-card-grid-view { display: none; }
-  .c2-card-grid-view.active { display: block; animation: staggerUp 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
   .c2-grid-back {
     background: none; border: none; font-size: 0.9rem;
     color: var(--accent-orange); font-weight: 600; margin-bottom: 20px;
@@ -806,6 +878,8 @@
     .c1-feeling-tray { width: 100%; }
     .c1-board { flex-direction: column; }
     .c2-flip-container { width: 340px; }
+    .c2-deck-box { width: 200px; height: 290px; }
+    .c2-intro-decks { gap: 16px; }
     #landing h1 { font-size: 2.2rem; }
   }
 </style>
@@ -837,7 +911,7 @@
         <div class="card-arrow">&#8594;</div>
       </div>
     </div>
-    <div class="concept-card stagger-in" style="animation-delay: 0.25s" onclick="showPage('concept2')">
+    <div class="concept-card stagger-in" style="animation-delay: 0.25s" onclick="showPage('concept2-intro')">
       <div class="card-banner"><img src="images/Concept-2.png" alt="Concept 2"></div>
       <div class="card-body">
         <div class="label">Concept 2</div>
@@ -1030,31 +1104,48 @@
 <!-- ════════════════════════════════════════
      CONCEPT 2 – PEER CHALLENGE
      ════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════
+     CONCEPT 2 – DECK SELECTION (INTRO)
+     ════════════════════════════════════════ -->
+<div id="concept2-intro" class="page">
+  <div class="c2-intro-layout">
+    <h1 class="c2-intro-title">Hook U Up</h1>
+    <p class="c2-intro-subtitle">Challenge your friend today!</p>
+    <div class="c2-intro-decks" id="c2IntroDecks"></div>
+    <p class="c2-deck-tap-hint">Tap a deck to flip it over and see the goal</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     CONCEPT 2 – CHALLENGE VIEW
+     ════════════════════════════════════════ -->
 <div id="concept2" class="page">
   <div class="c2-layout">
     <div class="c2-howto">
       <h2>How to Play</h2>
+      <h3 style="font-family:var(--font-display); font-size:0.9rem; color:var(--accent-orange); margin: 18px 0 10px; font-weight:600;">For the teen:</h3>
       <ol>
-        <li><strong>Have a look at the 5 topics</strong> and pick the one that feels most you right now.</li>
-        <li><strong>Find a buddy</strong> who is down for the same topic. Two people, one mission.</li>
-        <li><strong>Each day, flip the next card together</strong> and see what the challenge is. Then go do it.</li>
-        <li><strong>Upload your proof before midnight.</strong> A photo, a selfie, a written check-in &mdash; whatever the card asks for.</li>
-        <li><strong>Life happens, but try not to miss a day.</strong> The streak matters.</li>
-        <li><strong>Get through all 14</strong> and you are in the gallery. HPB picks a winner per topic.</li>
+        <li><strong>Have a browse through the 5 topics</strong> and see which one speaks to you right now.</li>
+        <li><strong>Find a friend</strong> who wants to take on the same topic. The more you are both into it, the better.</li>
+        <li><strong>Each day, flip the next card together</strong> and take on whatever challenge comes up.</li>
+        <li><strong>Upload your proof before midnight.</strong> A photo, a selfie, a quick note &mdash; whatever the card asks for.</li>
+        <li><strong>Get through all 14 days</strong> and you and your buddy could win an HPB prize.</li>
       </ol>
+      <h3 style="font-family:var(--font-display); font-size:0.9rem; color:var(--accent-peach); margin: 18px 0 10px; font-weight:600;">For the parent:</h3>
+      <ul style="padding-left:18px; list-style: disc;">
+        <li style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:10px; line-height:1.6;">Let them choose their own topic and buddy. The ownership is kind of the whole point.</li>
+        <li style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:10px; line-height:1.6;">Ask how their challenge went that day. Keep it light, like you are curious, not checking up.</li>
+        <li style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:10px; line-height:1.6;">When they hit a streak, celebrate it with them. That goes a long way.</li>
+      </ul>
     </div>
 
     <div class="c2-center">
-      <!-- Deck covers -->
-      <div class="c2-decks" id="c2Decks"></div>
+      <button class="c2-grid-back" onclick="backToC2Intro()" style="margin-bottom: 12px;">&#8592; Back to decks</button>
 
-      <!-- Card grid (hidden by default) -->
-      <div class="c2-card-grid-view" id="c2CardGridView">
-        <button class="c2-grid-back" onclick="backToC2Decks()">&#8592; Back to decks</button>
-        <div class="c2-grid-title" id="c2GridTitle"></div>
-        <div class="c2-grid-subtitle">Tap a card to zoom in. Tap again to flip it over.</div>
-        <div class="c2-card-grid" id="c2CardGrid"></div>
-      </div>
+      <!-- Card grid -->
+      <div class="c2-grid-title" id="c2GridTitle"></div>
+      <div class="c2-grid-subtitle">Tap a card to zoom in. Tap again to flip it over.</div>
+      <div class="c2-card-grid" id="c2CardGrid"></div>
     </div>
   </div>
 </div>
@@ -1410,32 +1501,39 @@ buildMagnetRow('c1FeelingRow', c1Feelings, 'feeling');
    CONCEPT 2 – PEER CHALLENGE
    ══════════════════════════════════════ */
 const c2Decks = [
-  { name: 'Bulk Up', key: 'bulk', cover: 'images/c2-deck-bulk.png' },
-  { name: 'Cut Season', key: 'cut', cover: 'images/c2-deck-cut.png' },
-  { name: 'Energy Era', key: 'energy', cover: 'images/c2-deck-energy.png' },
-  { name: 'Glow Up', key: 'glow-up', cover: 'images/c2-deck-glow-up.png' },
-  { name: 'Recharge', key: 'recharge', cover: 'images/c2-deck-recharge.png' },
+  { name: 'Bulk Up', key: 'bulk', cover: 'images/c2-deck-bulk.png', back: 'images/c2-deck-bulk-back.png' },
+  { name: 'Cut Season', key: 'cut', cover: 'images/c2-deck-cut.png', back: 'images/c2-deck-cut-back.png' },
+  { name: 'Energy Era', key: 'energy', cover: 'images/c2-deck-energy.png', back: 'images/c2-deck-energy-back.png' },
+  { name: 'Glow Up', key: 'glow-up', cover: 'images/c2-deck-glow-up.png', back: 'images/c2-deck-glow-up-back.png' },
+  { name: 'Recharge', key: 'recharge', cover: 'images/c2-deck-recharge.png', back: 'images/c2-deck-recharge-back.png' },
 ];
 
-// Build deck covers
-(function initC2Decks() {
-  const container = document.getElementById('c2Decks');
+// Build flippable deck boxes on intro page
+(function initC2IntroDecks() {
+  const container = document.getElementById('c2IntroDecks');
   c2Decks.forEach((deck, idx) => {
-    const card = document.createElement('div');
-    card.className = 'c2-deck-card';
-    card.innerHTML = `<img src="${deck.cover}" alt="${deck.name}">`;
-    card.onclick = () => showC2Deck(idx);
-    container.appendChild(card);
+    const box = document.createElement('div');
+    box.className = 'c2-deck-box';
+    box.innerHTML = `
+      <div class="c2-deck-box-inner">
+        <div class="c2-deck-box-front">
+          <img src="${deck.cover}" alt="${deck.name}">
+        </div>
+        <div class="c2-deck-box-back">
+          <img src="${deck.back}" alt="${deck.name} goal">
+          <button class="c2-deck-open-btn" onclick="event.stopPropagation(); openC2DeckFromIntro(${idx})">Open deck of cards</button>
+        </div>
+      </div>
+    `;
+    box.onclick = () => box.classList.toggle('flipped');
+    container.appendChild(box);
   });
 })();
 
-function showC2Deck(idx) {
+function openC2DeckFromIntro(idx) {
   const deck = c2Decks[idx];
-  document.getElementById('c2Decks').style.display = 'none';
-  const view = document.getElementById('c2CardGridView');
-  view.classList.add('active');
-  document.getElementById('c2GridTitle').textContent = deck.name + ' — 14 Day Challenge';
-
+  // Populate the grid
+  document.getElementById('c2GridTitle').textContent = deck.name + ' \u2014 14 Day Challenge';
   const grid = document.getElementById('c2CardGrid');
   grid.innerHTML = '';
   for (let i = 1; i <= 14; i++) {
@@ -1447,11 +1545,32 @@ function showC2Deck(idx) {
     card.onclick = () => openC2Zoom(frontSrc, backSrc);
     grid.appendChild(card);
   }
+  // Transition from intro to challenge view
+  const intro = document.getElementById('concept2-intro');
+  intro.classList.remove('active');
+  intro.classList.add('fade-out');
+  setTimeout(() => {
+    intro.classList.remove('fade-out');
+    intro.style.display = 'none';
+    const board = document.getElementById('concept2');
+    board.style.display = '';
+    board.classList.add('active');
+    window.scrollTo(0, 0);
+  }, 250);
 }
 
-function backToC2Decks() {
-  document.getElementById('c2Decks').style.display = 'flex';
-  document.getElementById('c2CardGridView').classList.remove('active');
+function backToC2Intro() {
+  const current = document.getElementById('concept2');
+  current.classList.remove('active');
+  current.classList.add('fade-out');
+  setTimeout(() => {
+    current.classList.remove('fade-out');
+    current.style.display = 'none';
+    const intro = document.getElementById('concept2-intro');
+    intro.style.display = '';
+    intro.classList.add('active');
+    window.scrollTo(0, 0);
+  }, 250);
 }
 
 let c2Flipped = false;
