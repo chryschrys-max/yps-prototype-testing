@@ -585,15 +585,12 @@
   .c2-deck-box-back {
     transform: rotateY(180deg);
     background: var(--bg-secondary);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 24px;
   }
   .c2-deck-box.flipped .c2-deck-box-back {
     box-shadow: 0 12px 48px rgba(255,138,92,0.25), 0 0 0 1px rgba(255,255,255,0.08);
   }
   .c2-deck-box-back img {
-    width: 100%; height: 100%; border-radius: var(--radius-md);
-    object-fit: contain;
+    width: 100%; height: 100%; object-fit: cover; display: block;
   }
   .c2-deck-open-btn {
     position: absolute; bottom: -52px; left: 50%; transform: translateX(-50%);
