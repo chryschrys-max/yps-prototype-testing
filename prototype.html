@@ -547,30 +547,50 @@
   }
   .c2-deck-box-inner {
     position: relative; width: 100%; height: 100%;
-    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     transform-style: preserve-3d;
+    will-change: transform;
   }
+  /* Lift up + flip with dynamic shadow shift */
   .c2-deck-box.flipped .c2-deck-box-inner { transform: rotateY(180deg); }
+  .c2-deck-box.flipped { animation: c2CardLift 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
+  @keyframes c2CardLift {
+    0%   { transform: translateY(0) scale(1); }
+    40%  { transform: translateY(-24px) scale(1.06); }
+    100% { transform: translateY(0) scale(1); }
+  }
   .c2-deck-box-front, .c2-deck-box-back {
     position: absolute; inset: 0; backface-visibility: hidden;
     border-radius: var(--radius-lg); overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.35);
     border: 1px solid var(--border-subtle);
   }
+  /* Gloss / shine sweep on front */
   .c2-deck-box-front {
     background: var(--bg-secondary);
     transition: box-shadow 0.4s, transform 0.4s;
   }
-  .c2-deck-box:not(.flipped):hover .c2-deck-box-front {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(255,138,92,0.3);
+  .c2-deck-box-front::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%),
+      rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.08) 30%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none; z-index: 2;
   }
+  .c2-deck-box:not(.flipped):hover .c2-deck-box-front {
+    box-shadow: 0 24px 60px rgba(255,138,92,0.35), 0 0 0 1px rgba(255,255,255,0.08);
+  }
+  .c2-deck-box:not(.flipped):hover .c2-deck-box-front::after { opacity: 1; }
   .c2-deck-box-front img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Back face — shadow shifts to simulate light from the other side */
   .c2-deck-box-back {
     transform: rotateY(180deg);
     background: var(--bg-secondary);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 24px;
+  }
+  .c2-deck-box.flipped .c2-deck-box-back {
+    box-shadow: 0 12px 48px rgba(255,138,92,0.25), 0 0 0 1px rgba(255,255,255,0.08);
   }
   .c2-deck-box-back img {
     width: 100%; height: auto; border-radius: var(--radius-md);
@@ -1525,7 +1545,33 @@ const c2Decks = [
         </div>
       </div>
     `;
-    box.onclick = () => box.classList.toggle('flipped');
+    box.onclick = function() {
+      const inner = box.querySelector('.c2-deck-box-inner');
+      inner.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
+      box.classList.toggle('flipped');
+      inner.style.transform = box.classList.contains('flipped') ? 'rotateY(180deg)' : '';
+      setTimeout(() => { inner.style.transition = ''; }, 800);
+    };
+
+    // 3D tilt on mouse move (front face only)
+    box.addEventListener('mousemove', function(e) {
+      if (box.classList.contains('flipped')) return;
+      const rect = box.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      const inner = box.querySelector('.c2-deck-box-inner');
+      inner.style.transform = `rotateY(${x * 18}deg) rotateX(${-y * 12}deg)`;
+      const front = box.querySelector('.c2-deck-box-front');
+      front.style.setProperty('--shine-x', `${(x + 0.5) * 100}%`);
+      front.style.setProperty('--shine-y', `${(y + 0.5) * 100}%`);
+    });
+    box.addEventListener('mouseleave', function() {
+      const inner = box.querySelector('.c2-deck-box-inner');
+      inner.style.transition = 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1)';
+      inner.style.transform = box.classList.contains('flipped') ? 'rotateY(180deg)' : '';
+      setTimeout(() => { inner.style.transition = ''; }, 500);
+    });
+
     container.appendChild(box);
   });
 })();
