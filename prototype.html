@@ -607,7 +607,7 @@
 
   /* Flippable deck box */
   .c2-deck-box {
-    width: 220px; height: 330px; perspective: 1200px; cursor: pointer;
+    width: 220px; height: 330px; -webkit-perspective: 1200px; perspective: 1200px; cursor: pointer;
     flex-shrink: 0; position: relative; overflow: visible;
     opacity: 0; animation: c2DeckPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
@@ -622,7 +622,7 @@
   }
   .c2-deck-box-inner {
     position: relative; width: 100%; height: 100%;
-    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d; transform-style: preserve-3d;
     will-change: transform;
   }
   /* Lift up on flip */
@@ -632,7 +632,7 @@
     100% { transform: translateY(0) scale(1); }
   }
   .c2-deck-box-front, .c2-deck-box-back {
-    position: absolute; inset: 0; backface-visibility: hidden;
+    position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden;
     border-radius: var(--radius-lg); overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.35);
     border: 1px solid var(--border-subtle);
@@ -657,7 +657,7 @@
 
   /* Back face — shadow shifts to simulate light from the other side */
   .c2-deck-box-back {
-    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg); transform: rotateY(180deg);
     background: var(--bg-secondary);
   }
   .c2-deck-box.flipped .c2-deck-box-back {
@@ -743,7 +743,7 @@
   .c2-overlay.active { display: flex; }
   .c2-flip-container {
     width: 440px; max-width: 85vw;
-    perspective: 1200px; cursor: pointer;
+    -webkit-perspective: 1200px; perspective: 1200px; cursor: pointer;
     animation: c2ZoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @keyframes c2ZoomIn {
@@ -753,17 +753,17 @@
   .c2-flip-inner {
     position: relative; width: 100%;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d; transform-style: preserve-3d;
   }
-  .c2-flip-inner.flipped { transform: rotateY(180deg); }
+  .c2-flip-inner.flipped { -webkit-transform: rotateY(180deg); transform: rotateY(180deg); }
   .c2-flip-front, .c2-flip-back {
-    width: 100%; backface-visibility: hidden;
+    width: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
     border-radius: var(--radius-lg); overflow: hidden;
     box-shadow: 0 24px 80px rgba(0,0,0,0.5);
     background: #ffffff;
   }
   .c2-flip-front img, .c2-flip-back img { width: 100%; display: block; border-radius: var(--radius-lg); }
-  .c2-flip-back { position: absolute; top: 0; left: 0; transform: rotateY(180deg); }
+  .c2-flip-back { position: absolute; top: 0; left: 0; -webkit-transform: rotateY(180deg); transform: rotateY(180deg); }
   .c2-flip-hint {
     text-align: center; color: var(--text-secondary);
     font-size: 0.85rem; margin-top: 20px; font-weight: 300;
@@ -862,7 +862,7 @@
   /* Stacked card visual */
   .c3-intro-stack-visual {
     position: relative; width: 264px; height: 196px;
-    margin: 0 auto 8px; perspective: 800px;
+    margin: 0 auto 8px; -webkit-perspective: 800px; perspective: 800px;
   }
   .c3-intro-stack-visual img {
     position: absolute; width: 264px; border-radius: 16px;
@@ -941,15 +941,15 @@
     min-height: 400px; position: relative;
   }
 
-  .c3-card-wrapper { width: 200px; perspective: 1000px; cursor: pointer; }
+  .c3-card-wrapper { width: 200px; -webkit-perspective: 1000px; perspective: 1000px; cursor: pointer; }
   .c3-card-inner {
     position: relative; width: 100%;
     transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d; transform-style: preserve-3d;
   }
-  .c3-card-inner.revealed { transform: rotateY(180deg); }
+  .c3-card-inner.revealed { -webkit-transform: rotateY(180deg); transform: rotateY(180deg); }
   .c3-card-face {
-    width: 100%; backface-visibility: hidden;
+    width: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
     border-radius: var(--radius-md); overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     border: 1px solid var(--border-subtle);
@@ -957,7 +957,7 @@
   .c3-card-face img { width: 100%; display: block; border-radius: var(--radius-md); }
   .c3-card-back-face {
     position: absolute; top: 0; left: 0; width: 100%;
-    backface-visibility: hidden; transform: rotateY(180deg);
+    -webkit-backface-visibility: hidden; backface-visibility: hidden; -webkit-transform: rotateY(180deg); transform: rotateY(180deg);
     border-radius: var(--radius-md); overflow: hidden;
     box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     border: 1px solid var(--border-subtle);
