@@ -1207,6 +1207,25 @@
     border-top: 1px solid rgba(255,255,255,0.04);
   }
 
+  /* Per-card stickiness rationale */
+  .detail-sticky {
+    margin-top: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    border-left: 3px solid var(--accent-teal);
+  }
+  .detail-sticky h5 {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-teal); margin: 0 0 8px;
+  }
+  .detail-sticky p {
+    font-size: 0.85rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.65; margin: 0;
+  }
+
   @media (max-width: 768px) {
     .portfolio-grid { grid-template-columns: 1fr; }
     .detail-row { grid-template-columns: 1fr; }
@@ -3872,48 +3891,11 @@
     </div>
   </div>
 
-  <!-- Stickiness rationale -->
-  <div class="sticky-section">
-    <div class="cluster-label">Why it sticks (or doesn't)</div>
-    <p class="sticky-intro">The most common question from stakeholders is: "What happens after day 2?" The behavioural frameworks we used throughout this study give a clear answer. Stickiness is not about motivation. It is about whether the concept's mechanics align with what behavioural science tells us sustains action over time. Here are the four patterns that emerged from validation, each grounded in the frameworks.</p>
-
-    <div class="sticky-grid">
-
-      <div class="sticky-card">
-        <div class="sticky-card-framework">B=MAP &middot; Social Motivation + SDT &middot; Relatedness</div>
-        <h4>Peer accountability beats willpower</h4>
-        <p>Fogg's B=MAP model says behaviour happens when motivation, ability, and a prompt converge at the same moment. In C2, the buddy is all three: the social bond provides motivation, the shared challenge keeps ability high, and the peer nudge is the prompt. Self-Determination Theory explains why this works longer term. Relatedness, the need to feel connected to others, is one of three innate psychological needs. When the habit is tied to a relationship, dropping the habit means dropping the person. That is why C2's streak mechanic held and C1's solo board did not.</p>
-        <div class="sticky-quote">TY06: "It's kind of like Snapchat or TikTok streaks. You don't want to break the streak."</div>
-      </div>
-
-      <div class="sticky-card">
-        <div class="sticky-card-framework">B=MAP &middot; Prompt + EAST &middot; Easy</div>
-        <h4>Physical cues only work in context</h4>
-        <p>A prompt that is not in the right place at the right time does not fire. EAST says the first condition for behaviour change is making it easy: reduce friction, remove steps, put it in the path. B=MAP says the prompt must arrive when motivation and ability are both present. C1's fridge magnet works for families who gather in the kitchen before bed. It fails when the behaviour happens in the bedroom. The placement determines whether the concept sustains or fades.</p>
-        <div class="sticky-quote">TY06: "If it was placed beside my bed I'd probably use it. But if it was on the fridge I'd probably forget."</div>
-      </div>
-
-      <div class="sticky-card">
-        <div class="sticky-card-framework">SDT &middot; Autonomy + TTM &middot; Action stage</div>
-        <h4>Identity framing outlasts health framing</h4>
-        <p>SDT says people sustain behaviour when it feels self-chosen, not imposed. TTM tells us that participants in the Action stage need reinforcement that connects to who they want to become, not what they should avoid. C2's "Glow Up" deck worked because it tied health behaviour to identity ("I want to look and feel good") rather than compliance ("I should eat better"). When the behaviour serves the self-image, it persists beyond novelty. When it serves an external goal, it drops as soon as the novelty fades.</p>
-        <div class="sticky-quote">TY01: "Natural glow up rather than using products." Rated 7/7. Said she would pay for it.</div>
-      </div>
-
-      <div class="sticky-card">
-        <div class="sticky-card-framework">Kano &middot; Excitement &rarr; Expected + B=MAP &middot; Motivation decay</div>
-        <h4>Without a re-engagement loop, every concept drops</h4>
-        <p>Kano's model predicts that excitement features become expected features over time. What delights on day 1 feels ordinary by day 14. B=MAP explains the mechanism: motivation naturally decays, and if the prompt does not compensate (by getting stronger or more social), the behaviour falls below the action line. C1 had no re-engagement loop. C2 had one (the buddy nudge). C3 had none (the cards sit in a drawer until someone decides to play). The difference between "drops after day 2" and "becomes a routine" is whether the concept has a built-in mechanism that pulls people back after the novelty wears off.</p>
-        <div class="sticky-quote">TP09: "Kids will do it for 1 week and won't continue." TY11: "I will keep doing it until I lose interest and forget."</div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- New directions portfolio -->
   <div id="rec-directions" class="rec-section-break">
     <div class="cluster-label">New directions worth exploring</div>
-    <p class="portfolio-intro">A common concern is "there are so many card games out there" and "they will drop it after day 2." These directions are designed to answer both. They are not card games. They are behaviour change mechanics wrapped in formats youth already use: streaks, trades, social challenges, and conversation triggers. Each direction has at least two independent signals from different sessions and maps back to the north star, the 6 wells, the design principles, and the windows where unhealthy choices build up.</p>
+    <p class="portfolio-intro">A common concern is "there are so many card games out there" and "they will drop it after day 2." These directions are designed to answer both. They are not card games. They are behaviour change mechanics wrapped in formats youth already use: streaks, trades, social challenges, and conversation triggers.</p>
+    <p class="portfolio-intro" style="margin-top: 4px;">Stickiness is not about motivation. It is about whether a concept's mechanics align with what behavioural science tells us sustains action over time. Validation surfaced four patterns: peer accountability beats willpower (B=MAP + SDT Relatedness), physical cues only work when placed in context (EAST Easy), identity framing outlasts health framing (SDT Autonomy), and without a re-engagement loop every concept drops (Kano + B=MAP motivation decay). Each card below includes a "Why it sticks" analysis grounded in these patterns, so the sustainability case is built into each direction, not bolted on after.</p>
     <p class="portfolio-intro" style="margin-top: 4px;">Click any card to see the full mapping.</p>
 
     <div class="portfolio-grid">
@@ -3957,6 +3939,10 @@
               <h5>What makes it different</h5>
               <p>It is not a mood tracker or a journalling app. There is no data, no history, no login. It is a physical signal that changes daily and that both sides can see. The simplicity is the point.</p>
             </div>
+          </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>B=MAP Prompt + EAST Easy.</strong> The magnet is always visible, always in the path, and takes under 5 seconds to move. That means the prompt fires every time the youth passes the fridge. Motivation can be near zero and the behaviour still happens because the effort is almost nothing. <strong>Kano risk:</strong> the emotion set could feel repetitive after 2 weeks. A seasonal or expandable magnet pack would counter novelty decay.</p>
           </div>
           <div class="portfolio-evidence">Evidence: TP01 noted the communication function of magnets independently. TY03 requested a "sleepy" magnet, the most common state. TY06 said the board works best beside the bed as a visible cue.</div>
         </div>
@@ -4002,6 +3988,10 @@
               <p>Moves accountability from a single buddy (who might lose interest) to a group (where social pressure is distributed). The leaderboard is internal to the group, not public. Matches how youth actually socialise: in clusters, not pairs.</p>
             </div>
           </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>SDT Relatedness + B=MAP Social Motivation.</strong> Group accountability is stronger than pair accountability. Breaking a group streak carries more social cost because multiple people notice. The rotating captain role adds novelty each day (Kano: excitement stays fresh longer). Youth were already running informal peer challenges in co-creation, which means the behaviour loop pre-exists. The concept formalises it rather than creating it from scratch.</p>
+          </div>
           <div class="portfolio-evidence">Evidence: TY11 invented a bet mechanic unprompted. TY10 wanted up to 5 people. TY06 compared it to Snapchat streaks, a group behaviour. Youth in co-creation were already doing peer challenges informally.</div>
         </div>
       </div>
@@ -4045,6 +4035,10 @@
               <h5>What makes it different</h5>
               <p>Co-creation confirmed that motivation connects to appearance, energy, and social credibility, not long-term health outcomes. These decks speak directly to what participants said matters to them right now.</p>
             </div>
+          </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>SDT Autonomy + TTM Action stage.</strong> Identity framing outlasts health framing. When youth see visible results they care about (clearer skin, more energy, a look they are proud of), that creates an external feedback loop: peers notice, which reinforces the behaviour. Health-coded challenges rely on internal motivation alone. Identity-coded challenges get reinforced by the social environment. That is why "Glow Up" sustained attention in every session where it appeared.</p>
           </div>
           <div class="portfolio-evidence">Evidence: TP04's daughters wanted skincare and makeup content. Co-creation youth tied motivation to appearance and social credibility. The "Glow Up" deck name resonated immediately in every session.</div>
         </div>
@@ -4090,6 +4084,10 @@
               <p>Every existing family conversation game assumes both sides should share equally. The research showed that is not where the power imbalance sits. Youth feel interrogated. This concept removes that entirely. The parent becomes the vulnerable one, which is what TY01 responded to so strongly.</p>
             </div>
           </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>SDT Competence + Kano content novelty.</strong> Curiosity is a renewable resource. Each new card reveals something the youth did not know about their parent, and each answer changes the relationship slightly. Unlike routine-based concepts where the activity is the same each day, the content here is different every time. <strong>Sustainability risk:</strong> still depends on someone initiating. Without a trigger (e.g., "play one card at dinner"), the deck sits in a drawer. Pairing with a simple ritual prompt ("Sunday dinner = Flip the Script night") would solve the initiation gap that C3 failed on.</p>
+          </div>
           <div class="portfolio-evidence">Evidence: TY01 gave 7/7 specifically because "the game lets me ask questions TO my parents." TY06 said she would refer friends with poor parent relationships. The reversed dynamic was the single strongest signal in C3 testing.</div>
         </div>
       </div>
@@ -4131,6 +4129,10 @@
               <h5>What makes it different</h5>
               <p>C3's biggest problem was that nobody initiated. This format is self-starting: leave the deck on the table, someone picks up a card, and the game begins. No rules explanation needed. No "let's sit down and play" moment. It solves the trigger gap by making starting feel incidental.</p>
             </div>
+          </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>SDT Relatedness + EAST Attractive.</strong> Laughter creates positive association. The format is inherently social and self-reinforcing: one round leads to "one more." The escalation from Level 1 (light) to Level 2 (deeper) builds in a progression arc that counters Kano novelty decay. <strong>Sustainability risk:</strong> same as C3. No built-in prompt to start. But the format lowers the initiation threshold dramatically: leaving cards on the dinner table is enough. Someone picks one up, and the game begins without anyone deciding to "play."</p>
           </div>
           <div class="portfolio-evidence">Evidence: TY11 suggested the format unprompted. TP11 independently suggested gamification with voting. C3's initiation gap was flagged by 4 of 8 participants as the top barrier to use.</div>
         </div>
@@ -4175,6 +4177,10 @@
               <h5>What makes it different</h5>
               <p>Co-creation showed that every youth idea changed something around them, not something inside them. This concept follows that insight. It does not ask youth to try harder. It changes what is available in the moment when they are most vulnerable to the easier option. Y10 said: "Something I don't need to put work into." This is that.</p>
             </div>
+          </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>B=MAP Ability + EAST Easy.</strong> This concept changes the environment, not the person. The healthy option requires less effort than the unhealthy one because it is already prepared. Motivation can be zero and the kit still wins on convenience. The weekly refresh with a parent adds a Shared Rhythm touchpoint and prevents Kano decay: each week the contents change. <strong>"Drop after day 2" defence:</strong> the kit does not require the youth to remember, decide, or motivate themselves. It is already there when they walk in the door.</p>
           </div>
           <div class="portfolio-evidence">Evidence: Y10 (co-creation) orders food daily because it requires no effort. Y09 cooks alone at 7-8pm because nothing is prepared. P03 has no visibility for 4+ hours. Window 1 was the largest gap identified in research. Co-creation youth designed environment changes, not willpower changes.</div>
         </div>
@@ -4221,6 +4227,10 @@
               <p>Nothing in the market addresses the handover moment directly. Parenting resources focus on younger children or crisis intervention. This sits in the gap between "I manage everything" and "I have no idea what they are doing." Kartika from co-creation said: "We only have one. I don't have the ability to try and see." This gives first-time parents of teenagers a structured path.</p>
             </div>
           </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>TTM Preparation &rarr; Action + SDT Competence.</strong> This concept is time-bound by design. It maps to a specific life transition (P6 to Sec 1) and is meant to become unnecessary once the handover is complete. Stickiness here is not about infinite engagement but about completing a finite journey. Each well handed over is a visible milestone. <strong>"Drop after day 2" defence:</strong> the concept has a natural endpoint. Parents are not asked to sustain a habit forever. They are asked to complete a structured handover across 6 wells over a defined period.</p>
+          </div>
           <div class="portfolio-evidence">Evidence: Kartika (co-creation): "We only have one child. I don't have the ability to try and see." Calvin (co-creation): "Feel it is too late now to set a rule." P04: "In primary school, everything was structured. Then secondary school started." The drift research identified three transition points where habits break.</div>
         </div>
       </div>
@@ -4266,6 +4276,10 @@
               <p>Screen time interventions typically restrict or monitor. This one negotiates. The language is "trade" not "limit." The alternatives were drawn from what youth in co-creation actually said they would do. Keev said he needs stimulation. The trades provide stimulation. Just not from a screen.</p>
             </div>
           </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>SDT Autonomy + B=MAP Ability.</strong> The trade mechanic feels fair because the youth chooses it. That autonomy sustains engagement longer than imposed rules. The card itself is the prompt and the commitment. <strong>Sustainability risk:</strong> this is a solo concept with no social accountability, the same structural weakness as C1. Without a peer or parent in the loop, motivation decay is likely after 1 to 2 weeks. Pairing Screen Swap with a buddy (C2-style) or a streak counter would add the re-engagement loop it currently lacks.</p>
+          </div>
           <div class="portfolio-evidence">Evidence: Amanda (co-creation): "Once take back, I will go back to my sneakier behaviour." Keev (co-creation): "I cannot survive. I need stimulation." Y10: screen time fills the gap when nothing else is available. Both co-creation and validation confirmed that restriction backfires.</div>
         </div>
       </div>
@@ -4310,6 +4324,10 @@
               <h5>What makes it different</h5>
               <p>This is not a health app. There is no dashboard, no data visualization, no parent login. It is a streak counter with a social nudge. The entire interaction takes under 10 seconds. Youth already maintain streaks on Snapchat and Duolingo. This uses the same mechanic for a different purpose. The physical cards remain the experience. The digital layer just makes sure people come back to them.</p>
             </div>
+          </div>
+          <div class="detail-sticky">
+            <h5>Why it sticks</h5>
+            <p><strong>Kano endowed progress + SDT Relatedness + B=MAP Prompt.</strong> This is the re-engagement layer that addresses the "drop after day 2" concern directly. The streak counter creates loss aversion: after 5 days, quitting costs something. The buddy nudge ties the streak to a relationship, not just a number. The notification is a prompt delivered at the right moment. Youth already maintain streaks on Snapchat and Duolingo for months. This uses the same mechanic for a different purpose. It is designed to be the missing loop that every physical concept needs.</p>
           </div>
           <div class="portfolio-evidence">Evidence: TY04: "I just want the streak, like Duolingo. I don't need to post anything." TY06: "Maybe if it could send a notification, if a notification pops up they're more likely to remember." TY06 also compared C2 to "Snapchat or TikTok streaks, you don't want to break the streak." QR proof failed across every test condition (school phone ban, privacy, friction), confirming the need for a simpler digital mechanic.</div>
         </div>
