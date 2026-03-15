@@ -1033,149 +1033,167 @@
 
   /* ── Habit loop visualisation ── */
   .habit-loops-section {
-    margin: 48px 0 56px;
-    padding: 40px 36px 36px;
-    background: rgba(255,255,255,0.015);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 14px;
+    margin: 48px 0 0;
   }
-  .habit-loops-section .cluster-label { margin-top: 0; }
   .habit-loops-intro {
     font-size: 0.92rem; color: var(--text-secondary);
     font-weight: 300; line-height: 1.7; margin-bottom: 32px;
   }
 
-  /* As-is loops grid */
-  .drift-loops-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 20px; margin-bottom: 40px;
+  /* Stacked drift loop cards */
+  .drift-loops-stack {
+    display: flex; flex-direction: column;
+    gap: 0; position: relative;
   }
 
-  /* Individual loop card */
+  /* Vertical connector between stacked cards */
+  .drift-stack-connector {
+    display: flex; align-items: center; justify-content: center;
+    height: 32px; position: relative;
+  }
+  .drift-stack-connector::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; width: 2px; height: 100%;
+    background: rgba(255,107,107,0.15);
+    transform: translateX(-50%);
+  }
+  .drift-stack-connector::after {
+    content: ''; position: absolute;
+    left: 50%; bottom: 0;
+    width: 8px; height: 8px;
+    border-right: 2px solid rgba(255,107,107,0.3);
+    border-bottom: 2px solid rgba(255,107,107,0.3);
+    transform: translateX(-50%) rotate(45deg);
+  }
+
+  /* Individual drift loop card — stacked full-width */
   .loop-card {
-    padding: 0; background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 12px; overflow: hidden;
-    position: relative;
   }
   .loop-card-head {
-    padding: 16px 20px 12px;
+    padding: 18px 28px 14px;
+    display: flex; align-items: baseline; gap: 16px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .loop-card-transition {
     font-size: 0.65rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
-    margin-bottom: 6px;
+    white-space: nowrap;
   }
   .loop-card-head h4 {
-    font-size: 0.9rem; font-weight: 600;
+    font-size: 1rem; font-weight: 600;
     color: var(--text-primary); margin: 0; line-height: 1.4;
   }
-  .loop-card-body { padding: 16px 20px 20px; }
 
-  /* Loop nodes */
-  .loop-flow {
-    display: flex; flex-direction: column;
-    gap: 0; position: relative;
-  }
-  .loop-node {
-    display: flex; align-items: flex-start;
-    gap: 10px; padding: 8px 0;
+  /* Horizontal flow inside each card */
+  .loop-flow-h {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; padding: 20px 28px 8px;
     position: relative;
   }
-  .loop-node-icon {
-    width: 28px; height: 28px; min-width: 28px;
-    border-radius: 50%; display: flex;
-    align-items: center; justify-content: center;
-    font-size: 0.7rem; font-weight: 700;
-    color: #fff; position: relative; z-index: 1;
+  .loop-step {
+    position: relative; padding: 0 12px;
   }
-  .loop-node-content {
-    flex: 1; padding-top: 4px;
+  /* Arrow between steps */
+  .loop-step::after {
+    content: ''; position: absolute;
+    right: -2px; top: 18px;
+    width: 14px; height: 14px;
+    border-right: 2px solid rgba(255,107,107,0.3);
+    border-bottom: 2px solid rgba(255,107,107,0.3);
+    transform: rotate(-45deg);
   }
-  .loop-node-label {
-    font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    margin-bottom: 3px;
+  .loop-step:last-child::after { content: none; }
+
+  .loop-step-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .loop-node-text {
-    font-size: 0.8rem; color: var(--text-secondary);
-    font-weight: 300; line-height: 1.55;
+  .loop-step-num {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; color: #fff;
   }
-  /* Connector line between nodes */
-  .loop-connector {
-    width: 2px; height: 12px;
-    margin-left: 13px;
+  .loop-step-text {
+    font-size: 0.82rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.6;
   }
 
-  /* As-is (drift) loop colours */
-  .loop-card.drift .loop-card-transition { color: var(--accent-coral); }
-  .loop-card.drift .loop-node-icon { background: rgba(255,107,107,0.2); border: 1.5px solid rgba(255,107,107,0.4); }
-  .loop-card.drift .loop-node-label { color: var(--accent-coral); }
-  .loop-card.drift .loop-connector { background: rgba(255,107,107,0.15); }
-  .loop-card.drift .loop-node-icon.node-consequence { background: rgba(255,107,107,0.35); }
-
-  /* Loop-back arrow */
-  .loop-back {
-    margin: 8px 0 0;
-    padding: 10px 12px;
-    background: rgba(255,107,107,0.06);
-    border: 1px dashed rgba(255,107,107,0.2);
+  /* Loop-back bar at bottom of card */
+  .loop-back-bar {
+    margin: 0 28px;
+    padding: 10px 16px;
+    background: rgba(255,107,107,0.05);
+    border: 1px dashed rgba(255,107,107,0.18);
     border-radius: 8px;
-    font-size: 0.75rem; color: var(--accent-coral);
+    font-size: 0.78rem; color: var(--accent-coral);
     font-weight: 500; text-align: center;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
   }
-  .loop-back-ideal {
-    background: rgba(92,184,178,0.06);
-    border-color: rgba(92,184,178,0.2);
-    color: var(--accent-teal);
+  .loop-back-bar .loop-arrow { font-size: 1rem; opacity: 0.5; }
+
+  /* Quote row */
+  .loop-quote-row {
+    padding: 12px 28px 18px;
+    font-size: 0.78rem; color: var(--text-muted);
+    font-style: italic; line-height: 1.6;
+    border-top: 1px solid rgba(255,255,255,0.03);
+    margin-top: 12px;
   }
 
-  /* Loop quote */
-  .loop-quote {
-    margin-top: 12px; padding-top: 10px;
-    border-top: 1px solid rgba(255,255,255,0.04);
-    font-size: 0.75rem; color: var(--text-muted);
-    font-style: italic; line-height: 1.55;
+  /* Drift card colours */
+  .loop-card.drift .loop-card-transition { color: var(--accent-coral); }
+  .loop-card.drift .loop-step-label { color: var(--accent-coral); }
+  .loop-card.drift .loop-step-num {
+    background: rgba(255,107,107,0.2);
+    border: 1.5px solid rgba(255,107,107,0.4);
+  }
+  .loop-card.drift .loop-step:last-child .loop-step-num {
+    background: rgba(255,107,107,0.35);
   }
 
-  /* Transition arrow between as-is and to-be */
-  .loop-transition-arrow {
-    text-align: center; padding: 28px 0;
+  /* Transition bridge from drift to ideal */
+  .loop-bridge {
+    display: flex; flex-direction: column;
+    align-items: center; padding: 36px 0;
     position: relative;
   }
-  .loop-transition-arrow::before {
-    content: '';
-    position: absolute; left: 50%; top: 0;
-    width: 2px; height: 100%;
-    background: linear-gradient(to bottom, rgba(255,107,107,0.3), rgba(92,184,178,0.3));
+  .loop-bridge::before {
+    content: ''; position: absolute;
+    left: 50%; top: 0; width: 2px; height: 100%;
+    background: linear-gradient(to bottom, rgba(255,107,107,0.25), rgba(92,184,178,0.25));
     transform: translateX(-50%);
   }
-  .loop-transition-label {
-    display: inline-block;
-    padding: 8px 20px;
-    background: var(--bg-primary);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px;
-    font-size: 0.75rem; font-weight: 600;
-    color: var(--text-primary);
+  .loop-bridge-label {
     position: relative; z-index: 1;
-    letter-spacing: 0.03em;
+    padding: 10px 24px;
+    background: var(--bg-primary);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    font-size: 0.8rem; font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+    text-align: center;
   }
 
-  /* To-be (ideal) card */
+  /* Ideal cycle card */
   .ideal-loop-card {
-    padding: 28px 32px;
     background: rgba(92,184,178,0.04);
     border: 1px solid rgba(92,184,178,0.15);
-    border-radius: 12px;
+    border-radius: 12px; overflow: hidden;
   }
   .ideal-loop-head {
-    display: flex; align-items: center;
-    gap: 16px; margin-bottom: 20px;
+    padding: 18px 28px 14px;
+    display: flex; align-items: center; gap: 16px;
+    border-bottom: 1px solid rgba(92,184,178,0.1);
   }
   .ideal-loop-head h3 {
-    font-size: 1.1rem; font-weight: 600;
+    font-size: 1.05rem; font-weight: 600;
     color: var(--text-primary); margin: 0;
   }
   .ideal-loop-tag {
@@ -1186,42 +1204,63 @@
     background: rgba(92,184,178,0.1);
     border-radius: 4px;
   }
-  .ideal-loop-grid {
-    display: grid; grid-template-columns: repeat(5, 1fr);
-    gap: 0; position: relative;
-  }
-  .ideal-node {
-    text-align: center; padding: 0 8px;
-    position: relative;
-  }
-  .ideal-node-icon {
-    width: 40px; height: 40px;
-    border-radius: 50%; margin: 0 auto 10px;
-    display: flex; align-items: center; justify-content: center;
-    background: rgba(92,184,178,0.15);
-    border: 2px solid rgba(92,184,178,0.3);
-    font-size: 0.85rem; font-weight: 700;
-    color: var(--accent-teal);
-  }
-  .ideal-node-label {
-    font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--accent-teal); margin-bottom: 6px;
-  }
-  .ideal-node-text {
-    font-size: 0.8rem; color: var(--text-secondary);
-    font-weight: 300; line-height: 1.55;
-  }
-  /* Arrow between ideal nodes */
-  .ideal-node::after {
-    content: '\u2192'; position: absolute;
-    right: -8px; top: 12px;
-    font-size: 1rem; color: rgba(92,184,178,0.35);
-  }
-  .ideal-node:last-child::after { content: none; }
 
+  /* Ideal horizontal flow — 5 steps */
+  .ideal-flow-h {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; padding: 20px 28px 12px;
+  }
+  .ideal-step {
+    position: relative; padding: 0 10px;
+  }
+  .ideal-step::after {
+    content: ''; position: absolute;
+    right: -2px; top: 18px;
+    width: 12px; height: 12px;
+    border-right: 2px solid rgba(92,184,178,0.3);
+    border-bottom: 2px solid rgba(92,184,178,0.3);
+    transform: rotate(-45deg);
+  }
+  .ideal-step:last-child::after { content: none; }
+  .ideal-step-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ideal-step-num {
+    width: 22px; height: 22px; min-width: 22px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; color: #fff;
+    background: rgba(92,184,178,0.2);
+    border: 1.5px solid rgba(92,184,178,0.4);
+  }
+  .ideal-step:last-child .ideal-step-num {
+    background: rgba(92,184,178,0.35);
+  }
+  .ideal-step-text {
+    font-size: 0.82rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.6;
+  }
+
+  /* Loop-back bar for ideal — positive version */
+  .ideal-back-bar {
+    margin: 0 28px;
+    padding: 10px 16px;
+    background: rgba(92,184,178,0.05);
+    border: 1px dashed rgba(92,184,178,0.18);
+    border-radius: 8px;
+    font-size: 0.78rem; color: var(--accent-teal);
+    font-weight: 500; text-align: center;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .ideal-back-bar .loop-arrow { font-size: 1rem; opacity: 0.5; }
+
+  /* HMW callout */
   .ideal-loop-hmw {
-    margin-top: 24px; padding: 16px 20px;
+    margin: 16px 28px 20px;
+    padding: 16px 20px;
     background: rgba(92,184,178,0.06);
     border-left: 3px solid var(--accent-teal);
     border-radius: 0 8px 8px 0;
@@ -1232,11 +1271,22 @@
     color: var(--accent-teal); font-weight: 600;
   }
 
+  /* Bridge text into next section */
+  .loop-section-bridge {
+    margin-top: 32px;
+    font-size: 0.92rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.7;
+  }
+
   @media (max-width: 768px) {
-    .drift-loops-grid { grid-template-columns: 1fr; }
-    .ideal-loop-grid { grid-template-columns: 1fr; gap: 16px; }
-    .ideal-node::after { content: '\u2193'; right: auto; left: 50%; top: auto; bottom: -12px; transform: translateX(-50%); }
-    .habit-loops-section { padding: 28px 20px 24px; }
+    .loop-flow-h { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .loop-step::after { content: none; }
+    .ideal-flow-h { grid-template-columns: 1fr; gap: 16px; }
+    .ideal-step::after { content: none; }
+    .loop-card-head { flex-direction: column; gap: 4px; padding: 14px 20px 10px; }
+    .loop-flow-h, .loop-back-bar, .loop-quote-row, .ideal-flow-h, .ideal-back-bar, .ideal-loop-hmw { padding-left: 20px; padding-right: 20px; }
+    .loop-back-bar, .ideal-back-bar { margin-left: 20px; margin-right: 20px; }
+    .ideal-loop-hmw { margin-left: 20px; margin-right: 20px; }
   }
 
   /* ── Section divider for recommendations ── */
@@ -4007,16 +4057,15 @@
     <div class="section-eyebrow">Step 4 &middot; Recommendations</div>
     <h2>What to Pilot, Improve, or Rethink</h2>
     <p>These three concepts were built from what youth and parents said during co-creation, filtered through the project's north star, design principles, and a desirability-viability-feasibility lens. They were designed to be simple on purpose: test the underlying mechanics with real people in real conditions, not deliver polished products.</p>
-    <p style="margin-top:12px; color: var(--text-secondary); font-weight: 300;">The validation data now tells us which mechanics held, which broke, and where the strongest signals point next. This section lays out the path for each concept, then maps out new directions that emerged from what participants said and did.</p>
+    <p style="margin-top:12px; color: var(--text-secondary); font-weight: 300;">Before we assess each concept, it is worth seeing the problem they were designed to solve. The Discover-phase transcripts revealed the same cycle repeating at three key transitions. Understanding these drift loops makes clear why some mechanics worked and others did not.</p>
   </div>
 
   <!-- Habit loop visualisation -->
   <div class="habit-loops-section">
-    <div class="cluster-label">The drift loops: what the research showed us</div>
-    <p class="habit-loops-intro">The research identified three key transitions where healthy habits break. At each one, the same cycle repeats: external structure falls away, the easiest option fills the gap, and the pattern deepens because nothing pulls youth back toward the healthier choice. These are the loops our interventions need to break.</p>
+    <div class="cluster-label">The drift loops: what the transcripts showed us</div>
+    <p class="habit-loops-intro">At each transition, external structure falls away and the easiest option fills the gap. The cycle deepens because nothing pulls youth back toward the healthier choice. These are the loops our interventions need to break.</p>
 
-    <!-- 3 As-Is Drift Loops -->
-    <div class="drift-loops-grid">
+    <div class="drift-loops-stack">
 
       <!-- Loop 1: P6 to Sec 1 -->
       <div class="loop-card drift">
@@ -4024,44 +4073,29 @@
           <div class="loop-card-transition">Transition 1</div>
           <h4>P6 to Sec 1: Structure falls away</h4>
         </div>
-        <div class="loop-card-body">
-          <div class="loop-flow">
-            <div class="loop-node">
-              <div class="loop-node-icon">1</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Trigger</div>
-                <div class="loop-node-text">Student Care ends. Youth gets phone, pocket money, and 4+ unsupervised hours. No one tells them when to eat, move, or sleep.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">2</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Default behaviour</div>
-                <div class="loop-node-text">Scrolls phone. Orders food delivery. Eats convenience food alone. Skips meals or snacks on bread and noodles.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">3</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Reward</div>
-                <div class="loop-node-text">Stimulation, comfort, feeling of independence. Zero effort required. The unhealthy choice is also the easiest choice.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon node-consequence">4</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Consequence</div>
-                <div class="loop-node-text">Poor nutrition, disrupted sleep, screen dependency begins. No routine established. Parent has no visibility.</div>
-              </div>
-            </div>
+        <div class="loop-flow-h">
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">1</span> Trigger</div>
+            <div class="loop-step-text">Student Care ends. Youth gets a phone, pocket money, and 4+ unsupervised hours. No one tells them when to eat, move, or sleep.</div>
           </div>
-          <div class="loop-back">Loop repeats daily. No alternative is easier, so the pattern becomes the routine.</div>
-          <div class="loop-quote">Y09: "After school, I'm home alone. I cook dinner myself and eat alone at 7 or 8 PM." Y01: "I don't eat breakfast at home but eat during recess. I typically opt for food like bread, noodles, or fries."</div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">2</span> Default</div>
+            <div class="loop-step-text">Scrolls phone. Orders food delivery. Eats convenience food alone. Skips meals or snacks on bread and noodles.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">3</span> Reward</div>
+            <div class="loop-step-text">Stimulation, comfort, feeling of independence. Zero effort required. The unhealthy choice is also the easiest choice.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">4</span> Consequence</div>
+            <div class="loop-step-text">Poor nutrition, disrupted sleep, screen dependency begins. No routine established. Parent has no visibility.</div>
+          </div>
         </div>
+        <div class="loop-back-bar"><span class="loop-arrow">&circlearrowleft;</span> Loop repeats daily. No alternative is easier, so the pattern becomes the routine.</div>
+        <div class="loop-quote-row">Y09: "After school, I'm home alone. I cook dinner myself and eat alone at 7 or 8 PM." &ensp; Y01: "I don't eat breakfast at home but eat during recess. I typically opt for food like bread, noodles, or fries." &ensp; P08: "In primary school, Student Care covered him until 7pm. Now he's on his own from 1:30pm."</div>
       </div>
+
+      <div class="drift-stack-connector"></div>
 
       <!-- Loop 2: Sec 2 to Sec 3 -->
       <div class="loop-card drift">
@@ -4069,44 +4103,29 @@
           <div class="loop-card-transition">Transition 2</div>
           <h4>Sec 2 to Sec 3: Peers replace parents</h4>
         </div>
-        <div class="loop-card-body">
-          <div class="loop-flow">
-            <div class="loop-node">
-              <div class="loop-node-icon">1</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Trigger</div>
-                <div class="loop-node-text">Peer influence becomes the dominant force. Parental visibility drops. Conversations that worked at age 9 now start arguments.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">2</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Default behaviour</div>
-                <div class="loop-node-text">Screen fills every gap. Meals are skipped or grabbed. Sleep gets pushed later. Exercise drops because "I'm tired after school."</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">3</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Reward</div>
-                <div class="loop-node-text">Social connection through screen. Autonomy from parents. The easier option consistently wins because nothing pushes toward healthy.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon node-consequence">4</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Consequence</div>
-                <div class="loop-node-text">Sleep quality declines. Eating patterns worsen. Parent steps back further. The pattern deepens without practical counter-strategies.</div>
-              </div>
-            </div>
+        <div class="loop-flow-h">
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">1</span> Trigger</div>
+            <div class="loop-step-text">Peer influence becomes the dominant force. Parental visibility drops. Conversations that worked at age 9 now start arguments.</div>
           </div>
-          <div class="loop-back">Parent reminder triggers resistance. Youth tunes out. Distance grows. Loop accelerates.</div>
-          <div class="loop-quote">P04: "In primary school, everything was structured. Dinner at 7, homework by 8, bed by 9:30. The routine held. Then secondary school started..." Y04: "Every time my mom talks to me it's 'did you eat', 'go sleep', 'stop your phone.' I just tune it out now."</div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">2</span> Default</div>
+            <div class="loop-step-text">Screen fills every gap. Meals are skipped or grabbed. Sleep gets pushed later. Exercise drops because they are tired after school and CCA.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">3</span> Reward</div>
+            <div class="loop-step-text">Social connection through screen. Autonomy from parents. The easier option consistently wins because nothing pushes toward healthy.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">4</span> Consequence</div>
+            <div class="loop-step-text">Sleep quality declines. Eating patterns worsen. Parent steps back further. The pattern deepens without practical counter-strategies.</div>
+          </div>
         </div>
+        <div class="loop-back-bar"><span class="loop-arrow">&circlearrowleft;</span> Parent reminder triggers resistance. Youth tunes out. Distance grows. Loop accelerates.</div>
+        <div class="loop-quote-row">P04: "In primary school, everything was structured. Dinner at 7, homework by 8, bed by 9:30. Then secondary school started..." &ensp; Y04: "Every time my mom talks to me it's 'did you eat', 'go sleep', 'stop your phone.' I just tune it out now." &ensp; P09: "The conversations stopped somewhere around Sec 2."</div>
       </div>
+
+      <div class="drift-stack-connector"></div>
 
       <!-- Loop 3: Sec 4 to JC/IHL -->
       <div class="loop-card drift">
@@ -4114,50 +4133,33 @@
           <div class="loop-card-transition">Transition 3</div>
           <h4>Sec 4 to JC / IHL: Sink or swim</h4>
         </div>
-        <div class="loop-card-body">
-          <div class="loop-flow">
-            <div class="loop-node">
-              <div class="loop-node-icon">1</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Trigger</div>
-                <div class="loop-node-text">External structure has largely stepped back. Youth is functionally self-governing. Academic pressure peaks. No safety net.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">2</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Default behaviour</div>
-                <div class="loop-node-text">Those who built routines earlier carry them forward. Those who did not are still relying on external support that is no longer there.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon">3</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Reward</div>
-                <div class="loop-node-text">For those without routines: short-term coping (screen, convenience food, late nights) feels like survival. Healthy habits lost to academic trade-offs.</div>
-              </div>
-            </div>
-            <div class="loop-connector"></div>
-            <div class="loop-node">
-              <div class="loop-node-icon node-consequence">4</div>
-              <div class="loop-node-content">
-                <div class="loop-node-label">Consequence</div>
-                <div class="loop-node-text">Habits are fully entrenched. Exercise drops first. Sleep and eating follow. Intervention at this stage is too late. The window was Sec 1 to 3.</div>
-              </div>
-            </div>
+        <div class="loop-flow-h">
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">1</span> Trigger</div>
+            <div class="loop-step-text">External structure has largely stepped back. Youth is functionally self-governing. Academic pressure peaks. No safety net remains.</div>
           </div>
-          <div class="loop-back">No loop-back. By this stage the drift has either been caught or it hasn't.</div>
-          <div class="loop-quote">Y06: "Gym is literally who I am now. I'll skip homework before I skip the gym." Y09: "I used to swim three times a week. Then tuition started. Then exams. Now I don't do anything."</div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">2</span> Default</div>
+            <div class="loop-step-text">Those who built routines in Sec 1 to 3 carry them forward. Those who did not are still relying on support that is no longer there.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">3</span> Reward</div>
+            <div class="loop-step-text">For those without routines: short-term coping feels like survival. Healthy habits are the first thing sacrificed to academic pressure.</div>
+          </div>
+          <div class="loop-step">
+            <div class="loop-step-label"><span class="loop-step-num">4</span> Consequence</div>
+            <div class="loop-step-text">Habits are fully entrenched or fully absent. Exercise drops first. Sleep and eating follow. The window for intervention was Sec 1 to 3.</div>
+          </div>
         </div>
+        <div class="loop-back-bar"><span class="loop-arrow">&circlearrowleft;</span> No loop-back. By this stage the drift has either been caught or it has not.</div>
+        <div class="loop-quote-row">Y06: "Gym is literally who I am now. I'll skip homework before I skip the gym." &ensp; Y09: "I used to swim three times a week. Then tuition started. Then exams. Now I don't do anything." &ensp; Y12: "My parents just... stopped checking. I didn't know if they trusted me or just gave up."</div>
       </div>
 
     </div>
 
-    <!-- Transition arrow -->
-    <div class="loop-transition-arrow">
-      <span class="loop-transition-label">With the right intervention at Sec 1 to 3, the drift loop becomes...</span>
+    <!-- Bridge to ideal cycle -->
+    <div class="loop-bridge">
+      <div class="loop-bridge-label">With the right intervention at Sec 1 to 3, the drift loop becomes...</div>
     </div>
 
     <!-- To-Be: Ideal Cycle -->
@@ -4167,38 +4169,37 @@
         <span class="ideal-loop-tag">North star</span>
       </div>
 
-      <div class="ideal-loop-grid">
-        <div class="ideal-node">
-          <div class="ideal-node-icon">1</div>
-          <div class="ideal-node-label">Same trigger</div>
-          <div class="ideal-node-text">School ends. Youth is home. The unsupervised gap opens. The same moment of choice arrives.</div>
+      <div class="ideal-flow-h">
+        <div class="ideal-step">
+          <div class="ideal-step-label"><span class="ideal-step-num">1</span> Same trigger</div>
+          <div class="ideal-step-text">School ends. Youth is home. The unsupervised gap opens. The same moment of choice arrives.</div>
         </div>
-        <div class="ideal-node">
-          <div class="ideal-node-icon">2</div>
-          <div class="ideal-node-label">Redirected choice</div>
-          <div class="ideal-node-text">The intervention makes the healthier option easier, more visible, or more social than the default. A peer nudge, a kit, a streak, a trade.</div>
+        <div class="ideal-step">
+          <div class="ideal-step-label"><span class="ideal-step-num">2</span> Redirected</div>
+          <div class="ideal-step-text">The intervention makes the healthier option easier, more visible, or more social. A peer nudge, a kit, a streak, a trade.</div>
         </div>
-        <div class="ideal-node">
-          <div class="ideal-node-icon">3</div>
-          <div class="ideal-node-label">Felt reward</div>
-          <div class="ideal-node-text">The reward is immediate and identity-linked: "I feel good," "my streak grew," "my friend noticed." Not a health lecture. A personal win.</div>
+        <div class="ideal-step">
+          <div class="ideal-step-label"><span class="ideal-step-num">3</span> Felt reward</div>
+          <div class="ideal-step-text">The reward is immediate and identity-linked: "I feel good," "my streak grew," "my friend noticed." A personal win, not a health lecture.</div>
         </div>
-        <div class="ideal-node">
-          <div class="ideal-node-icon">4</div>
-          <div class="ideal-node-label">Confidence builds</div>
-          <div class="ideal-node-text">Each small win builds the belief: "I can do this myself." Confidence compounds. The healthy choice starts feeling like the obvious choice.</div>
+        <div class="ideal-step">
+          <div class="ideal-step-label"><span class="ideal-step-num">4</span> Confidence</div>
+          <div class="ideal-step-text">Each small win builds the belief: "I can do this myself." Confidence compounds. The healthy choice starts feeling obvious.</div>
         </div>
-        <div class="ideal-node">
-          <div class="ideal-node-icon">5</div>
-          <div class="ideal-node-label">Self-managing</div>
-          <div class="ideal-node-text">The intervention becomes unnecessary. The youth owns the routine. When life disrupts it, they have the confidence to restart, not the despair of having lost it.</div>
+        <div class="ideal-step">
+          <div class="ideal-step-label"><span class="ideal-step-num">5</span> Self-managing</div>
+          <div class="ideal-step-text">The intervention becomes unnecessary. The youth owns the routine. When life disrupts it, they restart instead of giving up.</div>
         </div>
       </div>
 
+      <div class="ideal-back-bar"><span class="loop-arrow">&circlearrowleft;</span> The loop sustains itself. Confidence feeds forward. Each disruption is a restart, not a failure.</div>
+
       <div class="ideal-loop-hmw">
-        <strong>This is the HMW answered:</strong> "HMW motivate youth (aged 13 to 16) and their key supporters to build their confidence to start and sustain healthy habits across the 6 Wells, so that healthier choices become natural, even as routines change and independence grows?" The ideal cycle is what "natural" looks like. The interventions in this section are designed to start the cycle. The goal is for youth to no longer need them.
+        <strong>This is the HMW answered:</strong> "HMW motivate youth (aged 13 to 16) and their key supporters to build their confidence to start and sustain healthy habits across the 6 Wells, so that healthier choices become natural, even as routines change and independence grows?" The ideal cycle is what "natural" looks like. The interventions below are designed to start this cycle. The goal is for youth to no longer need them.
       </div>
     </div>
+
+    <p class="loop-section-bridge">The concept verdicts below assess how well each prototype's mechanics can break the drift loops above and start the ideal cycle. For each concept, we identify what held, what broke, and what to do next.</p>
 
   </div>
 
