@@ -851,6 +851,111 @@
     font-style: italic; margin-top: 8px;
   }
 
+  /* ── Portfolio Gallery ── */
+  .portfolio-intro {
+    color: var(--text-secondary); font-weight: 300;
+    line-height: 1.7; margin-bottom: 28px; font-size: 0.94rem;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 20px; margin-bottom: 32px;
+  }
+  .portfolio-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden; cursor: pointer;
+    transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    position: relative;
+  }
+  .portfolio-card:hover {
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .portfolio-card.expanded {
+    grid-column: 1 / -1;
+  }
+  .portfolio-card-header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .portfolio-origin {
+    display: inline-block; font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 10px;
+  }
+  .portfolio-origin.from-c1 { background: rgba(94,231,213,0.12); color: #5ee7d5; }
+  .portfolio-origin.from-c2 { background: rgba(255,179,71,0.12); color: #ffb347; }
+  .portfolio-origin.from-c3 { background: rgba(196,161,255,0.12); color: #c4a1ff; }
+  .portfolio-origin.new-direction { background: rgba(248,113,113,0.12); color: #f87171; }
+  .portfolio-card-title {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--text-primary); margin: 0 0 6px;
+    line-height: 1.4;
+  }
+  .portfolio-card-subtitle {
+    font-size: 0.82rem; color: var(--text-muted);
+    font-weight: 400; line-height: 1.5;
+  }
+  .portfolio-card-body {
+    padding: 16px 24px 20px;
+  }
+  .portfolio-card-body p {
+    font-size: 0.9rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300; margin: 0 0 14px;
+  }
+  .portfolio-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 12px;
+  }
+  .portfolio-tag {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    letter-spacing: 0.03em;
+  }
+  .tag-well { background: rgba(94,231,213,0.1); color: #5ee7d5; }
+  .tag-principle { background: rgba(255,179,71,0.1); color: #ffb347; }
+  .tag-pillar { background: rgba(196,161,255,0.1); color: #c4a1ff; }
+  .tag-window { background: rgba(124,196,250,0.1); color: #7cc4fa; }
+
+  .portfolio-detail {
+    display: none; padding: 0 24px 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .portfolio-card.expanded .portfolio-detail { display: block; padding-top: 16px; }
+  .portfolio-card .expand-hint {
+    font-size: 0.72rem; color: var(--text-muted);
+    text-align: center; padding: 8px 0 14px;
+    transition: opacity 0.2s;
+  }
+  .portfolio-card.expanded .expand-hint { opacity: 0; height: 0; padding: 0; overflow: hidden; }
+
+  .detail-row {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 14px;
+  }
+  .detail-block h5 {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 6px;
+  }
+  .detail-block p {
+    font-size: 0.85rem !important; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300; margin: 0;
+  }
+  .portfolio-evidence {
+    font-size: 0.78rem; color: var(--text-muted);
+    font-style: italic; margin-top: 10px; padding-top: 10px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .detail-row { grid-template-columns: 1fr; }
+  }
+
   /* ══════════════════════════════════════
      DATA VISUALIZATION STYLES
      ══════════════════════════════════════ */
@@ -3153,39 +3258,365 @@
 
   <div class="divider"></div>
 
-  <!-- New directions -->
+  <!-- New directions portfolio -->
   <div id="rec-directions">
-    <div class="cluster-label">New directions worth exploring</div>
-    <p style="color: var(--text-secondary); font-weight: 300; line-height: 1.7; margin-bottom: 20px;">These ideas emerged directly from what participants said or did during testing. Each one has at least two independent signals from different sessions pointing in the same direction. They represent opportunities that the validation surfaced precisely because real youth and parents were involved, which is the value of testing early with simple mechanics rather than waiting for a polished product.</p>
+    <div class="cluster-label">Concept portfolio: new directions worth exploring</div>
+    <p class="portfolio-intro">These directions emerged from what participants said and did during validation testing. Each one has at least two independent signals from different sessions. They represent opportunities that the validation surfaced precisely because real youth and parents were involved, which is the value of testing early with simple mechanics rather than waiting for a polished product. Every direction is mapped back to the project's north star, the 6 wells, the design principles, and the windows where unhealthy choices build up. Click any card to see the full mapping.</p>
 
-    <div class="direction-card" style="border-left: 3px solid var(--c1);">
-      <h4>Feelings magnets as a standalone communication tool</h4>
-      <p>Two participants independently identified that C1's emotion magnets allow youth to signal their state to a parent without starting a conversation. This "silent check-in" function was not part of the original design but resonated more strongly than the bedtime routine feature for some families. A standalone product built around non-verbal state signalling could serve a broader audience than the sleep-specific board.</p>
-      <div class="direction-source">Surfaced by TP01, TY03 across separate sessions</div>
-    </div>
+    <div class="portfolio-grid">
 
-    <div class="direction-card" style="border-left: 3px solid var(--c2);">
-      <h4>Group challenge variant for C2</h4>
-      <p>Several youth described C2 as a group activity without being prompted. TY11 invented a competitive bet mechanic on the spot. TY10 wanted to involve up to five friends. The pair model may be underselling the concept. A variant designed for small groups (3 to 5 youth) with rotating challenges and a leaderboard could tap into the same social motivation at a larger scale.</p>
-      <div class="direction-source">Surfaced by TY11, TY10, TY06 across separate sessions</div>
-    </div>
+      <!-- Card 1: Feelings Magnets -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin from-c1">Spin-off from C1</div>
+          <div class="portfolio-card-title">Mood Magnets: Silent Check-In</div>
+          <div class="portfolio-card-subtitle">A standalone set of emotion magnets on the fridge that let youth signal how they are feeling without starting a conversation.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Sleep</span>
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-principle">Autonomy with guardrails</span>
+            <span class="portfolio-tag tag-pillar">Shared Rhythm</span>
+            <span class="portfolio-tag tag-window">Window 2: 9pm+</span>
+          </div>
+          <p>Two participants independently identified that C1's emotion magnets let youth signal their state to a parent without having to explain. This "silent check-in" was not part of the original design but resonated more strongly than the bedtime routine feature for some families.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Shared Rhythm. The magnet becomes a daily touchpoint that both sides can read without it turning into a conversation about rules. The relationship itself becomes the structure.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Autonomy with guardrails: youth chooses what to express. Replace, don't restrict: replaces the "how was your day / fine" loop with a visible signal. Make it fit the day: lives on the fridge, zero effort required.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A set of emotion magnets on the fridge. Youth places one when they get home or before bed. Parent sees it. No conversation required, but the door is open if either side wants to talk. A "tired" magnet that TY03 specifically requested would be the most used.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>It is not a mood tracker or a journalling app. There is no data, no history, no login. It is a physical signal that changes daily and that both sides can see. The simplicity is the point.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TP01 noted the communication function of magnets independently. TY03 requested a "sleepy" magnet, the most common state. TY06 said the board works best beside the bed as a visible cue.</div>
+        </div>
+      </div>
 
-    <div class="direction-card" style="border-left: 3px solid var(--c2);">
-      <h4>Beauty and creativity challenge decks</h4>
-      <p>Multiple parents noted that the current deck topics skew toward traditionally health-coded activities. TP04's daughters wanted skincare and beauty content. Adding non-health decks that still serve wellbeing outcomes (self-care routines, creative expression, social connection) could broaden the appeal without diluting the core mechanic.</p>
-      <div class="direction-source">Surfaced by TP04, TP10 across separate sessions</div>
-    </div>
+      <!-- Card 2: Group Challenge -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin from-c2">Spin-off from C2</div>
+          <div class="portfolio-card-title">Squad Mode: Group Challenge</div>
+          <div class="portfolio-card-subtitle">C2's peer challenge expanded from pairs to groups of 3 to 5, with rotating challenges, a leaderboard, and a group streak.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Eat</span>
+            <span class="portfolio-tag tag-well">Exercise</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-principle">Replace, don't restrict</span>
+            <span class="portfolio-tag tag-pillar">Confidence Loop</span>
+            <span class="portfolio-tag tag-window">Window 1: 2-6pm</span>
+          </div>
+          <p>Several youth described C2 as a group activity without being prompted. TY11 invented a competitive bet mechanic on the spot. TY10 wanted to involve up to five friends. The pair model may be underselling the concept.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Confidence Loop. The group dynamic builds on itself: one person starts, others join, the streak becomes social proof, and healthy behaviour becomes part of the group's identity rather than an individual task.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Replace, don't restrict: fills the after-school screen gap with a social activity. Fit the day they already have: slots into the existing hangout window. Youth already do peer challenges informally (weight loss bets, "fining" friends for fast food).</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A group of 3 to 5 friends pick a topic deck and run a 14-day challenge together. Each day, one person draws the card and the whole group does it. Rotating "challenge captain" role. A shared streak that only breaks if the majority skips. Shield mechanic still protects one slip per cycle.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Moves accountability from a single buddy (who might lose interest) to a group (where social pressure is distributed). The leaderboard is internal to the group, not public. Matches how youth actually socialise: in clusters, not pairs.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TY11 invented a bet mechanic unprompted. TY10 wanted up to 5 people. TY06 compared it to Snapchat streaks, a group behaviour. Youth in co-creation were already doing peer challenges informally.</div>
+        </div>
+      </div>
 
-    <div class="direction-card" style="border-left: 3px solid var(--c3);">
-      <h4>Youth-led questioning game</h4>
-      <p>The strongest single reaction in C3 testing came from a youth who valued the ability to ask parents questions, not answer them. This reversed dynamic is rare in parent-youth health conversations and could be the foundation of a concept that feels genuinely youth-owned. A lighter card game where youth set the agenda, choose the questions, and lead the conversation may land differently from a game where both sides answer symmetrically.</p>
-      <div class="direction-source">Surfaced by TY01 (7/7 rating), supported by TY06 referral behaviour</div>
-    </div>
+      <!-- Card 3: Beauty + Creativity Decks -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin from-c2">Spin-off from C2</div>
+          <div class="portfolio-card-title">Glow Up+: Beauty and Self-Care Decks</div>
+          <div class="portfolio-card-subtitle">New topic decks for C2 that connect to what youth already care about: skincare routines, creative expression, and social confidence.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-well">Exercise</span>
+            <span class="portfolio-tag tag-principle">Replace, don't restrict</span>
+            <span class="portfolio-tag tag-pillar">Confidence Loop</span>
+            <span class="portfolio-tag tag-window">Window 1: 2-6pm</span>
+          </div>
+          <p>Multiple parents noted that the current decks skew toward traditionally health-coded activities. TP04's daughters wanted skincare and beauty content. Adding decks that still serve wellbeing outcomes through what youth already care about could broaden the appeal significantly.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Confidence Loop. When youth see results they care about (clearer skin, better energy, a creative project they are proud of), that builds the confidence to sustain the behaviour. The health outcome follows the identity one.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Replace, don't restrict: replaces mindless scrolling with a self-care activity that still feels like "me time." Autonomy with guardrails: youth choose decks that match their interests, not health categories imposed from outside.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>New topic decks added to the C2 system: "Skin Game" (skincare challenges), "Main Character" (confidence and presentation), "Create Mode" (creative expression replacing screen time). Same 14-day format, same buddy or group mechanic. The health framing is invisible. The youth framing is front and centre.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Co-creation confirmed that motivation connects to appearance, energy, and social credibility, not long-term health outcomes. These decks speak directly to what participants said matters to them right now.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TP04's daughters wanted skincare and makeup content. Co-creation youth tied motivation to appearance and social credibility. The "Glow Up" deck name resonated immediately in every session.</div>
+        </div>
+      </div>
 
-    <div class="direction-card" style="border-left: 3px solid var(--c3);">
-      <h4>Never Have I Ever entry format for C3</h4>
-      <p>TY11 suggested a "Never Have I Ever" format as the way into the game. This would lower the trust threshold significantly, since the format is already familiar and socially safe among youth. A Level 1 deck using this structure could solve the initiation problem and build comfort before deeper conversation cards.</p>
-      <div class="direction-source">Surfaced by TY11, supported by TP11's gamification suggestion</div>
+      <!-- Card 4: Youth-Led Questioning -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin from-c3">Spin-off from C3</div>
+          <div class="portfolio-card-title">Flip the Script: Youth-Led Conversations</div>
+          <div class="portfolio-card-subtitle">A card game where youth ask the questions and parents answer. The power dynamic is reversed on purpose.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-well">Sleep</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-principle">Autonomy with guardrails</span>
+            <span class="portfolio-tag tag-pillar">Shared Rhythm</span>
+            <span class="portfolio-tag tag-window">Window 2: Evening</span>
+          </div>
+          <p>The strongest single reaction in C3 testing came from a youth who valued the ability to ask parents questions, not answer them. This reversed dynamic is rare in parent-youth health conversations and could be the foundation of a concept that feels genuinely youth-owned.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Shared Rhythm. When youth lead the conversation, the relationship shifts from "parent checks on youth" to "both sides are curious about each other." That rhythm, once established, makes conversations about sleep, screens, and eating feel natural rather than imposed.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Autonomy with guardrails: youth set the agenda, choose the cards, and control the pace. Replace, don't restrict: replaces the lecture dynamic with genuine curiosity. The research showed that one-sided advice is what shuts youth down.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A card deck where every question is designed for youth to ask parents. "What were you scared of at my age?" "What is something you got wrong as a teenager?" "If you could change one rule you have for me, which one?" The parent answers. The youth listens. No Swap, no symmetry, just one direction: youth asks, parent opens up.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Every existing family conversation game assumes both sides should share equally. The research showed that is not where the power imbalance sits. Youth feel interrogated. This concept removes that entirely. The parent becomes the vulnerable one, which is what TY01 responded to so strongly.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TY01 gave 7/7 specifically because "the game lets me ask questions TO my parents." TY06 said she would refer friends with poor parent relationships. The reversed dynamic was the single strongest signal in C3 testing.</div>
+        </div>
+      </div>
+
+      <!-- Card 5: Never Have I Ever -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin from-c3">Spin-off from C3</div>
+          <div class="portfolio-card-title">Never Have I Ever: Family Edition</div>
+          <div class="portfolio-card-subtitle">A familiar party game format as the entry point for C3. Lowers the trust threshold by starting with something youth already know.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-principle">Make it fit the day</span>
+            <span class="portfolio-tag tag-pillar">Shared Rhythm</span>
+            <span class="portfolio-tag tag-window">Window 2: Evening</span>
+          </div>
+          <p>TY11 suggested a "Never Have I Ever" format as the way into the game. The format is already familiar and socially safe among youth. A Level 1 deck using this structure could solve the initiation problem and build comfort before deeper conversation cards.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Shared Rhythm. The format is light enough that it can become a regular dinner table activity. Once the rhythm is established, the transition to deeper cards happens naturally because trust has already been built through play.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Make it fit the day: takes 10 minutes at dinner, no preparation needed. Replace, don't restrict: replaces awkward silence or phone-at-the-table with an activity both sides enjoy. Autonomy with guardrails: the game structure provides safety while the content drives connection.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A small deck of "Never Have I Ever" statements written for families. "Never have I ever pretended to be asleep when someone checked on me." "Never have I ever eaten something I told someone else not to eat." Light, funny, low-stakes. After 3 to 4 sessions, a Level 2 deck with slightly deeper prompts becomes available. The escalation is built into the product, not forced by a facilitator.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>C3's biggest problem was that nobody initiated. This format is self-starting: leave the deck on the table, someone picks up a card, and the game begins. No rules explanation needed. No "let's sit down and play" moment. It solves the trigger gap by making starting feel incidental.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TY11 suggested the format unprompted. TP11 independently suggested gamification with voting. C3's initiation gap was flagged by 4 of 8 participants as the top barrier to use.</div>
+        </div>
+      </div>
+
+      <!-- Card 6: NEW CONCEPT - After-School Survival Kit -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin new-direction">New direction</div>
+          <div class="portfolio-card-title">After-School Survival Kit</div>
+          <div class="portfolio-card-subtitle">A physical kit for the 2-6pm window with pre-made options that make the healthy choice the easiest one. Designed for the moment when no adult is present.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Eat</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-well">Exercise</span>
+            <span class="portfolio-tag tag-principle">Make it fit the day</span>
+            <span class="portfolio-tag tag-pillar">Empowered Transitions</span>
+            <span class="portfolio-tag tag-window">Window 1: 2-6pm</span>
+          </div>
+          <p>The research identified Window 1 (2-6pm) as the largest unsupervised gap. 0 out of 6 parents are present. Youth default to screens and fast food not because they want to, but because those are the easiest options available. This concept puts healthier defaults into that window.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Empowered Transitions. This targets the P6-to-Sec 1 moment when Student Care ends and the after-school gap opens. The kit fills the gap that external structure used to fill, but with choices the youth controls rather than rules the parent sets.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Make it fit the day: designed for the exact window that opens when school ends. Replace, don't restrict: does not take the phone away, but makes other options more visible and easier. Autonomy with guardrails: youth picks what goes in the kit each week.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A physical box or bag that youth and parent fill together on Sunday. Pre-made snacks, a short activity card (stretch, walk, creative prompt), and a "this or that" choice card for the afternoon. No app, no tracking. The kit is the prompt. When youth gets home, it is already there. The decision has been made before the moment arrives.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Co-creation showed that every youth idea changed something around them, not something inside them. This concept follows that insight. It does not ask youth to try harder. It changes what is available in the moment when they are most vulnerable to the easier option. Y10 said: "Something I don't need to put work into." This is that.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: Y10 (co-creation) orders food daily because it requires no effort. Y09 cooks alone at 7-8pm because nothing is prepared. P03 has no visibility for 4+ hours. Window 1 was the largest gap identified in research. Co-creation youth designed environment changes, not willpower changes.</div>
+        </div>
+      </div>
+
+      <!-- Card 7: NEW CONCEPT - Transition Toolkit -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin new-direction">New direction</div>
+          <div class="portfolio-card-title">The Handover: Transition Toolkit for Parents</div>
+          <div class="portfolio-card-subtitle">A structured guide for parents at the P6-to-Sec 1 transition. Helps them shift from managing routines to coaching independence.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Sleep</span>
+            <span class="portfolio-tag tag-well">Eat</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-principle">Autonomy with guardrails</span>
+            <span class="portfolio-tag tag-pillar">Empowered Transitions</span>
+            <span class="portfolio-tag tag-window">P6 to Sec 1 transition</span>
+          </div>
+          <p>Co-creation made clear that parents want to guide, not control, but the strategies they rely on were built for primary school. This concept gives parents a structured way to hand over responsibility at the right pace, well after well, instead of all at once.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Empowered Transitions. The research showed that the drift happens not because parents stop caring but because they step back before youth are ready. This concept makes the handover intentional rather than accidental.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Autonomy with guardrails: the youth gains control of one well at a time, with the parent shifting from manager to coach. Replace, don't restrict: replaces the sudden loss of structure with a gradual transfer. Make it fit the day: tied to the actual transition moment, not a general programme.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A physical booklet or card set organised by well (Sleep, Eat, Screen, Exercise, Bond, Learn). For each well, a parent-youth conversation prompt, a "hand it over" checklist, and a trial period. "This month, you manage your own bedtime. Here is what worked before. Let us check in on Sunday." Designed for the summer before Sec 1 or the first term.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Nothing in the market addresses the handover moment directly. Parenting resources focus on younger children or crisis intervention. This sits in the gap between "I manage everything" and "I have no idea what they are doing." Kartika from co-creation said: "We only have one. I don't have the ability to try and see." This gives first-time parents of teenagers a structured path.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: Kartika (co-creation): "We only have one child. I don't have the ability to try and see." Calvin (co-creation): "Feel it is too late now to set a rule." P04: "In primary school, everything was structured. Then secondary school started." The drift research identified three transition points where habits break.</div>
+        </div>
+      </div>
+
+      <!-- Card 8: NEW CONCEPT - Screen Swap Challenges -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin new-direction">New direction</div>
+          <div class="portfolio-card-title">Screen Swap: 30-Minute Trade</div>
+          <div class="portfolio-card-subtitle">Trade 30 minutes of screen time for a pre-set alternative. Not a restriction. A replacement that feels like a fair deal.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-well">Exercise</span>
+            <span class="portfolio-tag tag-well">Bond</span>
+            <span class="portfolio-tag tag-principle">Replace, don't restrict</span>
+            <span class="portfolio-tag tag-pillar">Confidence Loop</span>
+            <span class="portfolio-tag tag-window">Window 1: 2-6pm</span>
+            <span class="portfolio-tag tag-window">Window 2: 9pm+</span>
+          </div>
+          <p>Co-creation confirmed that restriction triggers resistance. Amanda warned: "Once take back, I will go back to my sneakier behaviour." This concept never takes the phone away. It offers a trade that youth choose to make because the alternative is genuinely appealing.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Confidence Loop. Each trade is a small win: "I chose to do something else and it felt good." Over time, that builds the confidence to self-regulate without needing the trade structure. The goal is to make the concept unnecessary, not permanent.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Design principles</h5>
+              <p>Replace, don't restrict: the core principle. Never take something away without putting something in its place. Screens meet emotional and social needs. The replacement has to meet those same needs or it will not stick. Autonomy with guardrails: youth picks the trade, not the parent.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A set of "trade cards" with pre-written 30-minute alternatives. "Trade 30 minutes of scrolling for: a walk with music. Cooking something from TikTok. Sketching for 20 minutes then 10 minutes of whatever you want." Youth picks one trade per day. No tracking, no app. The card is the commitment. Works in both windows.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>Screen time interventions typically restrict or monitor. This one negotiates. The language is "trade" not "limit." The alternatives were drawn from what youth in co-creation actually said they would do. Keev said he needs stimulation. The trades provide stimulation. Just not from a screen.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: Amanda (co-creation): "Once take back, I will go back to my sneakier behaviour." Keev (co-creation): "I cannot survive. I need stimulation." Y10: screen time fills the gap when nothing else is available. Both co-creation and validation confirmed that restriction backfires.</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -3514,6 +3945,22 @@ function initChartsOnNav(sectionId) {
 // Hook into navigateTo
 const _origNavigateTo = navigateTo;
 // Override is handled inside navigateTo already via the chart render calls
+
+// ── Portfolio card toggle ──
+function togglePortfolioCard(card) {
+  const wasExpanded = card.classList.contains('expanded');
+  // Close all other cards
+  document.querySelectorAll('.portfolio-card.expanded').forEach(c => {
+    if (c !== card) c.classList.remove('expanded');
+  });
+  // Toggle this card
+  if (wasExpanded) {
+    card.classList.remove('expanded');
+  } else {
+    card.classList.add('expanded');
+    setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
+}
 </script>
 </body>
 </html>
