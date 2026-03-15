@@ -847,9 +847,9 @@
     overflow: hidden; gap: 2px;
     margin-top: 10px;
   }
-  .sc-verdict-bar .bar-met { background: var(--accent-teal); }
-  .sc-verdict-bar .bar-partial { background: var(--accent-orange); }
-  .sc-verdict-bar .bar-not { background: var(--accent-coral); }
+  .sc-verdict-bar .bar-met { background: var(--status-met); }
+  .sc-verdict-bar .bar-partial { background: var(--status-partial); }
+  .sc-verdict-bar .bar-not { background: var(--status-not); }
   .sc-verdict-legend {
     display: flex; justify-content: center; gap: 14px;
     margin-top: 8px;
@@ -858,9 +858,9 @@
     font-size: 0.68rem; color: var(--text-muted);
     display: flex; align-items: center; gap: 4px;
   }
-  .sc-verdict-legend .dot-met { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-teal); }
-  .sc-verdict-legend .dot-partial { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-orange); }
-  .sc-verdict-legend .dot-not { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-coral); }
+  .sc-verdict-legend .dot-met { width: 6px; height: 6px; border-radius: 50%; background: var(--status-met); }
+  .sc-verdict-legend .dot-partial { width: 6px; height: 6px; border-radius: 50%; background: var(--status-partial); }
+  .sc-verdict-legend .dot-not { width: 6px; height: 6px; border-radius: 50%; background: var(--status-not); }
 
   /* Chart containers */
   .chart-row {
@@ -1204,10 +1204,55 @@
   }
 
   /* ── Responsive ── */
+  /* ── Screen reader only ── */
+  .sr-only {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+
+  /* ── Data tables below charts ── */
+  .chart-data-table {
+    width: 100%; border-collapse: collapse;
+    margin-top: 16px; font-size: 0.82rem;
+  }
+  .chart-data-table caption {
+    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    text-align: left; padding-bottom: 8px;
+  }
+  .chart-data-table th, .chart-data-table td {
+    padding: 8px 12px; text-align: left;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .chart-data-table th {
+    color: var(--text-muted); font-weight: 600;
+    font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .chart-data-table td { color: var(--text-secondary); }
+  .chart-data-table tr:last-child td { border-bottom: none; }
+
+  /* ── Hamburger button ── */
+  .hamburger {
+    display: none;
+    position: fixed; top: 16px; left: 16px; z-index: 200;
+    background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+    border-radius: 10px; padding: 10px 12px;
+    color: var(--text-primary); font-size: 1.4rem; line-height: 1;
+    cursor: pointer; backdrop-filter: blur(12px);
+  }
+  .sidebar-overlay {
+    display: none; position: fixed; inset: 0; z-index: 90;
+    background: rgba(0,0,0,0.5);
+  }
+  .sidebar-overlay.open { display: block; }
   @media (max-width: 1024px) {
-    .sidebar { display: none; }
+    .hamburger { display: block; }
+    .sidebar { transform: translateX(-100%); transition: transform 0.3s ease; }
+    .sidebar.open { transform: translateX(0); }
     .main-content { margin-left: 0; }
-    .section { padding: 32px 20px 60px; }
+    .section { padding: 32px 20px 60px; padding-top: 64px; }
   }
   @media (max-width: 768px) {
     .section { padding: 24px 16px 60px; }
@@ -1231,8 +1276,12 @@
 <div class="bg-orb"></div>
 <div class="grain"></div>
 
+<!-- ════ MOBILE HAMBURGER ════ -->
+<button class="hamburger" aria-label="Open navigation menu" onclick="toggleMobileNav()">&#9776;</button>
+<div class="sidebar-overlay" onclick="toggleMobileNav()"></div>
+
 <!-- ════ SIDEBAR NAVIGATION ════ -->
-<nav class="sidebar">
+<nav class="sidebar" role="navigation" aria-label="Report sections">
   <div class="sidebar-brand">
     YPS Research Report
     <small>Validation Testing &middot; March 2026</small>
@@ -1290,12 +1339,12 @@
   </div>
 </nav>
 
-<div class="main-content">
+<div class="main-content" role="main">
 
 <!-- ════════════════════════════════════════
      SECTION: LANDING / OVERVIEW
      ════════════════════════════════════════ -->
-<div class="section active" id="landing">
+<div class="section active" id="landing" role="region" aria-label="Overview">
 
   <div class="landing-hero">
     <div class="hero-badge">
@@ -1361,7 +1410,7 @@
 <!-- ════════════════════════════════════════
      SECTION: SYNTHESIS
      ════════════════════════════════════════ -->
-<div class="section" id="synthesis">
+<div class="section" id="synthesis" role="region" aria-label="Synthesis">
 
   <div class="step-indicator">
     <span class="si-dot"></span> <span>Participant Data</span>
@@ -1381,15 +1430,42 @@
       <div class="chart-title">Pattern evidence strength</div>
       <div class="chart-sub">Number of participants who independently surfaced each pattern.</div>
       <div class="chart-canvas-wrap" style="height:280px;">
-        <canvas id="syn-strength-chart"></canvas>
+        <canvas id="syn-strength-chart" role="img" aria-label="Bar chart showing pattern strength across concepts by number of participants"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Pattern strength (participants who surfaced each)</caption>
+        <thead><tr><th>Pattern</th><th>Participants</th></tr></thead>
+        <tbody>
+          <tr><td>C1-P1 Structure slipping</td><td>5</td></tr>
+          <tr><td>C1-P2 Sustainability</td><td>5</td></tr>
+          <tr><td>C1-P3 Parent column</td><td>4</td></tr>
+          <tr><td>C1-P4 Physical cue</td><td>5</td></tr>
+          <tr><td>C2-P1 Youth ranked first</td><td>6</td></tr>
+          <tr><td>C2-P2 QR blocker</td><td>4</td></tr>
+          <tr><td>C2-P3 Fixed buddy</td><td>3</td></tr>
+          <tr><td>C2-P4 Bulk Up name</td><td>3</td></tr>
+          <tr><td>C3-P1 Swap confusion</td><td>3</td></tr>
+          <tr><td>C3-P2 Trust gap</td><td>4</td></tr>
+          <tr><td>C3-P3 Felt distance</td><td>4</td></tr>
+          <tr><td>C3-P4 No trigger</td><td>4</td></tr>
+        </tbody>
+      </table>
     </div>
     <div class="chart-box">
       <div class="chart-title">Keep / Fix / Drop distribution</div>
       <div class="chart-sub">Design actions across all 12 patterns.</div>
       <div class="chart-canvas-wrap" style="height:280px;">
-        <canvas id="syn-kfd-chart"></canvas>
+        <canvas id="syn-kfd-chart" role="img" aria-label="Doughnut chart showing Keep, Fix, and Drop distribution of design actions"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Design actions breakdown</caption>
+        <thead><tr><th>Action</th><th>Count</th><th>%</th></tr></thead>
+        <tbody>
+          <tr><td>Keep</td><td>8</td><td>35%</td></tr>
+          <tr><td>Fix</td><td>14</td><td>61%</td></tr>
+          <tr><td>Drop</td><td>1</td><td>4%</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -1846,7 +1922,7 @@
 <!-- ════════════════════════════════════════
      SECTION: EVIDENCE (Step 1)
      ════════════════════════════════════════ -->
-<div class="section" id="evidence">
+<div class="section" id="evidence" role="region" aria-label="Evidence">
 
   <div class="step-indicator">
     <span class="si-dot active"></span> <span class="si-current">Step 1: Participant Data</span>
@@ -1866,15 +1942,43 @@
       <div class="chart-title">Ratings across all three concepts</div>
       <div class="chart-sub">Each dot is one participant on a 1&ndash;7 scale. Hover for details.</div>
       <div class="chart-canvas-wrap">
-        <canvas id="ev-ratings-chart"></canvas>
+        <canvas id="ev-ratings-chart" role="img" aria-label="Bar chart comparing participant ratings across three concepts on a 1 to 7 scale"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Participant ratings (1&ndash;7 scale)</caption>
+        <thead><tr><th>Participant</th><th>C1</th><th>C2</th><th>C3</th></tr></thead>
+        <tbody>
+          <tr><td>TP01</td><td>7</td><td>6.5</td><td>6</td></tr>
+          <tr><td>TP02</td><td>3</td><td>2</td><td>3</td></tr>
+          <tr><td>TP04</td><td>6</td><td>5</td><td>&mdash;</td></tr>
+          <tr><td>TP05</td><td>4</td><td>&mdash;</td><td>5</td></tr>
+          <tr><td>TP06</td><td>5</td><td>&mdash;</td><td>6</td></tr>
+          <tr><td>TP07</td><td>4.5</td><td>6</td><td>3</td></tr>
+          <tr><td>TP09</td><td>4</td><td>&mdash;</td><td>3.5</td></tr>
+          <tr><td>TP10</td><td>1</td><td>3</td><td>1</td></tr>
+          <tr><td>TP11</td><td>6</td><td>&mdash;</td><td>5</td></tr>
+          <tr><td>TP12</td><td>7</td><td>1</td><td>7</td></tr>
+          <tr><td>TY01</td><td>5</td><td>7</td><td>7</td></tr>
+          <tr><td>TY04</td><td>5</td><td>6</td><td>4</td></tr>
+          <tr><td>TY11</td><td>4</td><td>6</td><td>4</td></tr>
+        </tbody>
+      </table>
     </div>
     <div class="chart-box">
       <div class="chart-title">Sentiment by concept</div>
       <div class="chart-sub">Proportion of positive, mixed, and negative reactions per concept.</div>
       <div class="chart-canvas-wrap">
-        <canvas id="ev-sentiment-chart"></canvas>
+        <canvas id="ev-sentiment-chart" role="img" aria-label="Horizontal bar chart showing positive, mixed, and negative sentiment distribution per concept"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Sentiment distribution</caption>
+        <thead><tr><th>Concept</th><th>Positive</th><th>Mixed</th><th>Negative</th></tr></thead>
+        <tbody>
+          <tr><td>C1 Bedtime Bundle</td><td>3</td><td>4</td><td>4</td></tr>
+          <tr><td>C2 Hook U Up</td><td>8</td><td>2</td><td>3</td></tr>
+          <tr><td>C3 We Open Up</td><td>4</td><td>3</td><td>5</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -2355,7 +2459,7 @@
 <!-- ════════════════════════════════════════
      SECTION: ASSESSMENT (Step 3)
      ════════════════════════════════════════ -->
-<div class="section" id="assessment">
+<div class="section" id="assessment" role="region" aria-label="Assessment">
 
   <div class="step-indicator">
     <span class="si-dot"></span> <span>Participant Data</span>
@@ -2429,15 +2533,34 @@
       <div class="chart-title">Rating distribution by concept</div>
       <div class="chart-sub">Each bar is one participant. Hover for participant ID.</div>
       <div class="chart-canvas-wrap">
-        <canvas id="assess-ratings-chart"></canvas>
+        <canvas id="assess-ratings-chart" role="img" aria-label="Stacked bar chart showing rating distribution across concepts"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Rating distribution by concept</caption>
+        <thead><tr><th>Rating band</th><th>C1</th><th>C2</th><th>C3</th></tr></thead>
+        <tbody>
+          <tr><td>7 (highest)</td><td>2</td><td>2</td><td>2</td></tr>
+          <tr><td>5&ndash;6</td><td>4</td><td>4</td><td>5</td></tr>
+          <tr><td>3&ndash;4</td><td>3</td><td>2</td><td>5</td></tr>
+          <tr><td>1&ndash;2</td><td>1</td><td>2</td><td>2</td></tr>
+        </tbody>
+      </table>
     </div>
     <div class="chart-box">
       <div class="chart-title">Success metrics comparison</div>
       <div class="chart-sub">How many metrics each concept met, partially met, or missed.</div>
       <div class="chart-canvas-wrap">
-        <canvas id="assess-verdict-chart"></canvas>
+        <canvas id="assess-verdict-chart" role="img" aria-label="Stacked bar chart showing Met, Partial, and Not Met success metrics per concept"></canvas>
       </div>
+      <table class="chart-data-table">
+        <caption>Success metrics verdict</caption>
+        <thead><tr><th>Concept</th><th>Met</th><th>Partial</th><th>Not Met</th></tr></thead>
+        <tbody>
+          <tr><td>C1 Bedtime Bundle</td><td>0</td><td>3</td><td>1</td></tr>
+          <tr><td>C2 Hook U Up</td><td>2</td><td>1</td><td>1</td></tr>
+          <tr><td>C3 We Open Up</td><td>0</td><td>2</td><td>2</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 
@@ -2454,26 +2577,26 @@
     <!-- Verdict grid -->
     <div class="cluster-label">Success metric results</div>
     <div class="verdict-grid-dark">
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">Youth chooses magnets that reflect what they would actually do</div>
         <p>TY01 connected naturally. TY04 dismissed most options. TY11 needed help before engaging.</p>
         <div class="verdict-quote-dark"><span class="quote">"More of my thing &mdash; I can plan my own schedules."</span><br><span class="ev-src">TY01</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">Parent column feels fair, not like surveillance</div>
         <p>TY04 called it invasion of privacy. TP09 felt children would control the parent column. Only TP01 reached intended use.</p>
         <div class="verdict-quote-dark"><span class="quote">"Invasion of privacy &mdash; I wouldn't want parents knowing I'm feeling sad."</span><br><span class="ev-src">TY04</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
-        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-not);">
+        <div class="verdict-badge-dark" style="background: var(--status-not);">Not Met</div>
         <div class="verdict-metric-dark">Weekly review feels manageable</div>
         <p>No participant commented positively. TP07, TP09, TP10 all predicted drop-off within 1&ndash;2 weeks.</p>
         <div class="verdict-quote-dark"><span class="quote">"Will it be consistent for a period? I don't think so."</span><br><span class="ev-src">TP07</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">Both sides can see using it beyond week 1</div>
         <p>TP01 asked for the prototype. TY01 saw it helping with procrastination. Most others were doubtful once novelty fades.</p>
         <div class="verdict-quote-dark"><span class="quote">"I will keep doing it until I lose interest and forget."</span><br><span class="ev-src">TY11</span></div>
@@ -2604,26 +2727,26 @@
 
     <div class="cluster-label">Success metric results</div>
     <div class="verdict-grid-dark">
-      <div class="verdict-dark" style="--verdict-color: var(--accent-teal);">
-        <div class="verdict-badge-dark" style="background: var(--accent-teal);">Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-met);">
+        <div class="verdict-badge-dark" style="background: var(--status-met);">Met</div>
         <div class="verdict-metric-dark">Youth picks a deck that matches a real habit</div>
         <p>TY10 went straight to Recharge (sleep issues). TY01 chose Glow Up (skin). TY04 explored multiple decks deliberately. Self-directed in every youth session.</p>
         <div class="verdict-quote-dark"><span class="quote">"I would not mind doing this with my friends actually."</span><br><span class="ev-src">TY10</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-teal);">
-        <div class="verdict-badge-dark" style="background: var(--accent-teal);">Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-met);">
+        <div class="verdict-badge-dark" style="background: var(--status-met);">Met</div>
         <div class="verdict-metric-dark">Peer accountability creates genuine motivation</div>
         <p>4 of 5 youth ranked C2 first. TY06 independently compared to Snapchat streaks. TY11 invented a bet mechanic on the spot. Peer-driven, not compliance-driven.</p>
         <div class="verdict-quote-dark"><span class="quote">"It's kind of like Snapchat or TikTok streaks. You don't want to break the streak."</span><br><span class="ev-src">TY06</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
-        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-not);">
+        <div class="verdict-badge-dark" style="background: var(--status-not);">Not Met</div>
         <div class="verdict-metric-dark">Proof step does not break the streak</div>
         <p>QR blocked by 2026 school phone ban. TP10 counted the steps: "Scan, log in, post, share URL." TY08 raised selfie privacy concerns.</p>
         <div class="verdict-quote-dark"><span class="quote">"So leche ah, every day need to scan a QR code?"</span><br><span class="ev-src">TP02</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">Both partners can complete half the 14 days</div>
         <p>Youth confident about peer motivation. But fixed-buddy rule was too rigid. Youth wanted to rotate who they challenge.</p>
         <div class="verdict-quote-dark"><span class="quote">"I would do this with like, whoever is around &mdash; up to five people."</span><br><span class="ev-src">TY11</span></div>
@@ -2752,26 +2875,26 @@
 
     <div class="cluster-label">Success metric results</div>
     <div class="verdict-grid-dark">
-      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
-        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-not);">
+        <div class="verdict-badge-dark" style="background: var(--status-not);">Not Met</div>
         <div class="verdict-metric-dark">Both sides understand how to play without a facilitator</div>
         <p>Swap and Spark confused almost every participant. TP02 needed researcher intervention twice. No participant reached the simultaneous reveal.</p>
         <div class="verdict-quote-dark"><span class="quote">"Very confused about what 'Swap' actually means."</span><br><span class="ev-src">TP04</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">Questions land as curious and fun, not threatening</div>
         <p>TY01 and TP03 found them engaging. TY04 would have to lie. TY10 worried about lectures. Question set needs a lighter entry tier.</p>
         <div class="verdict-quote-dark"><span class="quote">"If I played this with my parents, most answers I would have to lie."</span><br><span class="ev-src">TY10</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
-        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-partial);">
+        <div class="verdict-badge-dark" style="background: var(--status-partial);">Partial</div>
         <div class="verdict-metric-dark">At least one moment of genuine surprise or laughter</div>
         <p>TP03 laughed mimicking his son. TP01 smiled throughout. But the designed moment of surprise &mdash; the simultaneous reveal &mdash; was not reached in any session.</p>
         <div class="verdict-quote-dark"><span class="quote">"Harmless looking segway to deeper conversations."</span><br><span class="ev-src">TP03</span></div>
       </div>
-      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
-        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+      <div class="verdict-dark" style="--verdict-color: var(--status-not);">
+        <div class="verdict-badge-dark" style="background: var(--status-not);">Not Met</div>
         <div class="verdict-metric-dark">Either side reaches for it again without being told to</div>
         <p>No participant described a natural trigger. TP06: his son would not start it. TP11: parent drives by default. Nothing in the environment signals "now is the time."</p>
         <div class="verdict-quote-dark"><span class="quote">"If I don't start it, nobody will."</span><br><span class="ev-src">TP06</span></div>
@@ -2892,6 +3015,12 @@
 
 <!-- ════ SCRIPTS ════ -->
 <script>
+// ── Mobile nav toggle ──
+function toggleMobileNav() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('open');
+}
+
 // ── Sidebar Navigation ──
 const navItems = document.querySelectorAll('.nav-item[data-section]');
 const sections = document.querySelectorAll('.section');
@@ -2913,6 +3042,10 @@ function navigateTo(sectionId, scrollTarget) {
   navSubs.forEach(sub => {
     sub.style.display = sub.dataset.parent === sectionId ? 'block' : 'none';
   });
+
+  // Close mobile nav if open
+  document.querySelector('.sidebar').classList.remove('open');
+  document.querySelector('.sidebar-overlay').classList.remove('open');
 
   // Show target section
   sections.forEach(s => s.classList.remove('active'));
@@ -2979,6 +3112,40 @@ Chart.defaults.color = 'rgba(255,255,255,0.6)';
 Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
 Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.font.size = 13;
+
+// ── Bar label plugin (shows values on bars) ──
+const barLabelPlugin = {
+  id: 'barLabels',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart;
+    chart.data.datasets.forEach((dataset, di) => {
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, i) => {
+        const val = dataset.data[i];
+        if (val == null || val === 0) return;
+        ctx.save();
+        ctx.fillStyle = '#fff';
+        ctx.font = 'bold 11px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        const { x, y, width, height, base } = bar.getProps(['x', 'y', 'width', 'height', 'base']);
+        // For horizontal bars
+        if (chart.options.indexAxis === 'y') {
+          const midX = (x + base) / 2;
+          const barW = Math.abs(x - base);
+          if (barW > 24) ctx.fillText(val, midX, y);
+        } else {
+          const midY = (y + base) / 2;
+          const barH = Math.abs(base - y);
+          if (barH > 16) ctx.fillText(val, x, midY);
+        }
+        ctx.restore();
+      });
+    });
+  }
+};
+Chart.register(barLabelPlugin);
 
 // ── Evidence Charts ──
 function renderEvidenceCharts() {
@@ -3129,9 +3296,9 @@ function renderAssessmentCharts() {
     data: {
       labels: ['C1 Bedtime Bundle', 'C2 Hook U Up', 'C3 We Open Up'],
       datasets: [
-        { label: 'Met', data: [0, 2, 0], backgroundColor: '#5ee7d5', borderRadius: 4 },
-        { label: 'Partial', data: [3, 1, 2], backgroundColor: '#ffb347', borderRadius: 4 },
-        { label: 'Not Met', data: [1, 1, 2], backgroundColor: '#ff7eb3', borderRadius: 4 }
+        { label: 'Met', data: [0, 2, 0], backgroundColor: '#4ade80', borderRadius: 4 },
+        { label: 'Partial', data: [3, 1, 2], backgroundColor: '#fbbf24', borderRadius: 4 },
+        { label: 'Not Met', data: [1, 1, 2], backgroundColor: '#f87171', borderRadius: 4 }
       ]
     },
     options: {
