@@ -1010,6 +1010,23 @@
   .rec-card-col ul { padding-left: 18px; margin: 0; }
   .rec-card-col ul li { margin-bottom: 6px; }
   .rec-card-col ul li:last-child { margin-bottom: 0; }
+  .rec-card-used {
+    padding: 12px 28px 0;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    align-items: center;
+  }
+  .rec-card-used-label {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin-right: 4px;
+  }
+  .rec-card-used-tag {
+    font-size: 0.65rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 4px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-secondary);
+  }
   .rec-card-reco {
     padding: 20px 28px 24px;
     background: rgba(255,255,255,0.015);
@@ -1043,8 +1060,25 @@
   /* Side-by-side as-is / to-be grid */
   .drift-loops-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 0;
+  }
+  /* Arrow column between as-is and to-be */
+  .drift-loops-arrow-col {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0; padding-top: 36px;
+  }
+  .drift-arrow-row {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+  }
+  .drift-arrow-row svg {
+    width: 28px; height: 28px;
+    opacity: 0.35;
+  }
+  .drift-arrow-row svg path {
+    fill: none; stroke: rgba(255,255,255,0.5);
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
   }
   .drift-loops-col {
     display: flex; flex-direction: column; gap: 16px;
@@ -1231,6 +1265,7 @@
 
   @media (max-width: 768px) {
     .drift-loops-grid { grid-template-columns: 1fr; }
+    .drift-loops-arrow-col { display: none; }
     .loop-flow-h, .tobe-flow { grid-template-columns: 1fr; gap: 12px; }
     .loop-step::after, .tobe-step::after { content: none; }
     .loop-card-head, .tobe-card-head { flex-direction: column; gap: 4px; }
@@ -4103,6 +4138,13 @@
         </div>
       </div>
 
+      <!-- CENTER: Arrow connectors -->
+      <div class="drift-loops-arrow-col">
+        <div class="drift-arrow-row"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></div>
+        <div class="drift-arrow-row"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></div>
+        <div class="drift-arrow-row"><svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></div>
+      </div>
+
       <!-- RIGHT COLUMN: To-Be (ideal cycles, per transition) -->
       <div class="drift-loops-col">
         <div class="drift-col-label to-be">To-Be: The Ideal Cycle</div>
@@ -4221,6 +4263,11 @@
             </ul>
           </div>
         </div>
+        <div class="rec-card-used">
+          <span class="rec-card-used-label">Where it was used</span>
+          <span class="rec-card-used-tag">Transition 1: P6 → Sec 1</span>
+          <span class="rec-card-used-tag">Window 2: 9pm+</span>
+        </div>
         <div class="rec-card-reco">
           <h4>Recommendation</h4>
           <p>Fix the four must-have items first. Then run a physical pilot with 2 to 3 families at the P6 to Sec 1 transition where bedtime structure is actively slipping. The online format could not test the tactile interaction or the conversation-opening potential of feelings magnets, so a physical pilot is essential before further design decisions. Consider developing the feelings magnets as a communication tool in their own right, as this emerged as an unexpected strength in several sessions.</p>
@@ -4248,6 +4295,11 @@
             </ul>
           </div>
         </div>
+        <div class="rec-card-used">
+          <span class="rec-card-used-label">Where it was used</span>
+          <span class="rec-card-used-tag">Transition 2: Sec 2 → Sec 3</span>
+          <span class="rec-card-used-tag">Window 1: 2–6pm</span>
+        </div>
         <div class="rec-card-reco">
           <h4>Recommendation</h4>
           <p>C2 is closest to pilot-ready. Fix the four must-fix items, particularly the proof mechanic. Then run a 14-day physical pilot with at least two youth pairs from different school contexts. Design the pilot to stress-test sustainability over the full 14 days, not just initial enthusiasm. Consider testing a group variant (3 to 5 participants rotating) alongside the pair model, since several youth independently described it as a group activity.</p>
@@ -4274,6 +4326,11 @@
               <li>Build a low-stakes starting trigger: card on the dinner table, "question of the week," or a visible signal</li>
             </ul>
           </div>
+        </div>
+        <div class="rec-card-used">
+          <span class="rec-card-used-label">Where it was used</span>
+          <span class="rec-card-used-tag">Transition 1 → 3: Relationship narrows over time</span>
+          <span class="rec-card-used-tag">Window 2: Evening</span>
         </div>
         <div class="rec-card-reco">
           <h4>Recommendation</h4>
