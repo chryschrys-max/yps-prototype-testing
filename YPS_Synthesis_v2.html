@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YPS Synthesis - Patterns, Insights, Implications</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --c1:       #1F497D;
+    --c1-light: #EAF1FA;
+    --c1-mid:   #6A9CC8;
+    --c2:       #375623;
+    --c2-light: #EBF3E5;
+    --c2-mid:   #7AAD5B;
+    --c3:       #843C0C;
+    --c3-light: #FBF0E8;
+    --c3-mid:   #C87A46;
+    --ink:      #1C1C28;
+    --mid:      #5C5C70;
+    --rule:     #E4E4EE;
+    --bg:       #F7F7FA;
+    --white:    #FFFFFF;
+    --pattern-keep:   #1A5E34;
+    --pattern-keep-bg:#E6F4EC;
+    --pattern-fix:    #7B4A00;
+    --pattern-fix-bg: #FFF3DC;
+    --pattern-drop:   #8B1C1C;
+    --pattern-drop-bg:#FDEAEA;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 300;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.8;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--ink);
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    padding: 16px 0;
+    margin-right: 40px;
+    white-space: nowrap;
+  }
+  .nav a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 18px 16px;
+    transition: color 0.2s;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+  }
+  .nav a:hover { color: white; }
+
+  /* LAYOUT */
+  .page { max-width: 900px; margin: 0 auto; padding: 64px 48px 120px; }
+
+  /* HEADER */
+  .doc-header {
+    margin-bottom: 64px;
+  }
+  .doc-header .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .doc-header .eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .doc-header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.08;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .doc-header .intro {
+    font-size: 17px;
+    color: var(--mid);
+    max-width: 620px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* FLOW EXPLAINER */
+  .flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 64px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .flow-step {
+    flex: 1;
+    padding: 20px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--rule);
+    z-index: 2;
+  }
+  .flow-step .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+  .flow-step .step-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .flow-step .step-desc {
+    font-size: 12px;
+    color: var(--mid);
+    line-height: 1.4;
+  }
+  .flow-step.active {
+    background: var(--ink);
+  }
+  .flow-step.active .step-num,
+  .flow-step.active .step-desc { color: rgba(255,255,255,0.5); }
+  .flow-step.active .step-name { color: white; }
+
+  /* CONCEPT BLOCK */
+  .concept-block {
+    margin-bottom: 80px;
+  }
+
+  .concept-heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--rule);
+  }
+  .c-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    flex-shrink: 0;
+  }
+  .c1 .c-badge { background: var(--c1); }
+  .c2 .c-badge { background: var(--c2); }
+  .c3 .c-badge { background: var(--c3); }
+
+  .c-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .c-title-block .c-sub {
+    font-size: 13px;
+    color: var(--mid);
+    font-style: italic;
+  }
+
+  /* PATTERN CLUSTER */
+  .cluster {
+    margin-bottom: 40px;
+  }
+
+  .cluster-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cluster-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); }
+
+  /* PATTERN CARD */
+  .pattern-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .pattern-header {
+    padding: 18px 24px 14px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .pattern-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--mid);
+    padding-top: 2px;
+    flex-shrink: 0;
+    width: 24px;
+  }
+  .pattern-body {}
+  .pattern-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .pattern-who {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--mid);
+    margin-bottom: 10px;
+  }
+  .evidence-list {
+    list-style: none;
+    padding: 0;
+  }
+  .evidence-list li {
+    font-size: 13.5px;
+    color: var(--mid);
+    line-height: 1.6;
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .evidence-list li:last-child { border-bottom: none; }
+  .evidence-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--rule);
+  }
+  .evidence-list li .quote {
+    font-style: italic;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .evidence-list li .src {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--mid);
+    margin-left: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* INSIGHT + IMPLICATION */
+  .insight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+  }
+  .insight-cell {
+    padding: 16px 24px 16px 40px;
+  }
+  .insight-cell:first-child {
+    border-right: 1px solid var(--rule);
+  }
+  .insight-cell .cell-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .insight-cell.insight .cell-label { color: var(--c1); }
+  .c2 .insight-cell.insight .cell-label { color: var(--c2); }
+  .c3 .insight-cell.insight .cell-label { color: var(--c3); }
+  .insight-cell.implication .cell-label { color: var(--mid); }
+  .insight-cell p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+
+  /* KFD PILLS */
+  .kfd-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .kfd-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .keep { background: var(--pattern-keep-bg); color: var(--pattern-keep); }
+  .fix  { background: var(--pattern-fix-bg);  color: var(--pattern-fix);  }
+  .drop { background: var(--pattern-drop-bg); color: var(--pattern-drop); }
+
+  /* CROSS-CONCEPT */
+  .cross-section {
+    background: var(--ink);
+    border-radius: 16px;
+    padding: 48px;
+    margin-bottom: 48px;
+  }
+  .cross-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .cross-section .cross-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+  .cross-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .cross-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .cross-card .cross-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 10px;
+  }
+  .cross-card p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 64px 0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">YPS - Synthesis</div>
+  <a href="#c1">C1 Bedtime Bundle</a>
+  <a href="#c2">C2 Hook U Up</a>
+  <a href="#c3">C3 We Open Up</a>
+  <a href="#cross">Cross-concept</a>
+</nav>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <div class="eyebrow">HPB Youth Preventive Services</div>
+    <h1>Synthesis</h1>
+    <p class="intro">What the evidence means. Per concept: patterns that appeared across more than one participant, the insight each pattern points to, and the implication for the design.</p>
+  </div>
+
+  <!-- FLOW -->
+  <div class="flow">
+    <div class="flow-step">
+      <div class="step-num">Step 1</div>
+      <div class="step-name">Evidence</div>
+      <div class="step-desc">Raw quotes and observations per participant</div>
+    </div>
+    <div class="flow-step active">
+      <div class="step-num">Step 2 - You are here</div>
+      <div class="step-name">Synthesis</div>
+      <div class="step-desc">Patterns + insights + implications</div>
+    </div>
+    <div class="flow-step">
+      <div class="step-num">Step 3</div>
+      <div class="step-name">Assessment</div>
+      <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
+    </div>
+  </div>
+
+
+  <!-- ===== C1 ===== -->
+  <div class="concept-block c1" id="c1">
+    <div class="concept-heading">
+      <div class="c-badge">C1</div>
+      <div class="c-title-block">
+        <h2>Bedtime Bundle</h2>
+        <div class="c-sub">Physical magnet board for shared sleep wind-down - Home / Bedtime</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <div class="cluster-label">Patterns</div>
+
+      <!-- P1 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P1</div>
+          <div class="pattern-body">
+            <div class="pattern-title">Resonated most with parents who feel the structure slipping but have not lost it completely</div>
+            <div class="pattern-who">TP01, TP05, TP10, TP12 - across parent and youth sessions</div>
+            <ul class="evidence-list">
+              <li>TP01 (systematic Malay family, son sleeps next to her) loved it immediately and asked for a copy before being offered one. She already co-manages her son's bedtime.</li>
+              <li>TP05: <span class="quote">"We've been quite systematic since young so they are kind of used to this routine."</span> Rated it 4/7 - not because the concept failed, but because his daughter already manages herself.</li>
+              <li>TP10: Rated it 1/7. <span class="quote">"Too fixed and boring."</span> Her daughter already has an established routine. The board adds nothing new.</li>
+              <li>TP07: Said the concept works for preschool age, not Sec 1. Her son already has a 9pm bedtime instilled since young. No gap for the board to fill.</li>
+              <li>TP12 (strongest positive): <span class="quote">"This is something we have been looking for a long time."</span> 7/7. Single parent, daughter's sleep is a source of real tension at home. She is exactly the participant this concept is designed for.</li>
+              <li>TY06 (new): Can see herself using it, but some days after CCA she is exhausted and would go straight to sleep. <span class="quote">"Some days maybe after CCA I'm very exhausted and I come back late - I wouldn't have that much time to do it."</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>Resonated most with parents who feel the structure slipping but have not lost it completely. TP12 is the clearest signal of who this is designed for. As she put it: "This is something we have been looking for a long time." Where structure was already solid, participants saw no need for it. Where it had collapsed entirely, the concept felt too demanding to restart.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Target this at Sec 1 families in transition - the P6 to Sec 1 shift is exactly when parental oversight begins to drop and youth have not yet developed their own bedtime anchor. Reframe the concept as a transition tool, not a general sleep aid.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill keep">Keep - physical board</span>
+              <span class="kfd-pill fix">Fix - targeting and framing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P2</div>
+          <div class="pattern-body">
+            <div class="pattern-title">Sustainability was the primary concern - not whether participants would start, but whether they would keep going</div>
+            <div class="pattern-who">TP07, TP09, TP10, TY11 - 4 of 11 participants</div>
+            <ul class="evidence-list">
+              <li>TP07: <span class="quote">"Will it be consistent for a period? I don't think so."</span></li>
+              <li>TP09: Said teenagers would use it for 1 to 2 weeks, then ignore it. Predicted drop-off without prompting. <span class="quote">"Kids will do it for 1 week and won't continue."</span></li>
+              <li>TP10: <span class="quote">"The board would come down after 2 weeks."</span> Said it needs "info bites" to sustain interest, which the physical board lacks.</li>
+              <li>TY11: <span class="quote">"I will keep doing it until I lose interest and forget."</span></li>
+              <li>TP11: <span class="quote">"When you start you are on the ball, then over time you cannot follow through."</span> Said this unprompted, from her own experience with routines.</li>
+              <li>TY06 (new): Some days after CCA she comes home late and exhausted. <span class="quote">"Some days I might just feel lazy to do it."</span> The concept breaks on high-load days.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The concept has no built-in re-engagement mechanism. Once novelty fades, there is nothing pulling participants back. Every age group flagged this independently. A youth said it plainly: "I will keep doing it until I lose interest and forget." A parent said the same thing differently: "When you start you are on the ball, then over time you cannot follow through." Unlike C2 where a peer nudges you, the board relies entirely on the youth's own will to keep picking it up.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Add a lightweight re-engagement loop. The weekly review is supposed to do this but nobody found it compelling. Options: a rotating magnet that appears weekly (novelty mechanic), a parent-youth check-in prompt built into the Parent Says column, or a 5-night framing that resets deliberately.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - weekly review mechanic</span>
+              <span class="kfd-pill keep">Keep - 5-night trial framing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P3</div>
+          <div class="pattern-body">
+            <div class="pattern-title">The parent column role was misread by most participants - it felt like monitoring, not commitment</div>
+            <div class="pattern-who">TP02, TP09, TY04 - 3 of 11 participants</div>
+            <ul class="evidence-list">
+              <li>TP02: Misread the board layout - thought the top section was for parents, not the child. <span class="quote">"I thought the top part was for me to fill in."</span> Needed researcher to clarify.</li>
+              <li>TP09: Felt the children would decide what goes in the parent column, not the parent. <span class="quote">"Kids will control what goes in the parent side."</span> Did not see it as a commitment space.</li>
+              <li>TY04: <span class="quote">"Invasion of privacy - I wouldn't want my parents knowing I'm feeling sad or angry."</span> Read the board as surveillance, not collaboration.</li>
+              <li>TP01 (exception): Used Parent Says naturally to write advance reminders for her son. This was the intended use but only one participant reached it without prompting.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The parent column is doing two jobs at once - tracking youth mood and showing parent commitment - and it is failing at both because participants cannot tell which job it is doing. The emotional tracking section in particular reads as one-directional (youth sharing with parent) rather than mutual. The concept's strongest idea - shared accountability - is not coming through.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Split the board more visibly into Youth side and Parent side with equal weight. Make the parent column explicitly about what the parent commits to (e.g. no phone during check-in, lights off by 11pm) rather than a space to comment on the youth. Rename "How was your sleep?" to something mutual.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - parent column design</span>
+              <span class="kfd-pill fix">Fix - emotion section framing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P4</div>
+          <div class="pattern-body">
+            <div class="pattern-title">Always there, not a screen - that is the concept's core design advantage</div>
+            <div class="pattern-who">TP01, TY01, TP03, TP12, TY06 - multiple sessions</div>
+            <ul class="evidence-list">
+              <li>TP01 started dragging magnets immediately without being asked. The interaction model was self-evident. <span class="quote">"Creates the atmosphere, creates the mood."</span></li>
+              <li>TY01: <span class="quote">"It will help me by being more organised - I like to procrastinate a lot."</span> The board being visible removed the need to remember to start.</li>
+              <li>TP05 confirmed the concept is physical, not digital, and said this was the right call - phone in the bedroom is the problem, not the solution.</li>
+              <li>TP05 confirmed the concept is physical, not digital, and said this was the right call. Phone in the bedroom is the problem. Solving it with another phone interaction defeats the purpose.</li>
+              <li>TP03: Had never thought of a magnet board as a communication tool. <span class="quote">"It's an interesting idea. Worthwhile to explore."</span> The feelings magnets let the child signal their state without needing a conversation.</li>
+              <li>TP12: <span class="quote">"It's a good way for the kids to communicate to the parents. Kids nowadays don't know how to communicate."</span></li>
+              <li>TY06 (new): <span class="quote">"If it was placed beside my bed I'd probably use it. But if it was on the fridge I'd probably forget."</span> Location of the board determines whether the prompt works at all.</li>
+              <li>TY03 (new): Asked for a "sleepy" face magnet. <span class="quote">"I think there should be one with a sleepy face - I mainly feel tired, especially today and yesterday."</span> The current emotion set does not cover the most common state youth described.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The board works as a prompt even when participants are not actively thinking about sleep habits. This is its key behavioural advantage over any app-based solution. The physical format is not a constraint - it is the design. An unexpected second function also emerged: the feelings magnets let youth signal their state to parents without needing a conversation. Two participants named this independently. Location also matters - beside the bed outperformed the fridge for youth who described themselves as tired and forgetful at night.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Protect the physical-first principle across all iterations. Any digital companion should be opt-in and outside the bedroom. Explore the communication function of the feelings magnets - this was not designed in, but participants found it themselves. Add a "tired" option to the emotion set. Test placement beside the bed as an alternative to the fridge.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill keep">Keep - physical board, no app</span>
+              <span class="kfd-pill keep">Keep - persistent visual prompt</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cluster -->
+  </div><!-- /c1 -->
+
+  <div class="divider"></div>
+
+  <!-- ===== C2 ===== -->
+  <div class="concept-block c2" id="c2">
+    <div class="concept-heading">
+      <div class="c-badge">C2</div>
+      <div class="c-title-block">
+        <h2>Hook U Up</h2>
+        <div class="c-sub">14-day peer challenge card deck - After-school / Peer-led</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <div class="cluster-label">Patterns</div>
+
+      <!-- P1 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P1</div>
+          <div class="pattern-body">
+            <div class="pattern-title">4 of 5 original youth ranked C2 first - two asked to buy it without prompting</div>
+            <div class="pattern-who">TY01, TY04, TY10, TY11, TY06, TY02 - across youth sessions</div>
+            <ul class="evidence-list">
+              <li>TY01: Rated 7/7 all dimensions. <span class="quote">"Would keep me occupied for hours."</span> Said she would pay for it. Liked the "natural glow up rather than using products" framing.</li>
+              <li>TY04: Asked the researcher mid-session how to buy it. No prompting. The strongest unprompted purchase signal in the study. <span class="quote">"Can I buy this? Where can I get it?"</span></li>
+              <li>TY10: Ranked C2 first. <span class="quote">"I would not mind doing this with my friends actually."</span> Drawn to Recharge - it matched her actual sleep issue.</li>
+              <li>TY11: Said she would probably buy it. Invented her own bet mechanic on the spot - <span class="quote">"loser buys the winner something small"</span> - without any suggestion from the researcher.</li>
+              <li>TY06 (new): <span class="quote">"It's kind of like Snapchat or TikTok streaks - you don't want to break the streak."</span> Drew the comparison herself without any prompting.</li>
+              <li>TY02 (new): <span class="quote">"Wow."</span> Initial reaction before reading. Then: <span class="quote">"Both parties not only make happy memories but also gain very healthy relationships."</span></li>
+              <li>TY08 (outlier): Ranked C2 last. Under O-level pressure. <span class="quote">"Might give stress to those who overthink."</span> He adds: <span class="quote">"I do usually overthink."</span> His hesitation is about exam pressure, not the concept.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The concept has real pull with youth independently of parents or schools. The peer mechanic and the language (energy era, glow up, rizz) make health feel social and identity-relevant rather than instructional. This is the right frame - it does not ask youth to care about health, it asks them to care about their social world. The health outcome follows.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>C2 is the concept most likely to spread peer-to-peer without adult initiation. Distribution strategy should reflect this - consider routing it through youth rather than through parents or schools. The card deck should feel like something you find, not something you are given.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill keep">Keep - peer-led mechanic</span>
+              <span class="kfd-pill keep">Keep - identity-first language</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P2</div>
+          <div class="pattern-body">
+            <div class="pattern-title">The QR proof mechanic is the single biggest structural blocker - flagged independently across multiple participants</div>
+            <div class="pattern-who">TP07, TP10, TP05, TY04 - 4 of 11 participants</div>
+            <ul class="evidence-list">
+              <li>TP07: <span class="quote">"Students not allowed phones at school as of 2026 / phone hotel."</span> QR code cannot be scanned during school hours. This is a policy reality, not a preference.</li>
+              <li>TP10: <span class="quote">"Scan, log in, post, share URL."</span> Rated ease 3/7. Said youth would give up if the process is too troublesome.</li>
+              <li>TP05: Hit a prototype bug where clicking cards only showed the back. After the bug was resolved, still said the upload process felt like too many steps. <span class="quote">"Too many steps to get through just to prove you did it."</span></li>
+              <li>TY04: Wanted a Duolingo-style streak instead of QR proof. <span class="quote">"I just want the streak - like Duolingo. I don't need to post anything."</span></li>
+              <li>TP08 (new): Confirmed the 2026 school phone ban. <span class="quote">"Students are not allowed to bring phones to school for 2026 - kids would need to surrender their phones at a check-in area."</span></li>
+              <li>TY08: <span class="quote">"I wouldn't really trust giving a selfie of myself to the producers of these cards without consent."</span> Privacy concern raised without prompting.</li>
+              <li>TY06 (new): <span class="quote">"Maybe if it could send a notification - if a notification pops up they're more likely to remember."</span> A notification would work better than a QR step.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The QR proof does not work. Too many steps, a school phone ban from 2026, and privacy concerns from both youth and parents. Three separate blockers emerged independently across different sessions. The buddy seeing it happen is enough - the peer witness is the accountability.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Replace or radically simplify the proof mechanic. Options: a simple physical tick on the card itself (no scanning), a shared group chat photo (what youth already do), or a streak sticker on the card deck. The peer witness is the accountability - the platform upload is not needed.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - QR proof mechanic</span>
+              <span class="kfd-pill fix">Fix - upload deadline timing</span>
+              <span class="kfd-pill keep">Keep - peer accountability logic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P3</div>
+          <div class="pattern-body">
+            <div class="pattern-title">One fixed buddy for 14 days was too rigid - participants wanted flexibility in who they challenge</div>
+            <div class="pattern-who">TP01, TP02, TY11 - 3 of 11 participants</div>
+            <ul class="evidence-list">
+              <li>TP01: Wanted to challenge a different person each day - a friend, cousin, even a parent. <span class="quote">"I want to be able to challenge whoever I feel like that day."</span></li>
+              <li>TP02: <span class="quote">"If I'm the buddy it would fail - child sees me as parent, not friend."</span> The fixed rule forced an unnatural pairing.</li>
+              <li>TY11: Said her friends would motivate her, not one fixed person. <span class="quote">"I would do this with like, whoever is around - up to five people."</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The buddy system is the right social mechanic but the 14-day fixed pair is too constraining. Youth friendships are fluid. A card-by-card or week-by-week challenger model would match how teens actually socialise - pulling different people in depending on who is around and what the challenge is.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Loosen the buddy rule. Allow 2 to 4 people to rotate in and out across 14 days. Keep the Shield mechanic (one free slip) per person. The commitment is to the streak and the group, not to one fixed person.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - buddy flexibility</span>
+              <span class="kfd-pill keep">Keep - Shield mechanic</span>
+              <span class="kfd-pill keep">Keep - peer group framing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P4</div>
+          <div class="pattern-body">
+            <div class="pattern-title">"Bulk Up" was the only deck name that put participants off - the others landed immediately</div>
+            <div class="pattern-who">TP10, TP04 (daughters implied), TY04 (ACL context) - multiple</div>
+            <ul class="evidence-list">
+              <li>TP10: <span class="quote">"Bulk Up puts girls off - it sounds like it's only for guys who want muscles."</span></li>
+              <li>TP04: His daughters would respond to a makeup and skincare card - the current decks do not cover this territory.</li>
+              <li>TY04: Could not do physical challenges because of her ACL injury. A skip or swap option was missing.</li>
+              <li>Glow Up, Recharge, and Feel Good resonated without explanation. Participants understood these instantly.</li>
+              <li>TY02 (new): <span class="quote">"What are the benefits that the body is gaining? That's what's missing."</span> The outcome needs to be on the card, not assumed.</li>
+              <li>TY12 (new): <span class="quote">"Maybe for every day they get to choose what they want to do - some might want to do the hard ones first."</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>"Bulk Up" carries a body-building connotation that does not match the language of female participants or the concept's broader identity framing. The other four deck names use aspiration language (glow, recharge, feel good) - Bulk Up is the only one that uses effort language. It reads differently.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Rename Bulk Up. Test options that use aspiration language consistent with the other decks - e.g. "Level Up," "Stronger," "Build." Also add a skip or swap mechanic for physical challenges so injury or ability does not block participation.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - rename Bulk Up</span>
+              <span class="kfd-pill fix">Fix - add skip/swap mechanic</span>
+              <span class="kfd-pill keep">Keep - other four deck names</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cluster -->
+  </div><!-- /c2 -->
+
+  <div class="divider"></div>
+
+  <!-- ===== C3 ===== -->
+  <div class="concept-block c3" id="c3">
+    <div class="concept-heading">
+      <div class="c-badge">C3</div>
+      <div class="c-title-block">
+        <h2>We Open Up</h2>
+        <div class="c-sub">Family conversation card game - Home / Dining table</div>
+      </div>
+    </div>
+
+    <div class="cluster">
+      <div class="cluster-label">Patterns</div>
+
+      <!-- P1 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P1</div>
+          <div class="pattern-body">
+            <div class="pattern-title">The Swap and Spark mechanic confused almost every participant - but this is a medium problem, not a concept problem</div>
+            <div class="pattern-who">TP02, TP05, TP10 - 3 of 8 parents required researcher intervention</div>
+            <ul class="evidence-list">
+              <li>TP02: Kept trying to navigate around the blue cards without understanding what they did. Needed the researcher to intervene twice.</li>
+              <li>TP05: Paused when Swap and Spark cards appeared. Could not tell what the blue cards were for until the researcher gave a worked example.</li>
+              <li>TP10: Caught the Spark card design flaw herself - <span class="quote">"the question doesn't link to the category card."</span> But she reached this only after navigating it incorrectly first.</li>
+              <li>The mechanic was never experienced as intended in any session - participants did not reach the moment of simultaneous reveal and surprise. As one observer noted: <span class="quote">"No participant reached the simultaneous reveal in any session."</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>Clicking a card on a screen is not the same as picking one up, reading it, and placing it face-down. The Swap mechanic depends on physical simultaneity - both people reveal at the same moment. Online, there is no way to recreate this. The confusion is almost certainly a testing format problem, not a concept failure. This is the concept that most needs a physical test before conclusions are drawn.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Do not judge the Swap mechanic by these results. Run one physical session with real cards at a real table before deciding whether to keep or change it. In the meantime, add clearer instructions on the card itself - what to do, in what order - so players do not need a guide.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill keep">Keep - simultaneous reveal mechanic</span>
+              <span class="kfd-pill fix">Fix - on-card instructions</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P2</div>
+          <div class="pattern-body">
+            <div class="pattern-title">The concept assumes a level of trust that most families do not yet have - it needs a lighter entry point first</div>
+            <div class="pattern-who">TP10, TY04, TP09, TP07 - 4 of 11 participants</div>
+            <ul class="evidence-list">
+              <li>TP10: <span class="quote">"These are level 2 to 3 questions - need simpler daily-life set first."</span> The trust between her daughter and her is not yet at the level these questions require.</li>
+              <li>TY04: <span class="quote">"Would feel suspicious if parents initiated."</span> Said playing it with parents could cause tension. Would prefer to play with friends first.</li>
+              <li>TP09: Her introverted child would shut down with emotional questions. Said written notes would be less threatening than speaking aloud.</li>
+              <li>TP07: Questions were "too common and general" and would only get one or two word answers. She wanted questions about curiosity and things outside the house.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The concept is designed for families who are ready to have deeper conversations but do not know how to start. What it does not account for is families where even the starting point is contested - where youth distrust the game because it came from a parent, or where parents worry it will surface conflicts. It also does not account for timing: most weekday evenings are too busy for the game to feel genuinely playful rather than pressured. The concept needs both a lighter entry point and a realistic use window.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Add a Level 1 starter set - light, everyday, fun questions that build comfort before the deeper cards are introduced. TY11 suggested a Never Have I Ever format. Make the tiered structure visible. Flag weekends as the primary use window - this is not a weekday-after-homework concept.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - add Level 1 starter set</span>
+              <span class="kfd-pill fix">Fix - make question tiers visible</span>
+              <span class="kfd-pill keep">Keep - deeper question set for later</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P3</div>
+          <div class="pattern-body">
+            <div class="pattern-title">Parents who felt distance from their child responded most strongly</div>
+            <div class="pattern-who">TP06, TP03, TP12 - strongest responses; contrasted against TP10, TP07</div>
+            <ul class="evidence-list">
+              <li>TP06: Ranked C3 first. His son has grown more distant since secondary school. <span class="quote">"I always say the same thing. Go sleep early. Go and study. I don't think he gets my message."</span> C3 gave him something different to try.</li>
+              <li>TP06 became visibly more animated during C3 than C1 or C2 - his tone shifted and he spoke more freely. He named his pain point without being asked.</li>
+              <li>TY01: Found the reversed dynamic exciting. <span class="quote">"The game lets me ask questions TO my parents - that's kind of unusual."</span> Rated 7/7.</li>
+              <li>TP03: Ranked C3 first. <span class="quote">"Harmless looking segway to deeper conversations."</span> Kids are older now, harder to connect. Described the shift himself.</li>
+              <li>TP12: Ranked C3 first. 7/7 overall. <span class="quote">"Yeah, this is something more interesting than the one before."</span> Relationship with daughter strained around sleep and screen time.</li>
+              <li>TY06 (new): <span class="quote">"Some of my friends don't have a very close relationship with their parents. I thought this might help a bit."</span> A referral signal, not a use signal.</li>
+              <li>TP10 and TP07: families where communication was already working found the concept redundant. TP10 gave 1/7 across all dimensions.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>Resonated most where the relationship had already gone quieter. Participants described this shift themselves - we did not ask them to compare then and now. The reversed dynamic, youth asking parents questions, was also an unexpected strength that no participant had anticipated before playing. TY06's response is notable: she would refer it to friends with difficult parent relationships rather than use it herself. The concept is correctly identifying a real gap but may need to reach families through a referral model, not a top-down distribution one.</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Position C3 explicitly for the Sec 1 to Sec 2 transition window - before the relationship narrows further. Make the youth the initiator where possible, not the parent. The reversed questioning dynamic (TY01's reaction) is an underused strength - amplify it so youth feel they are getting something out of the game, not just being questioned.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill keep">Keep - reversed questioning dynamic</span>
+              <span class="kfd-pill fix">Fix - reduce initiation friction</span>
+              <span class="kfd-pill keep">Keep - simultaneous reveal, no winner</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P4 -->
+      <div class="pattern-card">
+        <div class="pattern-header">
+          <div class="pattern-num">P4</div>
+          <div class="pattern-body">
+            <div class="pattern-title">Nobody is likely to start it on their own - neither side has a natural reason to go first</div>
+            <div class="pattern-who">TP06, TP07, TY04, TY11 - multiple participants noted this gap</div>
+            <ul class="evidence-list">
+              <li>TP06: Said he would have to be the one to start it. <span class="quote">"If I don't start it, nobody will."</span> His son would not do it on his own.</li>
+              <li>TY04: Said she would feel suspicious if her parents started the game. The act of initiating carries meaning.</li>
+              <li>TY11: Would answer honestly but engagement would drop quickly. <span class="quote">"Fun is necessary to maintain engagement."</span></li>
+              <li>TY06 (new): <span class="quote">"I won't mind trying it to be honest. Just a good way for me to learn how to bond another way - we've always just been playing board games."</span> Willing but would not initiate.</li>
+              <li>TP11 (new): <span class="quote">"If they can vote for the most interesting answer - who has the most cards at the end wins - then they'd actually answer properly instead of just saying don't know."</span></li>
+              <li>Unlike C1 where the board is always visible and C2 where a friend nudges you, C3 sits in a drawer until someone decides to take it out.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="insight-row">
+          <div class="insight-cell insight">
+            <div class="cell-label">Insight</div>
+            <p>The prompt problem is structural. C3 needs someone to decide to play it, and that decision is loaded - for youth it can feel like a setup, for parents it can feel awkward to propose. The concept needs a low-stakes trigger that makes starting feel incidental rather than deliberate. The dining table is the right setting but the game still needs something that signals "now is the time."</p>
+          </div>
+          <div class="insight-cell implication">
+            <div class="cell-label">Implication</div>
+            <p>Test a physical trigger - e.g. a card left on the table as an invitation, a conversation started by a shared meal moment, or a "question of the week" format where one card is revealed at dinner without framing it as a game. Lower the entry cost before the full game mechanic is introduced.</p>
+            <div class="kfd-row">
+              <span class="kfd-pill fix">Fix - add a low-stakes trigger</span>
+              <span class="kfd-pill fix">Fix - make starting feel incidental</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /cluster -->
+  </div><!-- /c3 -->
+
+  <div class="divider"></div>
+
+  <!-- CROSS-CONCEPT -->
+  <div class="cross-section" id="cross">
+    <h2>Across all three concepts</h2>
+    <p class="cross-sub">Five patterns that cut across C1, C2, and C3 regardless of concept. The last two - data quality and readiness staging - have implications for how synthesis findings should be weighted.</p>
+    <div class="cross-grid">
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept pattern 1</div>
+        <p>Online testing systematically underrepresented the physical experience. Every concept has at least one design feature that depends on holding, moving, or placing a physical object. Ratings in this study reflect screen interactions, not product interactions. A physical pilot will produce different - almost certainly higher - engagement.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept pattern 2</div>
+        <p>Youth motivation is stronger than parents predicted. Parents consistently underestimated how much their children would engage with the concepts, especially C2. The youth participants were more willing, more specific, and more creative in how they imagined using the concepts than any parent assumed they would be.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept pattern 3</div>
+        <p>All three concepts are more useful at the start of a transition than in the middle of one. C1 works before bedtime structure collapses. C2 works before after-school time becomes unstructured habit. C3 works before the parent-youth relationship narrows. The intervention timing matters as much as the concept itself.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept pattern 4</div>
+        <p>Numeric ratings did not always match what participants said out loud. At least 4 of 16 participants gave scores that did not match their verbal feedback - one gave ratings for concepts she could not even interact with due to a technical issue. Observer notes flag this explicitly in multiple sessions. Ratings should be read as directional signals, not conclusive scores. Verbal feedback and observable behaviour carry more weight.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept pattern 5 - Transtheoretical Model (stages of readiness)</div>
+        <p>This study uses the Transtheoretical Model as a behavioural anchor. Participants sit at different stages of readiness for different health behaviours: Precontemplation, Contemplation, Preparation, Action, or Maintenance. This partly explains why the same concept landed differently across sessions. TP12 was at Preparation - she was actively looking for a solution and responded immediately when C1 was shown. TP10 was at Maintenance - structure was already working and all three concepts felt redundant. TY08 was at Contemplation for sleep - he knows he should change but it never happens.</p>
+        <p style="margin-top:10px;">Each concept maps most naturally to a different stage. C1 and C3 suit Contemplation and Preparation - families aware of the problem and ready to try something structured. C2 suits Preparation and Action - youth who are already inclined to move but need a social hook. Offering C2 to a youth at Precontemplation, or C3 to a family already at Maintenance, is unlikely to land regardless of how well the concept is designed.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
