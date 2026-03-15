@@ -465,6 +465,27 @@
     margin: 48px 0;
   }
 
+  /* ── Intro Block ── */
+  .intro-block {
+    margin-bottom: 48px;
+  }
+  .intro-block p {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.8; font-weight: 300;
+    max-width: 720px;
+    margin-bottom: 20px;
+  }
+  .intro-block p:last-child { margin-bottom: 0; }
+
+  /* ── Clickable flow steps ── */
+  .flow-step.clickable {
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .flow-step.clickable:hover {
+    background: rgba(94,231,213,0.06);
+  }
+
   /* ── Placeholder sections ── */
   .coming-soon {
     text-align: center; padding: 120px 24px;
@@ -501,9 +522,9 @@
   <div class="nav-brand">YPS Report</div>
   <div class="nav-tabs">
     <button class="nav-tab active" data-section="landing">Overview</button>
-    <button class="nav-tab" data-section="synthesis">Synthesis</button>
-    <button class="nav-tab" data-section="concepts">Concept Performance</button>
-    <button class="nav-tab" data-section="evidence">Evidence &amp; Themes</button>
+    <button class="nav-tab" data-section="evidence">1 &middot; Evidence</button>
+    <button class="nav-tab" data-section="synthesis">2 &middot; Synthesis</button>
+    <button class="nav-tab" data-section="assessment">3 &middot; Assessment</button>
   </div>
   <div class="nav-right">
     <a href="prototype.html" class="nav-link">View Prototypes</a>
@@ -521,45 +542,50 @@
       HPB Youth Preventive Services
     </div>
     <h1 class="hero-title">Validation Testing Report</h1>
-    <p class="hero-subtitle">What the evidence means. Patterns that appeared across more than one participant, the insight each pattern points to, and the implication for design.</p>
   </div>
 
-  <!-- Flow -->
+  <!-- Intro paragraph -->
+  <div class="intro-block">
+    <p>We tested three early-stage concepts with 21 participants &mdash; 12 parents and 9 youth &mdash; over multiple online sessions in March 2026. Each concept tackles a different moment in a young person's day: bedtime, after-school time with friends, and family conversation at home. None of them were finished products. They were prototypes, built just enough to put in front of real people and find out what holds up and what falls apart.</p>
+    <p>The goal was practical: understand whether each concept's core mechanic actually works when someone who has never seen it before tries to use it. We wanted to know what resonates, what confuses, and what needs to change before anyone commits to building a physical version. We also wanted to see what patterns cut across all three ideas &mdash; things about how youth and parents relate to health behaviours that no single concept can tell you on its own.</p>
+    <p>This report is organised in three steps. The first is the raw evidence &mdash; what participants actually said and did, organised by concept. The second is the synthesis &mdash; where we pull out the patterns, name what each one means, and say what it implies for the design. The third is the assessment &mdash; concept-level scores, behavioural framework analysis, and prioritised fixes. You can read it end to end or jump straight to the section that matters most to you.</p>
+  </div>
+
+  <!-- Flow — clickable guide to tabs -->
   <div class="flow-bar">
-    <div class="flow-step">
+    <div class="flow-step clickable" data-section="evidence">
       <div class="step-num">Step 1</div>
       <div class="step-name">Evidence</div>
       <div class="step-desc">Raw quotes and observations per participant</div>
     </div>
-    <div class="flow-step active">
+    <div class="flow-step clickable" data-section="synthesis">
       <div class="step-num">Step 2</div>
       <div class="step-name">Synthesis</div>
       <div class="step-desc">Patterns + insights + implications</div>
     </div>
-    <div class="flow-step">
+    <div class="flow-step clickable" data-section="assessment">
       <div class="step-num">Step 3</div>
       <div class="step-name">Assessment</div>
       <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
     </div>
   </div>
 
-  <!-- Study Info -->
+  <!-- Concepts overview -->
+  <div class="section-head" style="margin-top: 16px;">
+    <div class="section-eyebrow">Three concepts tested</div>
+  </div>
   <div class="info-grid">
-    <div class="info-card">
-      <h3>Study overview</h3>
-      <p>Validation testing of three health behaviour change concepts for youth and parents. Conducted online with 12 parents and 9 youth across multiple sessions in March 2026.</p>
+    <div class="info-card" style="border-left: 3px solid var(--c1);">
+      <h3>C1 &mdash; Bedtime Bundle</h3>
+      <p>A physical magnet board placed in the bedroom. Youth pick magnets that reflect their wind-down routine, and parents commit their own column. Framed as a 5-night experiment with a weekly review.</p>
     </div>
-    <div class="info-card">
-      <h3>Participants</h3>
-      <p>21 participants total: 12 parents (TP01-TP12) and 9 youth (TY01-TY11). Mix of family structures, school stages, and existing health behaviours.</p>
+    <div class="info-card" style="border-left: 3px solid var(--c2);">
+      <h3>C2 &mdash; Hook U Up</h3>
+      <p>A physical card deck with 14-day peer challenges across five topic packs: eating, exercise, screen habits, sleep, and social connection. Designed for the after-school window, led by friends rather than parents.</p>
     </div>
-    <div class="info-card">
-      <h3>Three concepts tested</h3>
-      <p><strong style="color:var(--c1)">C1 Bedtime Bundle</strong> — physical magnet board for sleep wind-down. <strong style="color:var(--c2)">C2 Hook U Up</strong> — 14-day peer challenge card deck. <strong style="color:var(--c3)">C3 We Open Up</strong> — family conversation card game.</p>
-    </div>
-    <div class="info-card">
-      <h3>Research goals</h3>
-      <p>Test whether each concept's core mechanic works with real participants, identify what needs fixing before physical pilots, and surface cross-concept patterns about youth health behaviour.</p>
+    <div class="info-card" style="border-left: 3px solid var(--c3);">
+      <h3>C3 &mdash; We Open Up</h3>
+      <p>A family conversation card game played at the dining table. Uses question cards with a Swap and Spark mechanic to create moments of unexpected honesty between parents and youth.</p>
     </div>
   </div>
 
@@ -1027,46 +1053,53 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION: CONCEPT PERFORMANCE (placeholder)
+     SECTION: EVIDENCE (Step 1 - placeholder)
      ════════════════════════════════════════ -->
-<div class="section" id="concepts">
+<div class="section" id="evidence">
   <div class="coming-soon">
-    <h2>Concept Performance</h2>
-    <p>Detailed individual concept findings with charts, verdicts, and behavioural framework analysis. Coming next.</p>
+    <h2>Evidence</h2>
+    <p>Raw quotes, observations, and evidence mapping organised by concept and participant. Coming next.</p>
   </div>
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION: EVIDENCE & THEMES (placeholder)
+     SECTION: ASSESSMENT (Step 3 - placeholder)
      ════════════════════════════════════════ -->
-<div class="section" id="evidence">
+<div class="section" id="assessment">
   <div class="coming-soon">
-    <h2>Evidence Mapping &amp; Emerging Themes</h2>
-    <p>Evidence mapping with participant quotes, sticky notes, and cross-concept emerging themes. Coming soon.</p>
+    <h2>Assessment</h2>
+    <p>Concept-level scores, behavioural framework analysis (EAST, B=MAP), Kano classification, and prioritised fixes. Coming soon.</p>
   </div>
 </div>
 
 <!-- ════ SCRIPTS ════ -->
 <script>
-// Tab navigation
+// Navigation
 const tabs = document.querySelectorAll('.nav-tab');
 const sections = document.querySelectorAll('.section');
 
+function navigateTo(sectionId) {
+  // Update active tab
+  tabs.forEach(t => t.classList.remove('active'));
+  const matchingTab = document.querySelector(`.nav-tab[data-section="${sectionId}"]`);
+  if (matchingTab) matchingTab.classList.add('active');
+
+  // Show target section
+  sections.forEach(s => s.classList.remove('active'));
+  document.getElementById(sectionId).classList.add('active');
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Tab clicks
 tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    const target = tab.dataset.section;
+  tab.addEventListener('click', () => navigateTo(tab.dataset.section));
+});
 
-    // Update active tab
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    // Show target section
-    sections.forEach(s => s.classList.remove('active'));
-    document.getElementById(target).classList.add('active');
-
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+// Flow step clicks (on landing page)
+document.querySelectorAll('.flow-step.clickable').forEach(step => {
+  step.addEventListener('click', () => navigateTo(step.dataset.section));
 });
 </script>
 </body>
