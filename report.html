@@ -522,10 +522,7 @@
     margin: 0 -60px; padding: 56px 60px;
     border-top: 1px solid rgba(255,255,255,0.04);
     position: relative;
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
   }
-  .ov-band.visible { opacity: 1; transform: translateY(0); }
   .ov-band.alt { background: rgba(255,255,255,0.015); }
   .ov-band:first-child { border-top: none; }
   .ov-band .ov-inner { max-width: 900px; }
@@ -1855,7 +1852,7 @@
   </div>
 
   <!-- ═══ BAND 1: EXECUTIVE SUMMARY ═══ -->
-  <div class="ov-band visible">
+  <div class="ov-band">
     <div class="ov-inner">
       <div class="bottom-line">
         <div class="bottom-line-label">Bottom line</div>
@@ -4720,36 +4717,6 @@ function togglePortfolioCard(card) {
   }
 }
 
-// ── Scroll-reveal for overview bands ──
-(function() {
-  const bands = document.querySelectorAll('.ov-band:not(.visible)');
-  if (!bands.length) return;
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  // Start observing when overview section is shown
-  function observeBands() {
-    bands.forEach(function(band) {
-      if (!band.classList.contains('visible')) observer.observe(band);
-    });
-  }
-  // Re-observe whenever overview becomes active
-  var origNav = navigateTo;
-  navigateTo = function(sectionId, scrollTarget) {
-    origNav(sectionId, scrollTarget);
-    if (sectionId === 'overview') setTimeout(observeBands, 100);
-  };
-  // Also observe on initial load if overview is visible
-  if (document.getElementById('overview') &&
-      document.getElementById('overview').classList.contains('active')) {
-    observeBands();
-  }
-})();
 </script>
 </body>
 </html>
