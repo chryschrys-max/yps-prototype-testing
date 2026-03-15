@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
   /* ── Reset & Base ── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,9 +17,9 @@
     --bg-secondary: #111338;
     --bg-card: rgba(255,255,255,0.05);
     --bg-glass: rgba(255,255,255,0.07);
-    --text-primary: #f4f2ff;
-    --text-secondary: rgba(244,242,255,0.6);
-    --text-muted: rgba(244,242,255,0.35);
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255,255,255,0.82);
+    --text-muted: rgba(255,255,255,0.42);
     --accent-teal: #5ee7d5;
     --accent-orange: #ffb347;
     --accent-purple: #c4a1ff;
@@ -105,59 +106,101 @@
     background-repeat: repeat; background-size: 256px;
   }
 
-  /* ── Navigation ── */
-  .nav-bar {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; gap: 0;
-    padding: 0 32px;
-    background: rgba(12, 14, 43, 0.85);
+  /* ── Sidebar Navigation ── */
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    width: 240px;
+    background: rgba(8, 10, 30, 0.95);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+    display: flex; flex-direction: column;
+    padding: 28px 0 20px;
+    overflow-y: auto;
   }
-  .nav-brand {
+  .sidebar-brand {
     font-family: var(--font-display);
-    font-size: 1rem; font-weight: 700;
+    font-size: 0.92rem; font-weight: 700;
     color: var(--text-primary);
-    padding: 16px 0;
-    margin-right: 32px;
-    white-space: nowrap;
+    padding: 0 24px 24px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 12px;
   }
-  .nav-tabs {
-    display: flex; align-items: center; gap: 0;
+  .sidebar-brand small {
+    display: block; font-family: var(--font-body);
+    font-size: 0.68rem; font-weight: 400;
+    color: var(--text-muted); margin-top: 4px;
+    letter-spacing: 0.04em;
   }
-  .nav-tab {
-    background: none; border: none;
+  .nav-group {
+    padding: 8px 0;
+  }
+  .nav-group-label {
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted); padding: 8px 24px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    background: none; border: none; width: 100%;
+    text-align: left;
     color: var(--text-muted);
     font-family: var(--font-body);
-    font-size: 0.8rem; font-weight: 500;
-    letter-spacing: 0.04em;
-    padding: 18px 16px;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s;
-    white-space: nowrap;
+    font-size: 0.82rem; font-weight: 500;
+    padding: 9px 24px;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+    cursor: pointer;
   }
-  .nav-tab:hover { color: var(--text-secondary); }
-  .nav-tab.active {
+  .nav-item:hover { color: var(--text-secondary); background: rgba(255,255,255,0.03); }
+  .nav-item.active {
     color: var(--text-primary);
-    border-bottom-color: var(--accent-teal);
+    background: rgba(94,231,213,0.06);
+    border-left-color: var(--accent-teal);
   }
-  .nav-right {
-    margin-left: auto;
+  .nav-item .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    flex-shrink: 0;
   }
-  .nav-link {
+  .nav-sub {
+    padding: 0;
+  }
+  .nav-sub .nav-item {
+    font-size: 0.76rem; font-weight: 400;
+    padding: 6px 24px 6px 40px;
+    color: var(--text-muted);
+  }
+  .nav-sub .nav-item:hover { color: var(--text-secondary); }
+  .nav-sub .nav-item.active {
+    color: var(--text-primary);
+    border-left-color: transparent;
+    background: rgba(255,255,255,0.04);
+  }
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 16px 24px 0;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .sidebar-link {
+    display: block;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    border-radius: 50px; padding: 7px 18px;
-    font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
-    text-decoration: none;
+    border-radius: 8px; padding: 9px 16px;
+    font-size: 0.78rem; font-weight: 500; color: var(--text-secondary);
+    text-decoration: none; text-align: center;
     transition: all 0.3s;
   }
-  .nav-link:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+  .sidebar-link:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+
+  /* ── Main Content Area ── */
+  .main-content {
+    margin-left: 240px;
+    min-height: 100vh;
+  }
 
   /* ── Section Containers ── */
   .section {
     display: none;
-    max-width: 1000px; margin: 0 auto;
-    padding: 90px 24px 80px;
+    max-width: 1060px; margin: 0 auto;
+    padding: 48px 40px 80px;
   }
   .section.active {
     display: block;
@@ -171,7 +214,7 @@
   /* ── Hero / Landing ── */
   .landing-hero {
     text-align: center;
-    padding: 80px 0 60px;
+    padding: 40px 0 48px;
   }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -197,9 +240,9 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .hero-subtitle {
-    font-size: 1.05rem; color: var(--text-secondary);
-    font-weight: 300; max-width: 560px; margin: 0 auto 48px;
-    line-height: 1.7;
+    font-size: 1.1rem; color: var(--text-secondary);
+    font-weight: 300; max-width: 600px; margin: 0 auto 48px;
+    line-height: 1.75;
   }
 
   /* ── Flow Explainer ── */
@@ -255,8 +298,8 @@
     font-size: 1rem; font-weight: 600; margin-bottom: 12px;
   }
   .info-card p {
-    font-size: 0.88rem; color: var(--text-secondary);
-    line-height: 1.7; font-weight: 300;
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.75; font-weight: 300;
   }
 
   /* ── Section Headers ── */
@@ -280,8 +323,8 @@
     margin-bottom: 12px;
   }
   .section-head p {
-    font-size: 0.95rem; color: var(--text-secondary);
-    line-height: 1.7; font-weight: 300; max-width: 640px;
+    font-size: 1rem; color: var(--text-secondary);
+    line-height: 1.75; font-weight: 300; max-width: 700px;
   }
 
   /* ── Concept Block ── */
@@ -336,8 +379,8 @@
     padding-top: 2px; flex-shrink: 0; width: 24px;
   }
   .pattern-title {
-    font-size: 0.92rem; font-weight: 600;
-    line-height: 1.4; margin-bottom: 6px;
+    font-size: 1rem; font-weight: 600;
+    line-height: 1.45; margin-bottom: 6px;
   }
   .pattern-who {
     font-size: 0.7rem; font-weight: 500;
@@ -350,8 +393,8 @@
     list-style: none; padding: 0;
   }
   .evidence-list li {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.65; padding: 8px 0 8px 16px;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.7; padding: 8px 0 8px 16px;
     position: relative;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
@@ -394,7 +437,7 @@
   .c3-block .insight-cell.insight .cell-label { color: var(--accent-purple); }
   .insight-cell.implication .cell-label { color: var(--text-muted); }
   .insight-cell p {
-    font-size: 0.84rem; line-height: 1.65;
+    font-size: 0.92rem; line-height: 1.7;
     color: var(--text-secondary); font-weight: 300;
   }
 
@@ -445,8 +488,8 @@
     color: var(--text-muted); margin-bottom: 10px;
   }
   .cross-card p {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.65; font-weight: 300;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300;
   }
 
   /* ── Cluster label ── */
@@ -470,9 +513,9 @@
     margin-bottom: 48px;
   }
   .intro-block p {
-    font-size: 0.95rem; color: var(--text-secondary);
+    font-size: 1rem; color: var(--text-secondary);
     line-height: 1.8; font-weight: 300;
-    max-width: 720px;
+    max-width: 760px;
     margin-bottom: 20px;
   }
   .intro-block p:last-child { margin-bottom: 0; }
@@ -531,8 +574,8 @@
     padding-top: 2px;
   }
   .ev-body p {
-    font-size: 0.84rem; color: var(--text-secondary);
-    line-height: 1.65; font-weight: 300;
+    font-size: 0.94rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300;
     margin-bottom: 8px;
   }
   .ev-quote {
@@ -540,7 +583,7 @@
   }
   .ev-quote .quote {
     font-style: italic; color: var(--text-primary);
-    font-size: 0.84rem; font-weight: 400;
+    font-size: 0.94rem; font-weight: 400;
   }
   .ev-tags {
     display: flex; gap: 6px; flex-wrap: wrap;
@@ -601,8 +644,8 @@
     line-height: 1.4; margin-bottom: 4px;
   }
   .verdict-dark p {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.6; font-weight: 300;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
   }
   .verdict-quote-dark {
     margin-top: auto; padding-top: 8px;
@@ -643,8 +686,8 @@
     margin-bottom: 6px;
   }
   .fw-item p {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.6; font-weight: 300;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
   }
 
   /* Kano grid */
@@ -682,8 +725,8 @@
     list-style: none; padding: 0;
   }
   .kano-col li {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.55; font-weight: 300;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300;
     padding: 4px 0 4px 14px;
     position: relative;
   }
@@ -718,8 +761,8 @@
     margin-bottom: 6px;
   }
   .fix-dark p {
-    font-size: 0.82rem; color: var(--text-secondary);
-    line-height: 1.6; font-weight: 300;
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
   }
   .fix-src {
     font-size: 0.72rem; color: var(--text-muted);
@@ -740,8 +783,141 @@
     color: var(--accent-teal); margin-bottom: 8px;
   }
   .rec-dark p {
-    font-size: 0.84rem; color: var(--text-secondary);
-    line-height: 1.7; font-weight: 300;
+    font-size: 0.94rem; color: var(--text-secondary);
+    line-height: 1.75; font-weight: 300;
+  }
+
+  /* ══════════════════════════════════════
+     DATA VISUALIZATION STYLES
+     ══════════════════════════════════════ */
+
+  /* Concept scorecard strip */
+  .scorecard-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px; margin-bottom: 36px;
+  }
+  .scorecard {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: center;
+    border-top: 3px solid var(--sc-color, var(--accent-teal));
+  }
+  .scorecard .sc-concept {
+    font-family: var(--font-display);
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--sc-color, var(--accent-teal));
+    margin-bottom: 8px;
+  }
+  .scorecard .sc-name {
+    font-family: var(--font-display);
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .sc-metrics {
+    display: flex; justify-content: center; gap: 20px;
+    margin-bottom: 14px;
+  }
+  .sc-metric-item {
+    text-align: center;
+  }
+  .sc-metric-item .sc-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem; font-weight: 800;
+    line-height: 1;
+  }
+  .sc-metric-item .sc-label {
+    font-size: 0.68rem; color: var(--text-muted);
+    font-weight: 500; margin-top: 4px;
+  }
+  .sc-verdict-bar {
+    display: flex; height: 8px; border-radius: 4px;
+    overflow: hidden; gap: 2px;
+    margin-top: 10px;
+  }
+  .sc-verdict-bar .bar-met { background: var(--accent-teal); }
+  .sc-verdict-bar .bar-partial { background: var(--accent-orange); }
+  .sc-verdict-bar .bar-not { background: var(--accent-coral); }
+  .sc-verdict-legend {
+    display: flex; justify-content: center; gap: 14px;
+    margin-top: 8px;
+  }
+  .sc-verdict-legend span {
+    font-size: 0.68rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sc-verdict-legend .dot-met { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-teal); }
+  .sc-verdict-legend .dot-partial { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-orange); }
+  .sc-verdict-legend .dot-not { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-coral); }
+
+  /* Chart containers */
+  .chart-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-bottom: 32px;
+  }
+  .chart-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 24px;
+  }
+  .chart-box .chart-title {
+    font-family: var(--font-display);
+    font-size: 0.88rem; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .chart-box .chart-sub {
+    font-size: 0.78rem; color: var(--text-muted);
+    font-style: italic; margin-bottom: 16px;
+  }
+  .chart-canvas-wrap {
+    position: relative;
+    height: 240px;
+  }
+
+  /* Sentiment summary bar (for evidence page) */
+  .sentiment-bar-wrap {
+    margin-bottom: 28px;
+  }
+  .sentiment-bar {
+    display: flex; height: 14px; border-radius: 7px;
+    overflow: hidden; gap: 2px;
+  }
+  .sentiment-bar .seg-pos { background: var(--accent-teal); }
+  .sentiment-bar .seg-mix { background: var(--accent-orange); }
+  .sentiment-bar .seg-neg { background: var(--accent-coral); }
+  .sentiment-legend {
+    display: flex; gap: 16px; margin-top: 8px;
+  }
+  .sentiment-legend span {
+    font-size: 0.78rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .sentiment-legend .sdot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+
+  /* Pattern strength indicator */
+  .pattern-strength {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 8px; margin-bottom: 4px;
+  }
+  .pattern-strength .ps-bar {
+    flex: 1; height: 6px; border-radius: 3px;
+    background: rgba(255,255,255,0.06);
+    overflow: hidden;
+  }
+  .pattern-strength .ps-fill {
+    height: 100%; border-radius: 3px;
+    transition: width 0.6s ease;
+  }
+  .pattern-strength .ps-count {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--text-muted); white-space: nowrap;
   }
 
   /* ── Placeholder sections ── */
@@ -775,19 +951,66 @@
 <div class="bg-orb"></div>
 <div class="grain"></div>
 
-<!-- ════ NAVIGATION ════ -->
-<nav class="nav-bar">
-  <div class="nav-brand">YPS Report</div>
-  <div class="nav-tabs">
-    <button class="nav-tab active" data-section="landing">Overview</button>
-    <button class="nav-tab" data-section="evidence">1 &middot; Evidence</button>
-    <button class="nav-tab" data-section="synthesis">2 &middot; Synthesis</button>
-    <button class="nav-tab" data-section="assessment">3 &middot; Assessment</button>
+<!-- ════ SIDEBAR NAVIGATION ════ -->
+<nav class="sidebar">
+  <div class="sidebar-brand">
+    YPS Research Report
+    <small>Validation Testing &middot; March 2026</small>
   </div>
-  <div class="nav-right">
-    <a href="prototype.html" class="nav-link">View Prototypes</a>
+
+  <div class="nav-group">
+    <button class="nav-item active" data-section="landing">
+      <span class="nav-dot" style="background: var(--accent-teal);"></span>
+      Overview
+    </button>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Step 1</div>
+    <button class="nav-item" data-section="evidence">
+      <span class="nav-dot" style="background: var(--accent-blue);"></span>
+      Evidence
+    </button>
+    <div class="nav-sub" data-parent="evidence">
+      <button class="nav-item" data-section="evidence" data-scroll="ev-c1">C1 Bedtime Bundle</button>
+      <button class="nav-item" data-section="evidence" data-scroll="ev-c2">C2 Hook U Up</button>
+      <button class="nav-item" data-section="evidence" data-scroll="ev-c3">C3 We Open Up</button>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Step 2</div>
+    <button class="nav-item" data-section="synthesis">
+      <span class="nav-dot" style="background: var(--accent-orange);"></span>
+      Synthesis
+    </button>
+    <div class="nav-sub" data-parent="synthesis">
+      <button class="nav-item" data-section="synthesis" data-scroll="syn-c1">C1 Patterns</button>
+      <button class="nav-item" data-section="synthesis" data-scroll="syn-c2">C2 Patterns</button>
+      <button class="nav-item" data-section="synthesis" data-scroll="syn-c3">C3 Patterns</button>
+      <button class="nav-item" data-section="synthesis" data-scroll="syn-cross">Cross-concept</button>
+    </div>
+  </div>
+
+  <div class="nav-group">
+    <div class="nav-group-label">Step 3</div>
+    <button class="nav-item" data-section="assessment">
+      <span class="nav-dot" style="background: var(--accent-purple);"></span>
+      Assessment
+    </button>
+    <div class="nav-sub" data-parent="assessment">
+      <button class="nav-item" data-section="assessment" data-scroll="assess-c1">C1 Performance</button>
+      <button class="nav-item" data-section="assessment" data-scroll="assess-c2">C2 Performance</button>
+      <button class="nav-item" data-section="assessment" data-scroll="assess-c3">C3 Performance</button>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <a href="prototype.html" class="sidebar-link">View Prototypes</a>
   </div>
 </nav>
+
+<div class="main-content">
 
 <!-- ════════════════════════════════════════
      SECTION: LANDING / OVERVIEW
@@ -855,13 +1078,31 @@
 <div class="section" id="synthesis">
 
   <div class="section-head">
-    <div class="section-eyebrow">Synthesis</div>
+    <div class="section-eyebrow">Step 2 &middot; Synthesis</div>
     <h2>Patterns, Insights, Implications</h2>
     <p>Per concept: patterns that appeared across more than one participant, the insight each pattern points to, and the implication for the design.</p>
   </div>
 
+  <!-- Pattern overview chart -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title">Pattern evidence strength</div>
+      <div class="chart-sub">Number of participants who independently surfaced each pattern.</div>
+      <div class="chart-canvas-wrap" style="height:280px;">
+        <canvas id="syn-strength-chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Keep / Fix / Drop distribution</div>
+      <div class="chart-sub">Design actions across all 12 patterns.</div>
+      <div class="chart-canvas-wrap" style="height:280px;">
+        <canvas id="syn-kfd-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
   <!-- ── C1 ── -->
-  <div class="concept-block c1-block">
+  <div class="concept-block c1-block" id="syn-c1">
     <div class="concept-heading">
       <div class="c-badge">C1</div>
       <div class="c-title-block">
@@ -1003,7 +1244,7 @@
   <div class="divider"></div>
 
   <!-- ── C2 ── -->
-  <div class="concept-block c2-block">
+  <div class="concept-block c2-block" id="syn-c2">
     <div class="concept-heading">
       <div class="c-badge">C2</div>
       <div class="c-title-block">
@@ -1144,7 +1385,7 @@
   <div class="divider"></div>
 
   <!-- ── C3 ── -->
-  <div class="concept-block c3-block">
+  <div class="concept-block c3-block" id="syn-c3">
     <div class="concept-heading">
       <div class="c-badge">C3</div>
       <div class="c-title-block">
@@ -1281,7 +1522,7 @@
   </div><!-- /c3-block -->
 
   <!-- Cross-concept -->
-  <div class="cross-section">
+  <div class="cross-section" id="syn-cross">
     <h2>Across all three concepts</h2>
     <p class="cross-sub">Five patterns that cut across C1, C2, and C3 regardless of concept. The last two have implications for how synthesis findings should be weighted.</p>
     <div class="cross-grid">
@@ -1321,13 +1562,45 @@
     <p>Raw observations and direct quotes from 21 participants across 13 sessions. Organised by concept so you can see how each one landed before we pull patterns out.</p>
   </div>
 
+  <!-- Evidence overview charts -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title">Ratings across all three concepts</div>
+      <div class="chart-sub">Each dot is one participant on a 1&ndash;7 scale. Hover for details.</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="ev-ratings-chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Sentiment by concept</div>
+      <div class="chart-sub">Proportion of positive, mixed, and negative reactions per concept.</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="ev-sentiment-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
   <!-- ── C1 Evidence ── -->
-  <div class="concept-block c1-block">
+  <div class="concept-block c1-block" id="ev-c1">
     <div class="concept-heading">
       <div class="c-badge">C1</div>
       <div class="c-title-block">
         <h3>Bedtime Bundle</h3>
         <div class="c-sub">Physical magnet board for shared sleep wind-down &mdash; 12 participants tested</div>
+      </div>
+    </div>
+
+    <!-- C1 sentiment bar -->
+    <div class="sentiment-bar-wrap">
+      <div class="sentiment-bar">
+        <div class="seg-pos" style="flex:3;"></div>
+        <div class="seg-mix" style="flex:4;"></div>
+        <div class="seg-neg" style="flex:4;"></div>
+      </div>
+      <div class="sentiment-legend">
+        <span><span class="sdot" style="background:var(--accent-teal)"></span> 3 positive</span>
+        <span><span class="sdot" style="background:var(--accent-orange)"></span> 4 mixed</span>
+        <span><span class="sdot" style="background:var(--accent-coral)"></span> 4 negative</span>
       </div>
     </div>
 
@@ -1448,12 +1721,26 @@
   <div class="divider"></div>
 
   <!-- ── C2 Evidence ── -->
-  <div class="concept-block c2-block">
+  <div class="concept-block c2-block" id="ev-c2">
     <div class="concept-heading">
       <div class="c-badge">C2</div>
       <div class="c-title-block">
         <h3>Hook U Up</h3>
         <div class="c-sub">14-day peer challenge card deck &mdash; 15 participants tested</div>
+      </div>
+    </div>
+
+    <!-- C2 sentiment bar -->
+    <div class="sentiment-bar-wrap">
+      <div class="sentiment-bar">
+        <div class="seg-pos" style="flex:8;"></div>
+        <div class="seg-mix" style="flex:2;"></div>
+        <div class="seg-neg" style="flex:3;"></div>
+      </div>
+      <div class="sentiment-legend">
+        <span><span class="sdot" style="background:var(--accent-teal)"></span> 8 positive</span>
+        <span><span class="sdot" style="background:var(--accent-orange)"></span> 2 mixed</span>
+        <span><span class="sdot" style="background:var(--accent-coral)"></span> 3 negative</span>
       </div>
     </div>
 
@@ -1586,12 +1873,26 @@
   <div class="divider"></div>
 
   <!-- ── C3 Evidence ── -->
-  <div class="concept-block c3-block">
+  <div class="concept-block c3-block" id="ev-c3">
     <div class="concept-heading">
       <div class="c-badge">C3</div>
       <div class="c-title-block">
         <h3>We Open Up</h3>
         <div class="c-sub">Family conversation card game &mdash; 15 participants tested</div>
+      </div>
+    </div>
+
+    <!-- C3 sentiment bar -->
+    <div class="sentiment-bar-wrap">
+      <div class="sentiment-bar">
+        <div class="seg-pos" style="flex:4;"></div>
+        <div class="seg-mix" style="flex:3;"></div>
+        <div class="seg-neg" style="flex:5;"></div>
+      </div>
+      <div class="sentiment-legend">
+        <span><span class="sdot" style="background:var(--accent-teal)"></span> 4 positive</span>
+        <span><span class="sdot" style="background:var(--accent-orange)"></span> 3 mixed</span>
+        <span><span class="sdot" style="background:var(--accent-coral)"></span> 5 negative</span>
       </div>
     </div>
 
@@ -1725,8 +2026,80 @@
     <p>How each concept scored against its success metrics, how it performed against EAST and B=MAP, what falls into must-have / performance / delighter categories, and what needs fixing before a physical pilot.</p>
   </div>
 
+  <!-- Concept scorecards at a glance -->
+  <div class="scorecard-strip">
+    <div class="scorecard" style="--sc-color: var(--c1);">
+      <div class="sc-concept">C1</div>
+      <div class="sc-name">Bedtime Bundle</div>
+      <div class="sc-metrics">
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c1)">4.5</div><div class="sc-label">Avg rating</div></div>
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c1)">11</div><div class="sc-label">Tested</div></div>
+      </div>
+      <div class="sc-verdict-bar">
+        <div class="bar-partial" style="flex:3;"></div>
+        <div class="bar-not" style="flex:1;"></div>
+      </div>
+      <div class="sc-verdict-legend">
+        <span><span class="dot-partial"></span> 3 Partial</span>
+        <span><span class="dot-not"></span> 1 Not Met</span>
+      </div>
+    </div>
+    <div class="scorecard" style="--sc-color: var(--c2);">
+      <div class="sc-concept">C2</div>
+      <div class="sc-name">Hook U Up</div>
+      <div class="sc-metrics">
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c2)">5.4</div><div class="sc-label">Avg rating</div></div>
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c2)">13</div><div class="sc-label">Tested</div></div>
+      </div>
+      <div class="sc-verdict-bar">
+        <div class="bar-met" style="flex:2;"></div>
+        <div class="bar-partial" style="flex:1;"></div>
+        <div class="bar-not" style="flex:1;"></div>
+      </div>
+      <div class="sc-verdict-legend">
+        <span><span class="dot-met"></span> 2 Met</span>
+        <span><span class="dot-partial"></span> 1 Partial</span>
+        <span><span class="dot-not"></span> 1 Not Met</span>
+      </div>
+    </div>
+    <div class="scorecard" style="--sc-color: var(--c3);">
+      <div class="sc-concept">C3</div>
+      <div class="sc-name">We Open Up</div>
+      <div class="sc-metrics">
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c3)">4.5</div><div class="sc-label">Avg rating</div></div>
+        <div class="sc-metric-item"><div class="sc-num" style="color:var(--c3)">15</div><div class="sc-label">Tested</div></div>
+      </div>
+      <div class="sc-verdict-bar">
+        <div class="bar-partial" style="flex:2;"></div>
+        <div class="bar-not" style="flex:2;"></div>
+      </div>
+      <div class="sc-verdict-legend">
+        <span><span class="dot-partial"></span> 2 Partial</span>
+        <span><span class="dot-not"></span> 2 Not Met</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rating comparison chart -->
+  <div class="chart-row">
+    <div class="chart-box">
+      <div class="chart-title">Rating distribution by concept</div>
+      <div class="chart-sub">Each bar is one participant. Hover for participant ID.</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="assess-ratings-chart"></canvas>
+      </div>
+    </div>
+    <div class="chart-box">
+      <div class="chart-title">Success metrics comparison</div>
+      <div class="chart-sub">How many metrics each concept met, partially met, or missed.</div>
+      <div class="chart-canvas-wrap">
+        <canvas id="assess-verdict-chart"></canvas>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══════════════════════════ C1 ASSESSMENT ═══════════════════════════ -->
-  <div class="concept-block c1-block">
+  <div class="concept-block c1-block" id="assess-c1">
     <div class="concept-heading">
       <div class="c-badge">C1</div>
       <div class="c-title-block">
@@ -1877,7 +2250,7 @@
   <div class="divider"></div>
 
   <!-- ═══════════════════════════ C2 ASSESSMENT ═══════════════════════════ -->
-  <div class="concept-block c2-block">
+  <div class="concept-block c2-block" id="assess-c2">
     <div class="concept-heading">
       <div class="c-badge">C2</div>
       <div class="c-title-block">
@@ -2025,7 +2398,7 @@
   <div class="divider"></div>
 
   <!-- ═══════════════════════════ C3 ASSESSMENT ═══════════════════════════ -->
-  <div class="concept-block c3-block">
+  <div class="concept-block c3-block" id="assess-c3">
     <div class="concept-heading">
       <div class="c-badge">C3</div>
       <div class="c-title-block">
@@ -2172,35 +2545,269 @@
 
 </div>
 
+</div><!-- /main-content -->
+
 <!-- ════ SCRIPTS ════ -->
 <script>
-// Navigation
-const tabs = document.querySelectorAll('.nav-tab');
+// ── Sidebar Navigation ──
+const navItems = document.querySelectorAll('.nav-item[data-section]');
 const sections = document.querySelectorAll('.section');
+const navSubs = document.querySelectorAll('.nav-sub');
 
-function navigateTo(sectionId) {
-  // Update active tab
-  tabs.forEach(t => t.classList.remove('active'));
-  const matchingTab = document.querySelector(`.nav-tab[data-section="${sectionId}"]`);
-  if (matchingTab) matchingTab.classList.add('active');
+function navigateTo(sectionId, scrollTarget) {
+  // Update active nav items
+  navItems.forEach(n => n.classList.remove('active'));
+  // Activate the main section nav item (not sub-items)
+  const mainNav = document.querySelector(`.nav-item[data-section="${sectionId}"]:not(.nav-sub .nav-item)`);
+  if (mainNav) mainNav.classList.add('active');
+  // If a sub-item was clicked, activate it too
+  if (scrollTarget) {
+    const subNav = document.querySelector(`.nav-item[data-scroll="${scrollTarget}"]`);
+    if (subNav) subNav.classList.add('active');
+  }
+
+  // Show/hide sub-navs
+  navSubs.forEach(sub => {
+    sub.style.display = sub.dataset.parent === sectionId ? 'block' : 'none';
+  });
 
   // Show target section
   sections.forEach(s => s.classList.remove('active'));
-  document.getElementById(sectionId).classList.add('active');
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) targetSection.classList.add('active');
 
-  // Scroll to top
+  // Scroll
+  if (scrollTarget) {
+    const el = document.getElementById(scrollTarget);
+    if (el) {
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      return;
+    }
+  }
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Render charts when visiting each section
+  if (sectionId === 'assessment' && !window._chartsRendered) {
+    setTimeout(renderAssessmentCharts, 200);
+    window._chartsRendered = true;
+  }
+  if (sectionId === 'evidence' && !window._evChartsRendered) {
+    setTimeout(renderEvidenceCharts, 200);
+    window._evChartsRendered = true;
+  }
+  if (sectionId === 'synthesis' && !window._synChartsRendered) {
+    setTimeout(renderSynthesisCharts, 200);
+    window._synChartsRendered = true;
+  }
 }
 
-// Tab clicks
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => navigateTo(tab.dataset.section));
+// Nav item clicks
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    navigateTo(item.dataset.section, item.dataset.scroll || null);
+  });
 });
 
 // Flow step clicks (on landing page)
 document.querySelectorAll('.flow-step.clickable').forEach(step => {
   step.addEventListener('click', () => navigateTo(step.dataset.section));
 });
+
+// Initialize: hide sub-navs except for active section
+navSubs.forEach(sub => { sub.style.display = 'none'; });
+
+// ── Chart defaults ──
+Chart.defaults.color = 'rgba(255,255,255,0.5)';
+Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// ── Evidence Charts ──
+function renderEvidenceCharts() {
+  // Ratings across all concepts
+  const rCtx = document.getElementById('ev-ratings-chart');
+  if (!rCtx) return;
+  new Chart(rCtx, {
+    type: 'bar',
+    data: {
+      labels: ['TP01','TP02','TP04','TP05','TP06','TP07','TP09','TP10','TP11','TP12','TY01','TY04','TY11'],
+      datasets: [
+        { label: 'C1', data: [7,3,6,4,5,4.5,4,1,6,7,5,5,4], backgroundColor: '#5ee7d5', borderRadius: 4 },
+        { label: 'C2', data: [6.5,2,5,null,null,6,null,3,null,1,7,6,6], backgroundColor: '#ffb347', borderRadius: 4 },
+        { label: 'C3', data: [6,3,null,5,6,3,3.5,1,5,7,7,4,4], backgroundColor: '#c4a1ff', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, padding: 16, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}/7` } }
+      },
+      scales: {
+        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+        y: { min: 0, max: 7, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Rating (1-7)', font: { size: 11 } } }
+      }
+    }
+  });
+
+  // Sentiment by concept
+  const sCtx = document.getElementById('ev-sentiment-chart');
+  if (!sCtx) return;
+  new Chart(sCtx, {
+    type: 'bar',
+    data: {
+      labels: ['C1 Bedtime Bundle', 'C2 Hook U Up', 'C3 We Open Up'],
+      datasets: [
+        { label: 'Positive', data: [3, 8, 4], backgroundColor: '#5ee7d5', borderRadius: 4 },
+        { label: 'Mixed', data: [4, 2, 3], backgroundColor: '#ffb347', borderRadius: 4 },
+        { label: 'Negative', data: [4, 3, 5], backgroundColor: '#ff7eb3', borderRadius: 4 }
+      ]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, padding: 16, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} participants` } }
+      },
+      scales: {
+        x: { stacked: true, max: 15, ticks: { font: { size: 11 } }, title: { display: true, text: 'Participants', font: { size: 11 } } },
+        y: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ── Synthesis Charts ──
+function renderSynthesisCharts() {
+  const strCtx = document.getElementById('syn-strength-chart');
+  if (!strCtx) return;
+  new Chart(strCtx, {
+    type: 'bar',
+    data: {
+      labels: [
+        'C1-P1 Structure slipping', 'C1-P2 Sustainability', 'C1-P3 Parent column', 'C1-P4 Physical cue',
+        'C2-P1 Youth ranked first', 'C2-P2 QR blocker', 'C2-P3 Fixed buddy', 'C2-P4 Bulk Up name',
+        'C3-P1 Swap confusion', 'C3-P2 Trust gap', 'C3-P3 Felt distance', 'C3-P4 No trigger'
+      ],
+      datasets: [{
+        label: 'Participants',
+        data: [5, 5, 4, 5, 6, 4, 3, 3, 3, 4, 4, 4],
+        backgroundColor: [
+          '#5ee7d5','#5ee7d5','#5ee7d5','#5ee7d5',
+          '#ffb347','#ffb347','#ffb347','#ffb347',
+          '#c4a1ff','#c4a1ff','#c4a1ff','#c4a1ff'
+        ],
+        borderRadius: 4
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.raw} participants surfaced this` } } },
+      scales: {
+        x: { min: 0, max: 8, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Participants who surfaced pattern', font: { size: 11 } } },
+        y: { ticks: { font: { size: 11 } }, grid: { display: false } }
+      }
+    }
+  });
+
+  const kfdCtx = document.getElementById('syn-kfd-chart');
+  if (!kfdCtx) return;
+  new Chart(kfdCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Keep', 'Fix', 'Drop'],
+      datasets: [{
+        data: [8, 14, 1],
+        backgroundColor: ['#5ee7d5', '#ffb347', '#ff7eb3'],
+        borderWidth: 0,
+        hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      cutout: '55%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 20, font: { size: 13 }, boxWidth: 14 } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.raw} design actions` } }
+      }
+    }
+  });
+}
+
+// ── Assessment Charts ──
+function renderAssessmentCharts() {
+  const arCtx = document.getElementById('assess-ratings-chart');
+  if (!arCtx) return;
+  new Chart(arCtx, {
+    type: 'bar',
+    data: {
+      labels: ['C1 Bedtime Bundle', 'C2 Hook U Up', 'C3 We Open Up'],
+      datasets: [
+        { label: '7 (highest)', data: [2, 2, 2], backgroundColor: '#5ee7d5', borderRadius: 4 },
+        { label: '5-6', data: [4, 4, 5], backgroundColor: '#7cc4fa', borderRadius: 4 },
+        { label: '3-4', data: [3, 2, 5], backgroundColor: '#ffb347', borderRadius: 4 },
+        { label: '1-2', data: [1, 2, 2], backgroundColor: '#ff7eb3', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, padding: 14, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} participants` } }
+      },
+      scales: {
+        x: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } },
+        y: { stacked: true, ticks: { stepSize: 2, font: { size: 11 } }, title: { display: true, text: 'Participants', font: { size: 11 } } }
+      }
+    }
+  });
+
+  const avCtx = document.getElementById('assess-verdict-chart');
+  if (!avCtx) return;
+  new Chart(avCtx, {
+    type: 'bar',
+    data: {
+      labels: ['C1 Bedtime Bundle', 'C2 Hook U Up', 'C3 We Open Up'],
+      datasets: [
+        { label: 'Met', data: [0, 2, 0], backgroundColor: '#5ee7d5', borderRadius: 4 },
+        { label: 'Partial', data: [3, 1, 2], backgroundColor: '#ffb347', borderRadius: 4 },
+        { label: 'Not Met', data: [1, 1, 2], backgroundColor: '#ff7eb3', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, padding: 14, font: { size: 12 } } }
+      },
+      scales: {
+        x: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } },
+        y: { stacked: true, max: 4, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Success metrics (4 per concept)', font: { size: 11 } } }
+      }
+    }
+  });
+}
+
+// Render charts when sections are first visited
+// Also render synthesis charts immediately since they may be visited
+function initChartsOnNav(sectionId) {
+  if (sectionId === 'evidence' && !window._evChartsRendered) {
+    setTimeout(renderEvidenceCharts, 200);
+    window._evChartsRendered = true;
+  }
+  if (sectionId === 'synthesis' && !window._synChartsRendered) {
+    setTimeout(renderSynthesisCharts, 200);
+    window._synChartsRendered = true;
+  }
+  if (sectionId === 'assessment' && !window._chartsRendered) {
+    setTimeout(renderAssessmentCharts, 200);
+    window._chartsRendered = true;
+  }
+}
+
+// Hook into navigateTo
+const _origNavigateTo = navigateTo;
+// Override is handled inside navigateTo already via the chart render calls
 </script>
 </body>
 </html>
