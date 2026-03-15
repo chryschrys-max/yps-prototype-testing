@@ -970,38 +970,73 @@
   /* ══════════════════════════════════════
      RECOMMENDATIONS TABLE
      ══════════════════════════════════════ */
-  .rec-table-wrap {
-    overflow-x: auto; margin: 24px 0;
-  }
-  .rec-table {
-    width: 100%; border-collapse: collapse;
-    font-size: 0.92rem; line-height: 1.7;
-  }
-  .rec-table th {
-    text-align: left; padding: 14px 16px;
-    font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08);
+  /* ── Recommendation cards (replaces dense table) ── */
+  .rec-cards { display: flex; flex-direction: column; gap: 28px; margin: 32px 0; }
+  .rec-card {
     background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; overflow: hidden;
+    border-left: 4px solid var(--card-accent, rgba(255,255,255,0.1));
   }
-  .rec-table td {
-    padding: 16px; vertical-align: top;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    color: var(--text-secondary); font-weight: 300;
+  .rec-card-head {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    padding: 24px 28px 18px;
   }
-  .rec-table tr:last-child td { border-bottom: none; }
-  .rec-table .concept-label {
-    font-weight: 600; color: var(--text-primary);
-    white-space: nowrap;
+  .rec-card-concept {
+    font-size: 1.05rem; font-weight: 600; color: var(--text-primary);
   }
   .rec-verdict {
-    display: inline-block; padding: 3px 10px;
-    border-radius: 20px; font-size: 0.78rem;
+    display: inline-block; padding: 4px 14px;
+    border-radius: 20px; font-size: 0.76rem;
     font-weight: 600; letter-spacing: 0.03em;
+    margin-left: auto;
   }
   .rec-verdict.improve { background: rgba(255,179,71,0.15); color: #ffb347; }
   .rec-verdict.pilot { background: rgba(94,231,213,0.15); color: #5ee7d5; }
   .rec-verdict.rethink { background: rgba(196,161,255,0.15); color: #c4a1ff; }
+  .rec-card-body {
+    padding: 0 28px 28px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  .rec-card-col h4 {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 10px;
+  }
+  .rec-card-col p, .rec-card-col ul {
+    font-size: 0.9rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.7; margin: 0;
+  }
+  .rec-card-col ul { padding-left: 18px; margin: 0; }
+  .rec-card-col ul li { margin-bottom: 6px; }
+  .rec-card-col ul li:last-child { margin-bottom: 0; }
+  .rec-card-reco {
+    padding: 20px 28px 24px;
+    background: rgba(255,255,255,0.015);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .rec-card-reco h4 {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin: 0 0 10px;
+  }
+  .rec-card-reco p {
+    font-size: 0.9rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.7; margin: 0;
+  }
+  @media (max-width: 768px) {
+    .rec-card-body { grid-template-columns: 1fr; }
+    .rec-card-head { padding: 20px 20px 14px; }
+    .rec-card-body { padding: 0 20px 20px; }
+    .rec-card-reco { padding: 16px 20px 20px; }
+  }
+
+  /* ── Section divider for recommendations ── */
+  .rec-section-break {
+    margin: 56px 0 40px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
 
   .direction-card {
     padding: 20px 24px; margin-bottom: 16px;
@@ -3694,61 +3729,104 @@
   <div class="section-head">
     <div class="section-eyebrow">Step 4 &middot; Recommendations</div>
     <h2>What to Pilot, Improve, or Rethink</h2>
-    <p>These three concepts were built from what youth and parents said during co-creation, filtered through the project's north star, design principles, design constraints, and a desirability-viability-feasibility lens. They were designed to be simple on purpose. The goal was to test the underlying mechanics with real people in real conditions, not to deliver polished products. That is how you find out what actually works before investing in scale. The validation data now tells us which mechanics held, which broke, and where the strongest signals point next. Some concepts need targeted fixes before a physical pilot. Others surfaced unexpected strengths that may deserve their own direction. This section lays out the path for each.</p>
+    <p>These three concepts were built from what youth and parents said during co-creation, filtered through the project's north star, design principles, and a desirability-viability-feasibility lens. They were designed to be simple on purpose: test the underlying mechanics with real people in real conditions, not deliver polished products.</p>
+    <p style="margin-top:12px; color: var(--text-secondary); font-weight: 300;">The validation data now tells us which mechanics held, which broke, and where the strongest signals point next. This section lays out the path for each concept, then maps out new directions that emerged from what participants said and did.</p>
   </div>
 
-  <!-- Decision table -->
+  <!-- Decision cards -->
   <div id="rec-decision">
-    <div class="cluster-label">Concept decision table</div>
-    <div class="rec-table-wrap">
-      <table class="rec-table" role="table">
-        <thead>
-          <tr>
-            <th style="width:12%;">Concept</th>
-            <th style="width:22%;">Current state</th>
-            <th style="width:28%;">What needs fixing</th>
-            <th style="width:38%;">Recommendation</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><span class="concept-label" style="color: var(--c1);">C1 Bedtime Bundle</span></td>
-            <td>Core mechanic (physical board as persistent cue) is the strongest prompt of all three concepts. But the parent column was misread as monitoring by most participants, sustainability was flagged by 5 of 11, and attractiveness split sharply by age group. The concept works for a narrow window: families where sleep structure is slipping but not yet gone.</td>
-            <td>Redesign parent column as an explicit commitment pledge, not an observation slot. Add text labels to emotion icons. Build a re-engagement mechanism so the board does not come down after week two. Consider testing beside-the-bed placement as an alternative to the fridge, since one participant flagged that fridge placement led to forgetting.</td>
-            <td>
-              <span class="rec-verdict improve">Improve, then pilot</span>
-              <p style="margin-top:10px;">Fix the four must-have items first. Then run a physical pilot with 2 to 3 families at the P6 to Sec 1 transition where bedtime structure is actively slipping. The online format could not test the tactile interaction or the conversation-opening potential of feelings magnets, so a physical pilot is essential before further design decisions. Consider developing the feelings magnets as a communication tool in their own right, as this emerged as an unexpected strength in several sessions.</p>
-            </td>
-          </tr>
-          <tr>
-            <td><span class="concept-label" style="color: var(--c2);">C2 Hook U Up</span></td>
-            <td>Strongest youth appetite of the three concepts. 4 of 5 youth ranked it first. The peer mechanic and identity framing made health behaviour feel socially relevant without reading as an intervention. Youth motivation was self-generated in every session. However, the QR proof mechanic failed across every test condition: school phone bans, too many steps, and privacy concerns.</td>
-            <td>Replace the QR proof entirely with a physical tick, streak sticker, or peer-verified check. Rename "Bulk Up" to aspiration language (test "Level Up" or "Stronger"). Allow buddy rotation across 2 to 4 people instead of one fixed partner. Add a one-line benefit explanation to each challenge card.</td>
-            <td>
-              <span class="rec-verdict pilot">Fix critical blockers, then pilot</span>
-              <p style="margin-top:10px;">C2 is closest to pilot-ready. Fix the four must-fix items, particularly the proof mechanic. Then run a 14-day physical pilot with at least two youth pairs from different school contexts. Design the pilot to stress-test sustainability over the full 14 days, not just initial enthusiasm. Consider testing a group variant (3 to 5 participants rotating) alongside the pair model, since several youth independently described it as a group activity. A spin-off with beauty and creativity decks could broaden reach beyond the current health-coded framing.</p>
-            </td>
-          </tr>
-          <tr>
-            <td><span class="concept-label" style="color: var(--c3);">C3 We Open Up</span></td>
-            <td>The concept that resonated most deeply with the families who needed it, and felt most redundant to the families who did not. TP12 gave 7 out of 7 and TP10 gave 1 out of 7. Importantly, the core Swap mechanic (answering as each other) was never actually tested in its intended form: online participants clicked through individually, and no pair reached the simultaneous reveal. This means the mechanic confusion flagged by participants may be a limitation of the online format rather than the concept itself. The initiation gap (no natural reason for either side to start) is the challenge that a physical pilot needs to address.</td>
-            <td>Add on-card mechanic instructions so Swap and Spark are self-explanatory without a facilitator. Fix Spark card links so they connect logically to their category. Create a Level 1 starter set of lighter, observable questions before the deeper material. Build a low-stakes starting trigger: a card left on the dinner table, a "question of the week" format, or a visible card that signals "whenever you are ready."</td>
-            <td>
-              <span class="rec-verdict rethink">Improve, and explore the spin-off</span>
-              <p style="margin-top:10px;">C3 needs a physical pilot before any structural decisions about the Swap mechanic. Run with 2 to 3 families where parents describe a felt shift in connection since secondary school. However, the evidence also suggests a stronger concept may be hiding inside this one. The most powerful moment in testing was not the Swap card. It was youth asking parents questions, a reversal that TY01 rated 7 out of 7 specifically because "the game lets me ask questions TO my parents." A spin-off that centres on youth-led questioning, with lighter entry and a visible trigger, may outperform the current design. Explore both paths in parallel.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="cluster-label">Concept verdicts</div>
+    <div class="rec-cards">
+
+      <!-- C1 -->
+      <div class="rec-card" style="--card-accent: var(--c1);">
+        <div class="rec-card-head">
+          <span class="rec-card-concept" style="color: var(--c1);">C1 Bedtime Bundle</span>
+          <span class="rec-verdict improve">Improve, then pilot</span>
+        </div>
+        <div class="rec-card-body">
+          <div class="rec-card-col">
+            <h4>Current state</h4>
+            <p>The physical board as persistent cue is the strongest prompt of all three concepts. But the parent column was misread as monitoring, sustainability was flagged by 5 of 11 participants, and attractiveness split sharply by age group. The concept works for a specific window: families where sleep structure is slipping but not yet gone.</p>
+          </div>
+          <div class="rec-card-col">
+            <h4>What needs fixing</h4>
+            <ul>
+              <li>Redesign parent column as a commitment pledge, not an observation slot</li>
+              <li>Add text labels to emotion icons</li>
+              <li>Build a re-engagement mechanism so the board does not come down after week two</li>
+              <li>Consider testing beside-the-bed placement as an alternative to the fridge</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rec-card-reco">
+          <h4>Recommendation</h4>
+          <p>Fix the four must-have items first. Then run a physical pilot with 2 to 3 families at the P6 to Sec 1 transition where bedtime structure is actively slipping. The online format could not test the tactile interaction or the conversation-opening potential of feelings magnets, so a physical pilot is essential before further design decisions. Consider developing the feelings magnets as a communication tool in their own right, as this emerged as an unexpected strength in several sessions.</p>
+        </div>
+      </div>
+
+      <!-- C2 -->
+      <div class="rec-card" style="--card-accent: var(--c2);">
+        <div class="rec-card-head">
+          <span class="rec-card-concept" style="color: var(--c2);">C2 Hook U Up</span>
+          <span class="rec-verdict pilot">Fix critical blockers, then pilot</span>
+        </div>
+        <div class="rec-card-body">
+          <div class="rec-card-col">
+            <h4>Current state</h4>
+            <p>Strongest youth appetite of the three. 4 of 5 youth ranked it first. The peer mechanic and identity framing made health behaviour feel socially relevant without reading as an intervention. Youth motivation was self-generated in every session. However, the QR proof mechanic failed across every test condition: school phone bans, too many steps, and privacy concerns.</p>
+          </div>
+          <div class="rec-card-col">
+            <h4>What needs fixing</h4>
+            <ul>
+              <li>Replace QR proof entirely with a physical tick, streak sticker, or peer-verified check</li>
+              <li>Rename "Bulk Up" to aspiration language (test "Level Up" or "Stronger")</li>
+              <li>Allow buddy rotation across 2 to 4 people instead of one fixed partner</li>
+              <li>Add a one-line benefit explanation to each challenge card</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rec-card-reco">
+          <h4>Recommendation</h4>
+          <p>C2 is closest to pilot-ready. Fix the four must-fix items, particularly the proof mechanic. Then run a 14-day physical pilot with at least two youth pairs from different school contexts. Design the pilot to stress-test sustainability over the full 14 days, not just initial enthusiasm. Consider testing a group variant (3 to 5 participants rotating) alongside the pair model, since several youth independently described it as a group activity.</p>
+        </div>
+      </div>
+
+      <!-- C3 -->
+      <div class="rec-card" style="--card-accent: var(--c3);">
+        <div class="rec-card-head">
+          <span class="rec-card-concept" style="color: var(--c3);">C3 We Open Up</span>
+          <span class="rec-verdict rethink">Improve, and explore the spin-off</span>
+        </div>
+        <div class="rec-card-body">
+          <div class="rec-card-col">
+            <h4>Current state</h4>
+            <p>The concept that resonated most deeply with the families who needed it, and felt most redundant to the families who did not. TP12 gave 7/7 and TP10 gave 1/7. The core Swap mechanic was never actually tested in its intended form: online participants clicked through individually, and no pair reached the simultaneous reveal. The initiation gap (no natural reason for either side to start) is the challenge that a physical pilot needs to address.</p>
+          </div>
+          <div class="rec-card-col">
+            <h4>What needs fixing</h4>
+            <ul>
+              <li>Add on-card mechanic instructions so Swap and Spark are self-explanatory</li>
+              <li>Fix Spark card links so they connect logically to their category</li>
+              <li>Create a Level 1 starter set of lighter, observable questions</li>
+              <li>Build a low-stakes starting trigger: card on the dinner table, "question of the week," or a visible signal</li>
+            </ul>
+          </div>
+        </div>
+        <div class="rec-card-reco">
+          <h4>Recommendation</h4>
+          <p>C3 needs a physical pilot before any structural decisions about the Swap mechanic. Run with 2 to 3 families where parents describe a felt shift in connection since secondary school. The most powerful moment in testing was not the Swap card. It was youth asking parents questions, a reversal that TY01 rated 7/7 specifically because "the game lets me ask questions TO my parents." A spin-off that centres on youth-led questioning, with lighter entry and a visible trigger, may outperform the current design. Explore both paths in parallel.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="divider"></div>
-
   <!-- New directions portfolio -->
-  <div id="rec-directions">
-    <div class="cluster-label">Concept portfolio: new directions worth exploring</div>
-    <p class="portfolio-intro">These directions emerged from what participants said and did during validation testing. Each one has at least two independent signals from different sessions. They represent opportunities that the validation surfaced precisely because real youth and parents were involved, which is the value of testing early with simple mechanics rather than waiting for a polished product. Every direction is mapped back to the project's north star, the 6 wells, the design principles, and the windows where unhealthy choices build up. Click any card to see the full mapping.</p>
+  <div id="rec-directions" class="rec-section-break">
+    <div class="cluster-label">New directions worth exploring</div>
+    <p class="portfolio-intro">These directions emerged from what participants said and did during validation. Each one has at least two independent signals from different sessions. Every direction maps back to the north star, the 6 wells, the design principles, and the windows where unhealthy choices build up.</p>
+    <p class="portfolio-intro" style="margin-top: 4px;">Click any card to see the full mapping.</p>
 
     <div class="portfolio-grid">
 
