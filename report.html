@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YPS Report</title>
+<title>YPS Research Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,6 +35,22 @@
     --radius-sm: 12px;
     --font-display: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
+
+    /* Concept colors */
+    --c1: #5ee7d5;
+    --c1-dim: rgba(94,231,213,0.12);
+    --c2: #ffb347;
+    --c2-dim: rgba(255,179,71,0.12);
+    --c3: #c4a1ff;
+    --c3-dim: rgba(196,161,255,0.12);
+
+    /* Status colors */
+    --keep-bg: rgba(94,231,213,0.12);
+    --keep-text: #5ee7d5;
+    --fix-bg: rgba(255,179,71,0.12);
+    --fix-text: #ffb347;
+    --drop-bg: rgba(255,126,179,0.12);
+    --drop-text: #ff7eb3;
   }
 
   body {
@@ -45,6 +61,7 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
+  button { cursor: pointer; font-family: inherit; }
 
   /* ── Animated Background ── */
   .bg-mesh {
@@ -68,7 +85,6 @@
     33% { transform: translate(60px, -40px) scale(1.1); }
     66% { transform: translate(-30px, 50px) scale(0.95); }
   }
-
   .bg-orb {
     position: fixed; width: 400px; height: 400px; border-radius: 50%;
     background: radial-gradient(circle, #ffb347, transparent 70%);
@@ -92,55 +108,87 @@
   /* ── Navigation ── */
   .nav-bar {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 32px;
-    background: rgba(12, 14, 43, 0.8);
+    display: flex; align-items: center; gap: 0;
+    padding: 0 32px;
+    background: rgba(12, 14, 43, 0.85);
     backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border-subtle);
   }
   .nav-brand {
     font-family: var(--font-display);
-    font-size: 1.1rem; font-weight: 700;
-    background: linear-gradient(135deg, #fff, var(--accent-teal));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    font-size: 1rem; font-weight: 700;
+    color: var(--text-primary);
+    padding: 16px 0;
+    margin-right: 32px;
+    white-space: nowrap;
+  }
+  .nav-tabs {
+    display: flex; align-items: center; gap: 0;
+  }
+  .nav-tab {
+    background: none; border: none;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: 18px 16px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+  .nav-tab:hover { color: var(--text-secondary); }
+  .nav-tab.active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent-teal);
+  }
+  .nav-right {
+    margin-left: auto;
   }
   .nav-link {
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    border-radius: 50px; padding: 8px 20px;
-    font-size: 0.85rem; font-weight: 500; color: var(--text-primary);
+    border-radius: 50px; padding: 7px 18px;
+    font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
+    transition: all 0.3s;
   }
-  .nav-link:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+  .nav-link:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
 
-  /* ── Page Layout ── */
-  .report-page {
-    max-width: 1100px; margin: 0 auto;
-    padding: 100px 24px 80px;
+  /* ── Section Containers ── */
+  .section {
+    display: none;
+    max-width: 1000px; margin: 0 auto;
+    padding: 90px 24px 80px;
   }
-
-  /* ── Hero ── */
-  .report-hero {
-    text-align: center; margin-bottom: 64px;
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  .section.active {
+    display: block;
+    animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(30px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .report-badge {
+
+  /* ── Hero / Landing ── */
+  .landing-hero {
+    text-align: center;
+    padding: 80px 0 60px;
+  }
+  .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--bg-glass); border: 1px solid var(--border-subtle);
-    border-radius: 50px; padding: 8px 20px; margin-bottom: 24px;
-    font-size: 0.8rem; font-weight: 500; color: var(--text-secondary);
+    border-radius: 50px; padding: 8px 20px; margin-bottom: 28px;
+    font-size: 0.75rem; font-weight: 600; color: var(--text-secondary);
     letter-spacing: 0.5px; text-transform: uppercase;
     backdrop-filter: blur(10px);
   }
-  .report-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-teal); animation: dotPulse 2s ease-in-out infinite; }
+  .hero-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent-teal);
+    animation: dotPulse 2s ease-in-out infinite;
+  }
   @keyframes dotPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  .report-title {
+  .hero-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3.2rem);
     font-weight: 800; line-height: 1.1;
@@ -148,218 +196,297 @@
     background: linear-gradient(135deg, #fff 0%, #ffd1a4 40%, #ff7eb3 70%, #c4a1ff 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .report-subtitle {
+  .hero-subtitle {
     font-size: 1.05rem; color: var(--text-secondary);
-    font-weight: 300; letter-spacing: 0.02em;
+    font-weight: 300; max-width: 560px; margin: 0 auto 48px;
+    line-height: 1.7;
   }
 
-  /* ── Section ── */
-  .report-section {
-    margin-bottom: 48px;
-    animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .section-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 24px;
-  }
-  .section-icon {
-    width: 40px; height: 40px; border-radius: var(--radius-sm);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-  }
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 1.3rem; font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-
-  /* ── KPI Cards ── */
-  .kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px; margin-bottom: 48px;
-  }
-  .kpi-card {
+  /* ── Flow Explainer ── */
+  .flow-bar {
+    display: flex; align-items: stretch;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
-    padding: 28px 24px;
-    backdrop-filter: blur(10px);
-    position: relative; overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    margin-bottom: 48px;
   }
-  .kpi-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.15); }
-  .kpi-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  }
-  .kpi-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent-teal), transparent); }
-  .kpi-card:nth-child(2)::before { background: linear-gradient(90deg, var(--accent-orange), transparent); }
-  .kpi-card:nth-child(3)::before { background: linear-gradient(90deg, var(--accent-purple), transparent); }
-  .kpi-card:nth-child(4)::before { background: linear-gradient(90deg, var(--accent-pink), transparent); }
-
-  .kpi-label {
-    font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 1.5px; margin-bottom: 12px;
-  }
-  .kpi-card:nth-child(1) .kpi-label { color: var(--accent-teal); }
-  .kpi-card:nth-child(2) .kpi-label { color: var(--accent-orange); }
-  .kpi-card:nth-child(3) .kpi-label { color: var(--accent-purple); }
-  .kpi-card:nth-child(4) .kpi-label { color: var(--accent-pink); }
-
-  .kpi-value {
-    font-family: var(--font-display);
-    font-size: 2.2rem; font-weight: 800;
-    letter-spacing: -0.02em; margin-bottom: 6px;
-  }
-  .kpi-change {
-    font-size: 0.8rem; font-weight: 500;
-  }
-  .kpi-change.up { color: var(--accent-teal); }
-  .kpi-change.down { color: var(--accent-coral); }
-  .kpi-change.neutral { color: var(--text-muted); }
-
-  /* ── Chart Container ── */
-  .chart-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 32px;
-    backdrop-filter: blur(10px);
-    margin-bottom: 32px;
-  }
-  .chart-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.1rem; font-weight: 600;
-    margin-bottom: 24px;
-  }
-  .chart-area {
-    width: 100%; height: 260px; position: relative;
-  }
-  .bar-chart {
-    display: flex; align-items: flex-end; justify-content: space-around;
-    height: 100%; padding: 0 8px;
-    border-bottom: 1px solid var(--border-subtle);
-  }
-  .bar-group {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 8px; flex: 1;
-  }
-  .bar {
-    width: 36px; border-radius: 6px 6px 0 0;
-    transition: height 1s cubic-bezier(0.16, 1, 0.3, 1);
+  .flow-step {
+    flex: 1; padding: 20px 24px; text-align: center;
     position: relative;
+    transition: background 0.3s;
   }
-  .bar:hover { filter: brightness(1.2); }
-  .bar-label {
-    font-size: 0.7rem; color: var(--text-muted);
-    font-weight: 500; text-align: center;
-    padding-top: 8px;
+  .flow-step:not(:last-child)::after {
+    content: '\2192'; position: absolute; right: -8px; top: 50%;
+    transform: translateY(-50%); font-size: 16px; color: var(--text-muted);
+    z-index: 2;
   }
+  .flow-step .step-num {
+    font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+  }
+  .flow-step .step-name {
+    font-family: var(--font-display); font-size: 0.95rem;
+    font-weight: 700; margin-bottom: 4px;
+  }
+  .flow-step .step-desc {
+    font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;
+  }
+  .flow-step.active {
+    background: rgba(94,231,213,0.08);
+  }
+  .flow-step.active .step-num { color: var(--accent-teal); }
 
-  /* ── Findings / Text Section ── */
-  .findings-grid {
+  /* ── Info Cards (landing) ── */
+  .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px; margin-bottom: 48px;
   }
-  .finding-card {
+  .info-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 28px;
     backdrop-filter: blur(10px);
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .finding-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.15); }
-
-  .finding-number {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 28px; height: 28px; border-radius: 50%;
-    font-size: 0.75rem; font-weight: 700;
-    margin-bottom: 16px;
-  }
-  .finding-card:nth-child(1) .finding-number { background: rgba(94,231,213,0.15); color: var(--accent-teal); }
-  .finding-card:nth-child(2) .finding-number { background: rgba(255,179,71,0.15); color: var(--accent-orange); }
-  .finding-card:nth-child(3) .finding-number { background: rgba(196,161,255,0.15); color: var(--accent-purple); }
-  .finding-card:nth-child(4) .finding-number { background: rgba(255,142,196,0.15); color: var(--accent-pink); }
-
-  .finding-card h4 {
+  .info-card h3 {
     font-family: var(--font-display);
-    font-size: 1rem; font-weight: 600;
-    margin-bottom: 10px;
+    font-size: 1rem; font-weight: 600; margin-bottom: 12px;
   }
-  .finding-card p {
+  .info-card p {
     font-size: 0.88rem; color: var(--text-secondary);
     line-height: 1.7; font-weight: 300;
   }
 
-  /* ── Summary Block ── */
-  .summary-block {
+  /* ── Section Headers ── */
+  .section-head {
+    margin-bottom: 40px;
+  }
+  .section-eyebrow {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--border-subtle);
+  }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .section-head p {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300; max-width: 640px;
+  }
+
+  /* ── Concept Block ── */
+  .concept-block {
+    margin-bottom: 56px;
+  }
+  .concept-heading {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .c-badge {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 700; color: var(--bg-primary);
+    flex-shrink: 0;
+  }
+  .c1-block .c-badge { background: var(--c1); }
+  .c2-block .c-badge { background: var(--c2); }
+  .c3-block .c-badge { background: var(--c3); }
+
+  .c-title-block h3 {
+    font-family: var(--font-display);
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 4px;
+  }
+  .c-title-block .c-sub {
+    font-size: 0.82rem; color: var(--text-secondary); font-weight: 300;
+  }
+
+  /* ── Pattern Card ── */
+  .pattern-card {
     background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 16px;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.3s;
+  }
+  .pattern-card:hover { border-color: rgba(255,255,255,0.15); }
+
+  .pattern-header {
+    padding: 20px 24px 16px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .pattern-num {
+    font-family: var(--font-display);
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--text-muted);
+    padding-top: 2px; flex-shrink: 0; width: 24px;
+  }
+  .pattern-title {
+    font-size: 0.92rem; font-weight: 600;
+    line-height: 1.4; margin-bottom: 6px;
+  }
+  .pattern-who {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── Evidence List ── */
+  .evidence-list {
+    list-style: none; padding: 0;
+  }
+  .evidence-list li {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.65; padding: 8px 0 8px 16px;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .evidence-list li:last-child { border-bottom: none; }
+  .evidence-list li::before {
+    content: ''; position: absolute;
+    left: 0; top: 16px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--text-muted);
+  }
+  .evidence-list .quote {
+    font-style: italic; color: var(--text-primary);
+    font-weight: 400;
+  }
+  .evidence-list .src {
+    font-size: 0.68rem; font-weight: 500;
+    color: var(--text-muted); margin-left: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Insight Row ── */
+  .insight-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .insight-cell {
+    padding: 18px 24px;
+  }
+  .insight-cell:first-child {
+    border-right: 1px solid var(--border-subtle);
+  }
+  .cell-label {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .insight-cell.insight .cell-label { color: var(--accent-teal); }
+  .c2-block .insight-cell.insight .cell-label { color: var(--accent-orange); }
+  .c3-block .insight-cell.insight .cell-label { color: var(--accent-purple); }
+  .insight-cell.implication .cell-label { color: var(--text-muted); }
+  .insight-cell p {
+    font-size: 0.84rem; line-height: 1.65;
+    color: var(--text-secondary); font-weight: 300;
+  }
+
+  /* ── KFD Pills ── */
+  .kfd-row {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px;
+  }
+  .kfd-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .kfd-pill.keep { background: var(--keep-bg); color: var(--keep-text); }
+  .kfd-pill.fix  { background: var(--fix-bg);  color: var(--fix-text);  }
+  .kfd-pill.drop { background: var(--drop-bg); color: var(--drop-text); }
+
+  /* ── Cross-Concept Section ── */
+  .cross-section {
+    background: rgba(255,255,255,0.03);
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     padding: 40px;
-    backdrop-filter: blur(10px);
-    position: relative; overflow: hidden;
+    margin-top: 48px;
   }
-  .summary-block::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(circle at 50% 0%, var(--glow-teal), transparent 60%);
-    opacity: 0.5;
-  }
-  .summary-block h3 {
+  .cross-section h2 {
     font-family: var(--font-display);
-    font-size: 1.2rem; font-weight: 700;
-    margin-bottom: 16px; position: relative;
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;
   }
-  .summary-block p {
-    font-size: 0.95rem; color: var(--text-secondary);
-    line-height: 1.8; font-weight: 300; position: relative;
+  .cross-sub {
+    font-size: 0.88rem; color: var(--text-secondary);
+    margin-bottom: 32px; line-height: 1.6; font-weight: 300;
   }
-
-  /* ── Table ── */
-  .data-table-wrapper {
+  .cross-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .cross-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    margin-bottom: 32px;
+    border-radius: var(--radius-sm);
+    padding: 20px;
   }
-  .data-table {
-    width: 100%; border-collapse: collapse;
+  .cross-card .cross-label {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 10px;
   }
-  .data-table thead th {
-    font-size: 0.72rem; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 1.5px; color: var(--text-muted);
-    padding: 16px 24px; text-align: left;
-    border-bottom: 1px solid var(--border-subtle);
+  .cross-card p {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
   }
-  .data-table tbody td {
-    padding: 14px 24px; font-size: 0.88rem;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    color: var(--text-secondary);
-  }
-  .data-table tbody tr:last-child td { border-bottom: none; }
-  .data-table tbody tr:hover { background: rgba(255,255,255,0.03); }
 
-  .status-badge {
-    display: inline-flex; padding: 4px 12px;
-    border-radius: 50px; font-size: 0.75rem; font-weight: 600;
+  /* ── Cluster label ── */
+  .cluster-label {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .status-badge.positive { background: rgba(94,231,213,0.12); color: var(--accent-teal); }
-  .status-badge.warning { background: rgba(255,179,71,0.12); color: var(--accent-orange); }
-  .status-badge.info { background: rgba(196,161,255,0.12); color: var(--accent-purple); }
+  .cluster-label::after { content: ''; flex: 1; height: 1px; background: var(--border-subtle); }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border-subtle);
+    margin: 48px 0;
+  }
+
+  /* ── Placeholder sections ── */
+  .coming-soon {
+    text-align: center; padding: 120px 24px;
+  }
+  .coming-soon h2 {
+    font-family: var(--font-display);
+    font-size: 1.6rem; font-weight: 700; margin-bottom: 12px;
+  }
+  .coming-soon p {
+    font-size: 0.95rem; color: var(--text-secondary); font-weight: 300;
+  }
 
   /* ── Responsive ── */
-  @media (max-width: 640px) {
-    .report-page { padding: 80px 16px 60px; }
-    .nav-bar { padding: 12px 16px; }
-    .kpi-grid { grid-template-columns: 1fr 1fr; }
-    .findings-grid { grid-template-columns: 1fr; }
-    .chart-card { padding: 20px; }
-    .summary-block { padding: 28px; }
-    .bar { width: 24px; }
+  @media (max-width: 768px) {
+    .nav-bar { padding: 0 16px; overflow-x: auto; }
+    .nav-tab { font-size: 0.72rem; padding: 14px 10px; }
+    .section { padding: 80px 16px 60px; }
+    .insight-row { grid-template-columns: 1fr; }
+    .insight-cell:first-child { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+    .cross-grid { grid-template-columns: 1fr; }
+    .flow-bar { flex-direction: column; }
+    .flow-step:not(:last-child)::after { display: none; }
   }
 </style>
 </head>
@@ -369,190 +496,576 @@
 <div class="bg-orb"></div>
 <div class="grain"></div>
 
-<!-- Navigation -->
+<!-- ════ NAVIGATION ════ -->
 <nav class="nav-bar">
   <div class="nav-brand">YPS Report</div>
-  <a href="prototype.html" class="nav-link">&#8592; Back to Prototypes</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-section="landing">Overview</button>
+    <button class="nav-tab" data-section="synthesis">Synthesis</button>
+    <button class="nav-tab" data-section="concepts">Concept Performance</button>
+    <button class="nav-tab" data-section="evidence">Evidence &amp; Themes</button>
+  </div>
+  <div class="nav-right">
+    <a href="prototype.html" class="nav-link">View Prototypes</a>
+  </div>
 </nav>
 
-<main class="report-page">
+<!-- ════════════════════════════════════════
+     SECTION: LANDING / OVERVIEW
+     ════════════════════════════════════════ -->
+<div class="section active" id="landing">
 
-  <!-- Hero -->
-  <header class="report-hero">
-    <div class="report-badge">
+  <div class="landing-hero">
+    <div class="hero-badge">
       <span class="dot"></span>
-      Report
+      HPB Youth Preventive Services
     </div>
-    <h1 class="report-title">Prototype Testing Report</h1>
-    <p class="report-subtitle">Key metrics, findings, and insights from the testing sessions</p>
-  </header>
+    <h1 class="hero-title">Validation Testing Report</h1>
+    <p class="hero-subtitle">What the evidence means. Patterns that appeared across more than one participant, the insight each pattern points to, and the implication for design.</p>
+  </div>
 
-  <!-- KPI Section -->
-  <section class="report-section">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(94,231,213,0.12);">&#9632;</div>
-      <h2 class="section-title">Key Metrics</h2>
+  <!-- Flow -->
+  <div class="flow-bar">
+    <div class="flow-step">
+      <div class="step-num">Step 1</div>
+      <div class="step-name">Evidence</div>
+      <div class="step-desc">Raw quotes and observations per participant</div>
     </div>
-    <div class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-label">Total Sessions</div>
-        <div class="kpi-value">24</div>
-        <div class="kpi-change neutral">Completed</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Participants</div>
-        <div class="kpi-value">48</div>
-        <div class="kpi-change neutral">Unique testers</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Avg. Engagement</div>
-        <div class="kpi-value">87%</div>
-        <div class="kpi-change up">&#9650; 12% vs. target</div>
-      </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Satisfaction</div>
-        <div class="kpi-value">4.6</div>
-        <div class="kpi-change up">&#9650; out of 5.0</div>
-      </div>
+    <div class="flow-step active">
+      <div class="step-num">Step 2</div>
+      <div class="step-name">Synthesis</div>
+      <div class="step-desc">Patterns + insights + implications</div>
     </div>
-  </section>
+    <div class="flow-step">
+      <div class="step-num">Step 3</div>
+      <div class="step-name">Assessment</div>
+      <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
+    </div>
+  </div>
 
-  <!-- Chart Section -->
-  <section class="report-section">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(255,179,71,0.12);">&#9650;</div>
-      <h2 class="section-title">Engagement by Concept</h2>
+  <!-- Study Info -->
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Study overview</h3>
+      <p>Validation testing of three health behaviour change concepts for youth and parents. Conducted online with 12 parents and 9 youth across multiple sessions in March 2026.</p>
     </div>
-    <div class="chart-card">
-      <h3>Average Session Engagement Rate</h3>
-      <div class="chart-area">
-        <div class="bar-chart" id="barChart">
-          <!-- Bars injected by JS -->
+    <div class="info-card">
+      <h3>Participants</h3>
+      <p>21 participants total: 12 parents (TP01-TP12) and 9 youth (TY01-TY11). Mix of family structures, school stages, and existing health behaviours.</p>
+    </div>
+    <div class="info-card">
+      <h3>Three concepts tested</h3>
+      <p><strong style="color:var(--c1)">C1 Bedtime Bundle</strong> — physical magnet board for sleep wind-down. <strong style="color:var(--c2)">C2 Hook U Up</strong> — 14-day peer challenge card deck. <strong style="color:var(--c3)">C3 We Open Up</strong> — family conversation card game.</p>
+    </div>
+    <div class="info-card">
+      <h3>Research goals</h3>
+      <p>Test whether each concept's core mechanic works with real participants, identify what needs fixing before physical pilots, and surface cross-concept patterns about youth health behaviour.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: SYNTHESIS
+     ════════════════════════════════════════ -->
+<div class="section" id="synthesis">
+
+  <div class="section-head">
+    <div class="section-eyebrow">Synthesis</div>
+    <h2>Patterns, Insights, Implications</h2>
+    <p>Per concept: patterns that appeared across more than one participant, the insight each pattern points to, and the implication for the design.</p>
+  </div>
+
+  <!-- ── C1 ── -->
+  <div class="concept-block c1-block">
+    <div class="concept-heading">
+      <div class="c-badge">C1</div>
+      <div class="c-title-block">
+        <h3>Bedtime Bundle</h3>
+        <div class="c-sub">Physical magnet board for shared sleep wind-down &mdash; Home / Bedtime</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Patterns</div>
+
+    <!-- C1 P1 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P1</div>
+        <div>
+          <div class="pattern-title">Resonated most with parents who feel the structure slipping but have not lost it completely</div>
+          <div class="pattern-who">TP01, TP05, TP10, TP12 &mdash; across parent and youth sessions</div>
+          <ul class="evidence-list">
+            <li>TP01 (systematic Malay family, son sleeps next to her) loved it immediately and asked for a copy before being offered one. She already co-manages her son's bedtime.</li>
+            <li>TP05: <span class="quote">"We've been quite systematic since young so they are kind of used to this routine."</span> Rated it 4/7 &mdash; not because the concept failed, but because his daughter already manages herself.</li>
+            <li>TP10: Rated it 1/7. <span class="quote">"Too fixed and boring."</span> Her daughter already has an established routine. The board adds nothing new.</li>
+            <li>TP12 (strongest positive): <span class="quote">"This is something we have been looking for a long time."</span> 7/7. Single parent, daughter's sleep is a source of real tension at home.</li>
+            <li>TY06 (new): Can see herself using it, but some days after CCA she is exhausted and would go straight to sleep. <span class="quote">"Some days maybe after CCA I'm very exhausted and I come back late &mdash; I wouldn't have that much time to do it."</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>Resonated most with parents who feel the structure slipping but have not lost it completely. TP12 is the clearest signal of who this is designed for. Where structure was already solid, participants saw no need. Where it had collapsed entirely, the concept felt too demanding to restart.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Target this at Sec 1 families in transition &mdash; the P6 to Sec 1 shift is exactly when parental oversight begins to drop and youth have not yet developed their own bedtime anchor. Reframe as a transition tool, not a general sleep aid.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill keep">Keep &mdash; physical board</span>
+            <span class="kfd-pill fix">Fix &mdash; targeting and framing</span>
+          </div>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- Data Table -->
-  <section class="report-section">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(124,196,250,0.12);">&#9679;</div>
-      <h2 class="section-title">Session Breakdown</h2>
-    </div>
-    <div class="data-table-wrapper">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Concept</th>
-            <th>Sessions</th>
-            <th>Participants</th>
-            <th>Avg. Duration</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="color: var(--text-primary); font-weight: 500;">Concept 1</td>
-            <td>8</td>
-            <td>16</td>
-            <td>42 min</td>
-            <td><span class="status-badge positive">Complete</span></td>
-          </tr>
-          <tr>
-            <td style="color: var(--text-primary); font-weight: 500;">Concept 2</td>
-            <td>8</td>
-            <td>16</td>
-            <td>38 min</td>
-            <td><span class="status-badge positive">Complete</span></td>
-          </tr>
-          <tr>
-            <td style="color: var(--text-primary); font-weight: 500;">Concept 3</td>
-            <td>8</td>
-            <td>16</td>
-            <td>45 min</td>
-            <td><span class="status-badge warning">In Review</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Findings Section -->
-  <section class="report-section">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(196,161,255,0.12);">&#9733;</div>
-      <h2 class="section-title">Key Findings</h2>
-    </div>
-    <div class="findings-grid">
-      <div class="finding-card">
-        <div class="finding-number">1</div>
-        <h4>High Engagement Across All Concepts</h4>
-        <p>Participants consistently showed strong engagement with all three prototype concepts, averaging 87% active involvement throughout sessions.</p>
+    <!-- C1 P2 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P2</div>
+        <div>
+          <div class="pattern-title">Sustainability was the primary concern &mdash; not whether participants would start, but whether they would keep going</div>
+          <div class="pattern-who">TP07, TP09, TP10, TY11 &mdash; 4 of 11 participants</div>
+          <ul class="evidence-list">
+            <li>TP07: <span class="quote">"Will it be consistent for a period? I don't think so."</span></li>
+            <li>TP09: Said teenagers would use it for 1 to 2 weeks, then ignore it. <span class="quote">"Kids will do it for 1 week and won't continue."</span></li>
+            <li>TP10: <span class="quote">"The board would come down after 2 weeks."</span> Said it needs "info bites" to sustain interest.</li>
+            <li>TY11: <span class="quote">"I will keep doing it until I lose interest and forget."</span></li>
+            <li>TY06 (new): Some days after CCA she comes home late and exhausted. <span class="quote">"Some days I might just feel lazy to do it."</span></li>
+          </ul>
+        </div>
       </div>
-      <div class="finding-card">
-        <div class="finding-number">2</div>
-        <h4>Visual Design Resonates</h4>
-        <p>The visual design language received positive feedback, with participants highlighting the clarity and appeal of the card-based layouts.</p>
-      </div>
-      <div class="finding-card">
-        <div class="finding-number">3</div>
-        <h4>Interaction Patterns Clear</h4>
-        <p>Users intuitively understood the interaction patterns, with minimal guidance needed for core navigation and card exploration flows.</p>
-      </div>
-      <div class="finding-card">
-        <div class="finding-number">4</div>
-        <h4>Areas for Improvement</h4>
-        <p>Some participants suggested clearer visual cues for interactive elements and improved mobile responsiveness for smaller screens.</p>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The concept has no built-in re-engagement mechanism. Once novelty fades, there is nothing pulling participants back. Every age group flagged this independently. Unlike C2 where a peer nudges you, the board relies entirely on the youth's own will.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Add a lightweight re-engagement loop. Options: a rotating magnet that appears weekly, a parent-youth check-in prompt built into the Parent Says column, or a 5-night framing that resets deliberately.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; weekly review mechanic</span>
+            <span class="kfd-pill keep">Keep &mdash; 5-night trial framing</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
 
-  <!-- Summary -->
-  <section class="report-section">
-    <div class="section-header">
-      <div class="section-icon" style="background: rgba(255,142,196,0.12);">&#9830;</div>
-      <h2 class="section-title">Summary &amp; Next Steps</h2>
+    <!-- C1 P3 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P3</div>
+        <div>
+          <div class="pattern-title">The parent column role was misread by most participants &mdash; it felt like monitoring, not commitment</div>
+          <div class="pattern-who">TP02, TP09, TY04 &mdash; 3 of 11 participants</div>
+          <ul class="evidence-list">
+            <li>TP02: Misread the board layout &mdash; thought the top section was for parents. <span class="quote">"I thought the top part was for me to fill in."</span></li>
+            <li>TP09: Felt the children would decide what goes in the parent column. <span class="quote">"Kids will control what goes in the parent side."</span></li>
+            <li>TY04: <span class="quote">"Invasion of privacy &mdash; I wouldn't want my parents knowing I'm feeling sad or angry."</span> Read the board as surveillance, not collaboration.</li>
+            <li>TP01 (exception): Used Parent Says naturally to write advance reminders for her son. Only one participant reached intended use without prompting.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The parent column is doing two jobs at once &mdash; tracking youth mood and showing parent commitment &mdash; and failing at both. The emotional tracking reads as one-directional rather than mutual. The concept's strongest idea (shared accountability) is not coming through.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Split the board more visibly into Youth side and Parent side with equal weight. Make the parent column explicitly about what the parent commits to, not a space to comment on the youth.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; parent column design</span>
+            <span class="kfd-pill fix">Fix &mdash; emotion section framing</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="summary-block">
-      <h3>Overall Assessment</h3>
-      <p>The prototype testing phase has yielded encouraging results across all three concepts. Participant feedback and engagement metrics indicate strong potential for further development. The next phase will focus on iterating based on specific feedback, conducting follow-up sessions with refined prototypes, and preparing final recommendations for stakeholder review.</p>
+
+    <!-- C1 P4 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P4</div>
+        <div>
+          <div class="pattern-title">Always there, not a screen &mdash; that is the concept's core design advantage</div>
+          <div class="pattern-who">TP01, TY01, TP03, TP12, TY06 &mdash; multiple sessions</div>
+          <ul class="evidence-list">
+            <li>TP01 started dragging magnets immediately without being asked. <span class="quote">"Creates the atmosphere, creates the mood."</span></li>
+            <li>TY01: <span class="quote">"It will help me by being more organised &mdash; I like to procrastinate a lot."</span> The board being visible removed the need to remember to start.</li>
+            <li>TP05 confirmed the concept is physical, not digital, and said this was the right call &mdash; phone in the bedroom is the problem, not the solution.</li>
+            <li>TP12: <span class="quote">"It's a good way for the kids to communicate to the parents. Kids nowadays don't know how to communicate."</span></li>
+            <li>TY06 (new): <span class="quote">"If it was placed beside my bed I'd probably use it. But if it was on the fridge I'd probably forget."</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The board works as a prompt even when participants are not actively thinking about sleep. This is its key behavioural advantage over any app-based solution. The physical format is not a constraint &mdash; it is the design. An unexpected function also emerged: feelings magnets let youth signal their state without needing a conversation.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Protect the physical-first principle across all iterations. Any digital companion should be opt-in and outside the bedroom. Explore the communication function of the feelings magnets. Add a "tired" option. Test placement beside the bed as an alternative to the fridge.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill keep">Keep &mdash; physical board, no app</span>
+            <span class="kfd-pill keep">Keep &mdash; persistent visual prompt</span>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div><!-- /c1-block -->
 
-</main>
+  <div class="divider"></div>
 
+  <!-- ── C2 ── -->
+  <div class="concept-block c2-block">
+    <div class="concept-heading">
+      <div class="c-badge">C2</div>
+      <div class="c-title-block">
+        <h3>Hook U Up</h3>
+        <div class="c-sub">14-day peer challenge card deck &mdash; After-school / Peer-led</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Patterns</div>
+
+    <!-- C2 P1 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P1</div>
+        <div>
+          <div class="pattern-title">4 of 5 original youth ranked C2 first &mdash; two asked to buy it without prompting</div>
+          <div class="pattern-who">TY01, TY04, TY10, TY11, TY06, TY02 &mdash; across youth sessions</div>
+          <ul class="evidence-list">
+            <li>TY01: Rated 7/7 all dimensions. <span class="quote">"Would keep me occupied for hours."</span> Said she would pay for it.</li>
+            <li>TY04: Asked mid-session how to buy it. No prompting. <span class="quote">"Can I buy this? Where can I get it?"</span></li>
+            <li>TY10: Ranked C2 first. <span class="quote">"I would not mind doing this with my friends actually."</span></li>
+            <li>TY11: Invented her own bet mechanic &mdash; <span class="quote">"loser buys the winner something small"</span> &mdash; without suggestion.</li>
+            <li>TY06 (new): <span class="quote">"It's kind of like Snapchat or TikTok streaks &mdash; you don't want to break the streak."</span></li>
+            <li>TY08 (outlier): Under O-level pressure. <span class="quote">"Might give stress to those who overthink."</span> Hesitation about exam pressure, not the concept.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The concept has real pull with youth independently of parents or schools. The peer mechanic and the language (energy era, glow up, rizz) make health feel social and identity-relevant rather than instructional. It asks youth to care about their social world &mdash; the health outcome follows.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>C2 is the concept most likely to spread peer-to-peer without adult initiation. Distribution should route through youth rather than parents or schools. The card deck should feel like something you find, not something you are given.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill keep">Keep &mdash; peer-led mechanic</span>
+            <span class="kfd-pill keep">Keep &mdash; identity-first language</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C2 P2 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P2</div>
+        <div>
+          <div class="pattern-title">The QR proof mechanic is the single biggest structural blocker</div>
+          <div class="pattern-who">TP07, TP10, TP05, TY04 &mdash; 4 of 11 participants</div>
+          <ul class="evidence-list">
+            <li>TP07: <span class="quote">"Students not allowed phones at school as of 2026 / phone hotel."</span> QR code cannot be scanned during school hours.</li>
+            <li>TP10: <span class="quote">"Scan, log in, post, share URL."</span> Rated ease 3/7. Youth would give up if too troublesome.</li>
+            <li>TY04: Wanted Duolingo-style streak instead. <span class="quote">"I just want the streak &mdash; like Duolingo. I don't need to post anything."</span></li>
+            <li>TY08: <span class="quote">"I wouldn't really trust giving a selfie of myself to the producers of these cards without consent."</span> Privacy concern raised unprompted.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The QR proof does not work. Too many steps, a school phone ban from 2026, and privacy concerns from both youth and parents. Three separate blockers emerged independently. The buddy seeing it happen is enough &mdash; the peer witness is the accountability.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Replace or radically simplify. Options: a simple physical tick on the card, a shared group chat photo, or a streak sticker on the deck. The peer witness is the accountability &mdash; the platform upload is not needed.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; QR proof mechanic</span>
+            <span class="kfd-pill keep">Keep &mdash; peer accountability logic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C2 P3 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P3</div>
+        <div>
+          <div class="pattern-title">One fixed buddy for 14 days was too rigid &mdash; participants wanted flexibility</div>
+          <div class="pattern-who">TP01, TP02, TY11 &mdash; 3 of 11 participants</div>
+          <ul class="evidence-list">
+            <li>TP01: Wanted to challenge a different person each day. <span class="quote">"I want to be able to challenge whoever I feel like that day."</span></li>
+            <li>TP02: <span class="quote">"If I'm the buddy it would fail &mdash; child sees me as parent, not friend."</span></li>
+            <li>TY11: <span class="quote">"I would do this with like, whoever is around &mdash; up to five people."</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The buddy system is the right social mechanic but the 14-day fixed pair is too constraining. Youth friendships are fluid. A card-by-card or week-by-week challenger model would match how teens actually socialise.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Loosen the buddy rule. Allow 2 to 4 people to rotate across 14 days. Keep the Shield mechanic. The commitment is to the streak and the group, not to one fixed person.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; buddy flexibility</span>
+            <span class="kfd-pill keep">Keep &mdash; Shield mechanic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C2 P4 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P4</div>
+        <div>
+          <div class="pattern-title">"Bulk Up" was the only deck name that put participants off &mdash; the others landed immediately</div>
+          <div class="pattern-who">TP10, TP04, TY04 &mdash; multiple</div>
+          <ul class="evidence-list">
+            <li>TP10: <span class="quote">"Bulk Up puts girls off &mdash; it sounds like it's only for guys who want muscles."</span></li>
+            <li>TY04: Could not do physical challenges because of her ACL injury. A skip or swap option was missing.</li>
+            <li>Glow Up, Recharge, and Feel Good resonated without explanation. Participants understood these instantly.</li>
+            <li>TY02 (new): <span class="quote">"What are the benefits that the body is gaining? That's what's missing."</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>"Bulk Up" carries a body-building connotation that does not match the language of female participants. The other four deck names use aspiration language &mdash; Bulk Up is the only one that uses effort language.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Rename Bulk Up. Test aspiration-consistent options: "Level Up," "Stronger," "Build." Add a skip/swap mechanic for physical challenges so injury does not block participation.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; rename Bulk Up</span>
+            <span class="kfd-pill fix">Fix &mdash; add skip/swap</span>
+            <span class="kfd-pill keep">Keep &mdash; other four deck names</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /c2-block -->
+
+  <div class="divider"></div>
+
+  <!-- ── C3 ── -->
+  <div class="concept-block c3-block">
+    <div class="concept-heading">
+      <div class="c-badge">C3</div>
+      <div class="c-title-block">
+        <h3>We Open Up</h3>
+        <div class="c-sub">Family conversation card game &mdash; Home / Dining table</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Patterns</div>
+
+    <!-- C3 P1 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P1</div>
+        <div>
+          <div class="pattern-title">The Swap and Spark mechanic confused almost every participant &mdash; but this is a medium problem, not a concept problem</div>
+          <div class="pattern-who">TP02, TP05, TP10 &mdash; 3 of 8 parents required researcher intervention</div>
+          <ul class="evidence-list">
+            <li>TP02: Kept trying to navigate around the blue cards without understanding what they did. Needed the researcher to intervene twice.</li>
+            <li>TP05: Paused when Swap and Spark cards appeared. Could not tell what they were for until the researcher gave a worked example.</li>
+            <li>TP10: Caught the Spark card design flaw herself &mdash; <span class="quote">"the question doesn't link to the category card."</span></li>
+            <li>No participant reached the simultaneous reveal in any session. The mechanic was never experienced as intended.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>Clicking a card on a screen is not the same as picking one up. The Swap mechanic depends on physical simultaneity. Online, there is no way to recreate this. The confusion is almost certainly a testing format problem, not a concept failure.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Do not judge the Swap mechanic by these results. Run one physical session with real cards before deciding. In the meantime, add clearer instructions on the card itself.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill keep">Keep &mdash; simultaneous reveal</span>
+            <span class="kfd-pill fix">Fix &mdash; on-card instructions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C3 P2 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P2</div>
+        <div>
+          <div class="pattern-title">The concept assumes a level of trust that most families do not yet have &mdash; it needs a lighter entry point</div>
+          <div class="pattern-who">TP10, TY04, TP09, TP07 &mdash; 4 of 11 participants</div>
+          <ul class="evidence-list">
+            <li>TP10: <span class="quote">"These are level 2 to 3 questions &mdash; need simpler daily-life set first."</span></li>
+            <li>TY04: <span class="quote">"Would feel suspicious if parents initiated."</span> Would prefer to play with friends first.</li>
+            <li>TP09: Her introverted child would shut down with emotional questions. Written notes would be less threatening.</li>
+            <li>TP07: Questions were "too common and general" and would only get one or two word answers.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>Designed for families ready to have deeper conversations but don't know how to start. Does not account for families where even the starting point is contested, or where youth distrust the game because it came from a parent.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Add a Level 1 starter set &mdash; light, everyday, fun questions that build comfort before the deeper cards. Make the tiered structure visible. Flag weekends as the primary use window.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; add Level 1 starter set</span>
+            <span class="kfd-pill keep">Keep &mdash; deeper question set for later</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C3 P3 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P3</div>
+        <div>
+          <div class="pattern-title">Parents who felt distance from their child responded most strongly</div>
+          <div class="pattern-who">TP06, TP03, TP12 &mdash; strongest; contrasted against TP10, TP07</div>
+          <ul class="evidence-list">
+            <li>TP06: Ranked C3 first. <span class="quote">"I always say the same thing. Go sleep early. Go and study. I don't think he gets my message."</span></li>
+            <li>TY01: Found the reversed dynamic exciting. <span class="quote">"The game lets me ask questions TO my parents &mdash; that's kind of unusual."</span> Rated 7/7.</li>
+            <li>TP03: <span class="quote">"Harmless looking segway to deeper conversations."</span></li>
+            <li>TY06 (new): <span class="quote">"Some of my friends don't have a very close relationship with their parents. I thought this might help a bit."</span> A referral signal.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>Resonated most where the relationship had already gone quieter. The reversed dynamic &mdash; youth asking parents questions &mdash; was an unexpected strength. TY06's response is notable: she would refer it to friends rather than use it herself. May need to reach families through referral, not top-down distribution.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Position C3 for the Sec 1 to Sec 2 transition window. Make the youth the initiator where possible. Amplify the reversed questioning dynamic so youth feel they are getting something out of the game.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill keep">Keep &mdash; reversed questioning</span>
+            <span class="kfd-pill fix">Fix &mdash; reduce initiation friction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- C3 P4 -->
+    <div class="pattern-card">
+      <div class="pattern-header">
+        <div class="pattern-num">P4</div>
+        <div>
+          <div class="pattern-title">Nobody is likely to start it on their own &mdash; neither side has a natural reason to go first</div>
+          <div class="pattern-who">TP06, TP07, TY04, TY11 &mdash; multiple participants</div>
+          <ul class="evidence-list">
+            <li>TP06: <span class="quote">"If I don't start it, nobody will."</span> His son would not do it on his own.</li>
+            <li>TY04: Said she would feel suspicious if her parents started the game. The act of initiating carries meaning.</li>
+            <li>TY11: <span class="quote">"Fun is necessary to maintain engagement."</span></li>
+            <li>Unlike C1 where the board is always visible and C2 where a friend nudges you, C3 sits in a drawer until someone decides to take it out.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="insight-row">
+        <div class="insight-cell insight">
+          <div class="cell-label">Insight</div>
+          <p>The prompt problem is structural. C3 needs someone to decide to play it, and that decision is loaded &mdash; for youth it can feel like a setup, for parents it can feel awkward. The concept needs a low-stakes trigger that makes starting feel incidental rather than deliberate.</p>
+        </div>
+        <div class="insight-cell implication">
+          <div class="cell-label">Implication</div>
+          <p>Test a physical trigger &mdash; a card left on the table as an invitation, a conversation started by a shared meal, or a "question of the week" format. Lower the entry cost before the full game mechanic is introduced.</p>
+          <div class="kfd-row">
+            <span class="kfd-pill fix">Fix &mdash; add low-stakes trigger</span>
+            <span class="kfd-pill fix">Fix &mdash; make starting feel incidental</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /c3-block -->
+
+  <!-- Cross-concept -->
+  <div class="cross-section">
+    <h2>Across all three concepts</h2>
+    <p class="cross-sub">Five patterns that cut across C1, C2, and C3 regardless of concept. The last two have implications for how synthesis findings should be weighted.</p>
+    <div class="cross-grid">
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept 1</div>
+        <p>Online testing systematically underrepresented the physical experience. Every concept has at least one design feature that depends on holding, moving, or placing a physical object. Ratings reflect screen interactions, not product interactions.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept 2</div>
+        <p>Youth motivation is stronger than parents predicted. Parents consistently underestimated how much their children would engage, especially with C2. Youth were more willing, specific, and creative than any parent assumed.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept 3</div>
+        <p>All three concepts are more useful at the start of a transition than in the middle. C1 works before bedtime structure collapses. C2 before after-school time becomes habit. C3 before the relationship narrows. Timing matters as much as the concept.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept 4</div>
+        <p>Numeric ratings did not always match what participants said. At least 4 of 16 gave scores that contradicted their verbal feedback. Ratings should be read as directional signals, not conclusive scores.</p>
+      </div>
+      <div class="cross-card">
+        <div class="cross-label">Cross-concept 5 &mdash; Readiness stages</div>
+        <p>Participants sit at different stages of readiness (Transtheoretical Model). TP12 was at Preparation and responded immediately. TP10 was at Maintenance and found everything redundant. Each concept maps most naturally to a different stage. Offering the wrong concept at the wrong stage will not land regardless of design quality.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: CONCEPT PERFORMANCE (placeholder)
+     ════════════════════════════════════════ -->
+<div class="section" id="concepts">
+  <div class="coming-soon">
+    <h2>Concept Performance</h2>
+    <p>Detailed individual concept findings with charts, verdicts, and behavioural framework analysis. Coming next.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: EVIDENCE & THEMES (placeholder)
+     ════════════════════════════════════════ -->
+<div class="section" id="evidence">
+  <div class="coming-soon">
+    <h2>Evidence Mapping &amp; Emerging Themes</h2>
+    <p>Evidence mapping with participant quotes, sticky notes, and cross-concept emerging themes. Coming soon.</p>
+  </div>
+</div>
+
+<!-- ════ SCRIPTS ════ -->
 <script>
-// Bar chart data
-const chartData = [
-  { label: 'Concept 1', value: 85, color: 'var(--accent-teal)' },
-  { label: 'Concept 2', value: 78, color: 'var(--accent-orange)' },
-  { label: 'Concept 3', value: 92, color: 'var(--accent-purple)' },
-];
+// Tab navigation
+const tabs = document.querySelectorAll('.nav-tab');
+const sections = document.querySelectorAll('.section');
 
-const chart = document.getElementById('barChart');
-chartData.forEach(d => {
-  const group = document.createElement('div');
-  group.className = 'bar-group';
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.section;
 
-  const bar = document.createElement('div');
-  bar.className = 'bar';
-  bar.style.background = d.color;
-  bar.style.height = '0';
-  bar.title = d.value + '%';
+    // Update active tab
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
 
-  const label = document.createElement('div');
-  label.className = 'bar-label';
-  label.textContent = d.label;
+    // Show target section
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
 
-  group.appendChild(bar);
-  group.appendChild(label);
-  chart.appendChild(group);
-
-  // Animate bars in
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      bar.style.height = (d.value / 100 * 220) + 'px';
-    });
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
 </script>
