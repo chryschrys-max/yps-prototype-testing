@@ -1097,17 +1097,6 @@
   .loop-step {
     position: relative; padding: 0 10px;
   }
-  /* Arrow between steps — odd columns only */
-  .loop-step::after {
-    content: ''; position: absolute;
-    right: -2px; top: 18px;
-    width: 12px; height: 12px;
-    border-right: 2px solid rgba(255,107,107,0.3);
-    border-bottom: 2px solid rgba(255,107,107,0.3);
-    transform: rotate(-45deg);
-  }
-  .loop-step:nth-child(even)::after { content: none; }
-  .loop-step:last-child::after { content: none; }
 
   .loop-step-label {
     font-size: 0.62rem; font-weight: 700;
@@ -1187,16 +1176,6 @@
   .tobe-step {
     position: relative; padding: 0 10px;
   }
-  .tobe-step::after {
-    content: ''; position: absolute;
-    right: -2px; top: 18px;
-    width: 12px; height: 12px;
-    border-right: 2px solid rgba(92,184,178,0.3);
-    border-bottom: 2px solid rgba(92,184,178,0.3);
-    transform: rotate(-45deg);
-  }
-  .tobe-step:nth-child(even)::after { content: none; }
-  .tobe-step:last-child::after { content: none; }
   .tobe-step-label {
     font-size: 0.62rem; font-weight: 700;
     letter-spacing: 0.1em; text-transform: uppercase;
