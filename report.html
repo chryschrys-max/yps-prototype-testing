@@ -797,6 +797,61 @@
   }
 
   /* ══════════════════════════════════════
+     RECOMMENDATIONS TABLE
+     ══════════════════════════════════════ */
+  .rec-table-wrap {
+    overflow-x: auto; margin: 24px 0;
+  }
+  .rec-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.92rem; line-height: 1.7;
+  }
+  .rec-table th {
+    text-align: left; padding: 14px 16px;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+  .rec-table td {
+    padding: 16px; vertical-align: top;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-secondary); font-weight: 300;
+  }
+  .rec-table tr:last-child td { border-bottom: none; }
+  .rec-table .concept-label {
+    font-weight: 600; color: var(--text-primary);
+    white-space: nowrap;
+  }
+  .rec-verdict {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 20px; font-size: 0.78rem;
+    font-weight: 600; letter-spacing: 0.03em;
+  }
+  .rec-verdict.improve { background: rgba(255,179,71,0.15); color: #ffb347; }
+  .rec-verdict.pilot { background: rgba(94,231,213,0.15); color: #5ee7d5; }
+  .rec-verdict.rethink { background: rgba(196,161,255,0.15); color: #c4a1ff; }
+
+  .direction-card {
+    padding: 20px 24px; margin-bottom: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-sm);
+  }
+  .direction-card h4 {
+    font-size: 1rem; font-weight: 600;
+    color: var(--text-primary); margin: 0 0 8px;
+  }
+  .direction-card p {
+    font-size: 0.92rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300; margin: 0;
+  }
+  .direction-source {
+    font-size: 0.72rem; color: var(--text-muted);
+    font-style: italic; margin-top: 8px;
+  }
+
+  /* ══════════════════════════════════════
      DATA VISUALIZATION STYLES
      ══════════════════════════════════════ */
 
@@ -1334,6 +1389,18 @@
     </div>
   </div>
 
+  <div class="nav-group">
+    <div class="nav-group-label">Step 4</div>
+    <button class="nav-item" data-section="recommendations">
+      <span class="nav-dot" style="background: var(--accent-coral);"></span>
+      Recommendations
+    </button>
+    <div class="nav-sub" data-parent="recommendations">
+      <button class="nav-item" data-section="recommendations" data-scroll="rec-decision">Decision table</button>
+      <button class="nav-item" data-section="recommendations" data-scroll="rec-directions">New directions</button>
+    </div>
+  </div>
+
   <div class="sidebar-footer">
     <a href="prototype.html" class="sidebar-link">View Prototypes</a>
   </div>
@@ -1364,7 +1431,7 @@
   <div class="intro-block">
     <p>We tested three early-stage concepts with 21 participants &mdash; 12 parents and 9 youth &mdash; over multiple online sessions in March 2026. Each concept tackles a different moment in a young person's day: bedtime, after-school time with friends, and family conversation at home. None of them were finished products. They were prototypes, built just enough to put in front of real people and find out what holds up and what falls apart.</p>
     <p>The goal was practical: understand whether each concept's core mechanic actually works when someone who has never seen it before tries to use it. We wanted to know what resonates, what confuses, and what needs to change before anyone commits to building a physical version. We also wanted to see what patterns cut across all three ideas &mdash; things about how youth and parents relate to health behaviours that no single concept can tell you on its own.</p>
-    <p>This report is organised in three steps. The first is the raw evidence &mdash; what participants actually said and did, organised by concept. The second is the synthesis &mdash; where we pull out the patterns, name what each one means, and say what it implies for the design. The third is the assessment &mdash; concept-level scores, behavioural framework analysis, and prioritised fixes. You can read it end to end or jump straight to the section that matters most to you.</p>
+    <p>This report is organised in four steps. The first is the raw evidence, what participants actually said and did, organised by concept. The second is the synthesis, where we pull out the patterns, name what each one means, and say what it implies for the design. The third is the assessment, concept-level scores, behavioural framework analysis, and prioritised fixes. The fourth is our recommendations, where we lay out what to pilot, what to improve, and where entirely new directions may be worth exploring. You can read it end to end or jump straight to the section that matters most to you.</p>
   </div>
 
   <!-- Flow — clickable guide to tabs -->
@@ -1383,6 +1450,11 @@
       <div class="step-num">Step 3</div>
       <div class="step-name">Assessment</div>
       <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
+    </div>
+    <div class="flow-step clickable" data-section="recommendations">
+      <div class="step-num">Step 4</div>
+      <div class="step-name">Recommendations</div>
+      <div class="step-desc">What to pilot, improve, or rethink</div>
     </div>
   </div>
 
@@ -1413,8 +1485,9 @@
 <div class="section" id="synthesis" role="region" aria-label="Synthesis">
 
   <div class="step-indicator">
-    <span class="si-dot"></span> <span>Participant Data</span>
-    <span class="si-dot active"></span> <span class="si-current">Step 2: Key Findings</span>
+    <span class="si-dot"></span> <span>Evidence</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 2: Synthesis</span>
+    <span class="si-dot"></span> <span>Assessment</span>
     <span class="si-dot"></span> <span>Recommendations</span>
   </div>
 
@@ -1428,7 +1501,7 @@
   <div class="chart-row">
     <div class="chart-box">
       <div class="chart-title">Pattern evidence strength</div>
-      <div class="chart-sub">Number of participants who independently surfaced each pattern.</div>
+      <div class="chart-sub">Each bar shows how many participants independently raised the same observation without being prompted. A higher count means the pattern is more likely to reflect a genuine experience rather than one person's preference. We treat 4 or more participants as a strong signal and 2 or fewer as a hypothesis worth watching.</div>
       <div class="chart-canvas-wrap" style="height:280px;">
         <canvas id="syn-strength-chart" role="img" aria-label="Bar chart showing pattern strength across concepts by number of participants"></canvas>
       </div>
@@ -1926,8 +1999,9 @@
 <div class="section" id="evidence" role="region" aria-label="Evidence">
 
   <div class="step-indicator">
-    <span class="si-dot active"></span> <span class="si-current">Step 1: Participant Data</span>
-    <span class="si-dot"></span> <span>Key Findings</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 1: Evidence</span>
+    <span class="si-dot"></span> <span>Synthesis</span>
+    <span class="si-dot"></span> <span>Assessment</span>
     <span class="si-dot"></span> <span>Recommendations</span>
   </div>
 
@@ -2463,9 +2537,10 @@
 <div class="section" id="assessment" role="region" aria-label="Assessment">
 
   <div class="step-indicator">
-    <span class="si-dot"></span> <span>Participant Data</span>
-    <span class="si-dot"></span> <span>Key Findings</span>
-    <span class="si-dot active"></span> <span class="si-current">Step 3: Recommendations</span>
+    <span class="si-dot"></span> <span>Evidence</span>
+    <span class="si-dot"></span> <span>Synthesis</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 3: Assessment</span>
+    <span class="si-dot"></span> <span>Recommendations</span>
   </div>
 
   <div class="section-head">
@@ -3007,6 +3082,110 @@
     <div class="rec-dark">
       <div class="rec-label-dark">Recommendation</div>
       <p>Prioritise a physical pilot for C3 above the other two concepts. C1 and C2 have clearer validation from the online format. C3 has the most conditional results and the most to gain from a physical test. Run with 2&ndash;3 families where parents describe a shift in connection with their secondary school child. Observe across at least two sessions.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: RECOMMENDATIONS (Step 4)
+     ════════════════════════════════════════ -->
+<div class="section" id="recommendations" role="region" aria-label="Recommendations">
+
+  <div class="step-indicator">
+    <span class="si-dot"></span> <span>Evidence</span>
+    <span class="si-dot"></span> <span>Synthesis</span>
+    <span class="si-dot"></span> <span>Assessment</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 4: Recommendations</span>
+  </div>
+
+  <div class="section-head">
+    <div class="section-eyebrow">Step 4 &middot; Recommendations</div>
+    <h2>What to Pilot, Improve, or Rethink</h2>
+    <p>None of the three concepts tested is ready to pilot in its current form. Each has strengths worth protecting and gaps that need closing. Some may be best served by an improved version of the original design. Others may benefit more from a spin-off that keeps the strongest mechanic but changes the frame. In one case, the evidence points toward an entirely new direction. This section lays out the path for each concept and names the new directions worth exploring.</p>
+  </div>
+
+  <!-- Decision table -->
+  <div id="rec-decision">
+    <div class="cluster-label">Concept decision table</div>
+    <div class="rec-table-wrap">
+      <table class="rec-table" role="table">
+        <thead>
+          <tr>
+            <th style="width:12%;">Concept</th>
+            <th style="width:22%;">Current state</th>
+            <th style="width:28%;">What needs fixing</th>
+            <th style="width:38%;">Recommendation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="concept-label" style="color: var(--c1);">C1 Bedtime Bundle</span></td>
+            <td>Core mechanic (physical board as persistent cue) is the strongest prompt of all three concepts. But the parent column was misread as monitoring by most participants, sustainability was flagged by 5 of 11, and attractiveness split sharply by age group. The concept works for a narrow window: families where sleep structure is slipping but not yet gone.</td>
+            <td>Redesign parent column as an explicit commitment pledge, not an observation slot. Add text labels to emotion icons. Build a re-engagement mechanism so the board does not come down after week two. Test beside-the-bed placement, not the fridge.</td>
+            <td>
+              <span class="rec-verdict improve">Improve, then pilot</span>
+              <p style="margin-top:10px;">Fix the four must-have items first. Then run a physical pilot with 2 to 3 families at the P6 to Sec 1 transition where bedtime structure is actively slipping. The online format could not test the tactile interaction or the conversation-opening potential of feelings magnets, so a physical pilot is essential before further design decisions. Consider developing the feelings magnets as a communication tool in their own right, as this emerged as an unexpected strength in several sessions.</p>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="concept-label" style="color: var(--c2);">C2 Hook U Up</span></td>
+            <td>Strongest youth appetite of the three concepts. 4 of 5 youth ranked it first. The peer mechanic and identity framing made health behaviour feel socially relevant without reading as an intervention. Youth motivation was self-generated in every session. However, the QR proof mechanic failed across every test condition: school phone bans, too many steps, and privacy concerns.</td>
+            <td>Replace the QR proof entirely with a physical tick, streak sticker, or peer-verified check. Rename "Bulk Up" to aspiration language (test "Level Up" or "Stronger"). Allow buddy rotation across 2 to 4 people instead of one fixed partner. Add a one-line benefit explanation to each challenge card.</td>
+            <td>
+              <span class="rec-verdict pilot">Fix critical blockers, then pilot</span>
+              <p style="margin-top:10px;">C2 is closest to pilot-ready. Fix the four must-fix items, particularly the proof mechanic. Then run a 14-day physical pilot with at least two youth pairs from different school contexts. Design the pilot to stress-test sustainability over the full 14 days, not just initial enthusiasm. Consider testing a group variant (3 to 5 participants rotating) alongside the pair model, since several youth independently described it as a group activity. A spin-off with beauty and creativity decks could broaden reach beyond the current health-coded framing.</p>
+            </td>
+          </tr>
+          <tr>
+            <td><span class="concept-label" style="color: var(--c3);">C3 We Open Up</span></td>
+            <td>The concept that resonated most deeply with the families who needed it, and felt most redundant to the families who did not. TP12 gave 7 out of 7 and TP10 gave 1 out of 7. The Swap mechanic (answering as each other) was never actually tested: online participants clicked through individually and no pair reached the simultaneous reveal. Mechanic confusion was the top blocker. The initiation gap was the widest of all three concepts, with neither parent nor youth having a natural reason to start.</td>
+            <td>Add on-card mechanic instructions so Swap and Spark are self-explanatory without a facilitator. Fix Spark card links so they connect logically to their category. Create a Level 1 starter set of lighter, observable questions before the deeper material. Build a low-stakes starting trigger: a card left on the dinner table, a "question of the week" format, or a visible card that signals "whenever you are ready."</td>
+            <td>
+              <span class="rec-verdict rethink">Improve and rethink the frame</span>
+              <p style="margin-top:10px;">C3 needs a physical pilot before any structural decisions about the Swap mechanic. Run with 2 to 3 families where parents describe a felt shift in connection since secondary school. However, the evidence also suggests a stronger concept may be hiding inside this one. The most powerful moment in testing was not the Swap card. It was youth asking parents questions, a reversal that TY01 rated 7 out of 7 specifically because "the game lets me ask questions TO my parents." A spin-off that centres on youth-led questioning, with lighter entry and a visible trigger, may outperform the current design. Explore both paths in parallel.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- New directions -->
+  <div id="rec-directions">
+    <div class="cluster-label">New directions worth exploring</div>
+    <p style="color: var(--text-secondary); font-weight: 300; line-height: 1.7; margin-bottom: 20px;">These ideas emerged directly from what participants said or did during testing. They are not validated concepts yet, but each one has at least two independent signals from different sessions pointing in the same direction.</p>
+
+    <div class="direction-card" style="border-left: 3px solid var(--c1);">
+      <h4>Feelings magnets as a standalone communication tool</h4>
+      <p>Two participants independently identified that C1's emotion magnets allow youth to signal their state to a parent without starting a conversation. This "silent check-in" function was not part of the original design but resonated more strongly than the bedtime routine feature for some families. A standalone product built around non-verbal state signalling could serve a broader audience than the sleep-specific board.</p>
+      <div class="direction-source">Surfaced by TP01, TY03 across separate sessions</div>
+    </div>
+
+    <div class="direction-card" style="border-left: 3px solid var(--c2);">
+      <h4>Group challenge variant for C2</h4>
+      <p>Several youth described C2 as a group activity without being prompted. TY11 invented a competitive bet mechanic on the spot. TY10 wanted to involve up to five friends. The pair model may be underselling the concept. A variant designed for small groups (3 to 5 youth) with rotating challenges and a leaderboard could tap into the same social motivation at a larger scale.</p>
+      <div class="direction-source">Surfaced by TY11, TY10, TY06 across separate sessions</div>
+    </div>
+
+    <div class="direction-card" style="border-left: 3px solid var(--c2);">
+      <h4>Beauty and creativity challenge decks</h4>
+      <p>Multiple parents noted that the current deck topics skew toward traditionally health-coded activities. TP04's daughters wanted skincare and beauty content. Adding non-health decks that still serve wellbeing outcomes (self-care routines, creative expression, social connection) could broaden the appeal without diluting the core mechanic.</p>
+      <div class="direction-source">Surfaced by TP04, TP10 across separate sessions</div>
+    </div>
+
+    <div class="direction-card" style="border-left: 3px solid var(--c3);">
+      <h4>Youth-led questioning game</h4>
+      <p>The strongest single reaction in C3 testing came from a youth who valued the ability to ask parents questions, not answer them. This reversed dynamic is rare in parent-youth health conversations and could be the foundation of a concept that feels genuinely youth-owned. A lighter card game where youth set the agenda, choose the questions, and lead the conversation may land differently from a game where both sides answer symmetrically.</p>
+      <div class="direction-source">Surfaced by TY01 (7/7 rating), supported by TY06 referral behaviour</div>
+    </div>
+
+    <div class="direction-card" style="border-left: 3px solid var(--c3);">
+      <h4>Never Have I Ever entry format for C3</h4>
+      <p>TY11 suggested a "Never Have I Ever" format as the way into the game. This would lower the trust threshold significantly, since the format is already familiar and socially safe among youth. A Level 1 deck using this structure could solve the initiation problem and build comfort before deeper conversation cards.</p>
+      <div class="direction-source">Surfaced by TY11, supported by TP11's gamification suggestion</div>
     </div>
   </div>
 
