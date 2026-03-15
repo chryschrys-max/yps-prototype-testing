@@ -517,7 +517,31 @@
     margin: 48px 0;
   }
 
-  /* ── Overview enrichment ── */
+  /* ── Overview sections ── */
+  .ov-band {
+    margin: 0 -60px; padding: 56px 60px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .ov-band.visible { opacity: 1; transform: translateY(0); }
+  .ov-band.alt { background: rgba(255,255,255,0.015); }
+  .ov-band:first-child { border-top: none; }
+  .ov-band .ov-inner { max-width: 900px; }
+  .ov-band-number {
+    font-size: 0.6rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(255,255,255,0.15); margin-bottom: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    .ov-band { margin: 0 -20px; padding: 40px 20px; }
+  }
+  @media (max-width: 768px) {
+    .ov-band { margin: 0 -16px; padding: 32px 16px; }
+  }
+
   .overview-context {
     margin-bottom: 40px;
   }
@@ -1830,201 +1854,221 @@
     <h1 class="hero-title">Validation Testing Report</h1>
   </div>
 
-  <!-- Bottom line / executive summary -->
-  <div class="bottom-line">
-    <div class="bottom-line-label">Bottom line</div>
-    <p>We tested three health behaviour concepts with 21 young people and parents. <strong>Concept 2 (Hook U Up)</strong>, a peer challenge card deck, had the strongest youth response and is closest to pilot-ready after fixing its proof mechanic. <strong>Concept 1 (Bedtime Bundle)</strong> works for families where sleep structure is slipping, but needs a re-engagement loop. <strong>Concept 3 (We Open Up)</strong> needs a physical pilot before any design decisions, as the core mechanic could not be tested online.</p>
-  </div>
-
-  <!-- Intro paragraph -->
-  <div class="intro-block">
-    <p>We tested three early-stage concepts with 21 participants, 12 parents and 9 youth, over individual online sessions from 9 to 13 March 2026. Each concept tackles a different moment in a young person's day: bedtime, after-school time with friends, and family conversation at home. None of them were finished products. They were prototypes, built just enough to put in front of real people and find out what holds up and what falls apart.</p>
-    <p>The goal was practical: understand whether each concept's core mechanic actually works when someone who has never seen it before tries to use it. We wanted to know what resonates, what confuses, and what needs to change before anyone commits to building a physical version.</p>
-  </div>
-
-  <!-- ── THE DRIFT ── -->
-  <div class="overview-context">
-    <div class="section-eyebrow">What the research told us</div>
-    <h3>Healthy habits don't slip randomly. They fade at three predictable moments.</h3>
-    <p>The research identified a pattern we call "the drift": the gradual slide away from healthy routines, not because youth choose to stop, but because external structure steps back before they have learned to manage it themselves. It happens at three transition points where routines reset and influence shifts.</p>
-  </div>
-
-  <div class="drift-strip">
-    <div class="drift-stage">
-      <div class="drift-stage-label">Transition 1</div>
-      <div class="drift-stage-title">P6 to Sec 1</div>
-      <div class="drift-stage-desc">After-school care ends. Youth get a phone, a personal device, and more pocket money. Afternoons shift from adult-supervised to self-managed before they have the skills to manage them.</div>
-    </div>
-    <div class="drift-stage">
-      <div class="drift-stage-label">Transition 2</div>
-      <div class="drift-stage-title">Sec 2 to Sec 3</div>
-      <div class="drift-stage-desc">Peer influence becomes the dominant force. Sleep quality drops, screens fill the gap, meals get skipped because the easier option consistently wins. Without practical strategies, the pattern deepens.</div>
-    </div>
-    <div class="drift-stage">
-      <div class="drift-stage-label">Transition 3</div>
-      <div class="drift-stage-title">Sec 4 to JC / IHL</div>
-      <div class="drift-stage-desc">External structure has largely stepped back. Youth who built their own routines carry them forward. Those who did not are still relying on someone else, but by this stage that support is gone.</div>
+  <!-- ═══ BAND 1: EXECUTIVE SUMMARY ═══ -->
+  <div class="ov-band visible">
+    <div class="ov-inner">
+      <div class="bottom-line">
+        <div class="bottom-line-label">Bottom line</div>
+        <p>We tested three health behaviour concepts with 21 young people and parents. <strong>Concept 2 (Hook U Up)</strong>, a peer challenge card deck, had the strongest youth response and is closest to pilot-ready after fixing its proof mechanic. <strong>Concept 1 (Bedtime Bundle)</strong> works for families where sleep structure is slipping, but needs a re-engagement loop. <strong>Concept 3 (We Open Up)</strong> needs a physical pilot before any design decisions, as the core mechanic could not be tested online.</p>
+      </div>
+      <div class="intro-block" style="margin-top: 28px;">
+        <p>We tested three early-stage concepts with 21 participants, 12 parents and 9 youth, over individual online sessions from 9 to 13 March 2026. Each concept tackles a different moment in a young person's day: bedtime, after-school time with friends, and family conversation at home. None of them were finished products. They were prototypes, built just enough to put in front of real people and find out what holds up and what falls apart.</p>
+        <p>The goal was practical: understand whether each concept's core mechanic actually works when someone who has never seen it before tries to use it. We wanted to know what resonates, what confuses, and what needs to change before anyone commits to building a physical version.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ── KNOWING-DOING GAP ── -->
-  <div class="overview-context">
-    <h3>The knowing-doing gap</h3>
-    <p>Youth in this study were not uninformed. They knew fast food was not great. They knew staying up until 2am on their phones was cutting into their sleep. Several could describe a healthier routine in their own words. What many could not do was act on it, especially when they were tired, when their friends were doing something else, or when the easier option was one tap away. This is not a knowledge problem. It is a behaviour problem, and it responds to very different design decisions than information alone.</p>
-    <p>Parents had not stopped trying either. Many had kept using tools that worked well when their children were younger: rules, reminders, set routines. By Sec 2, for a number of families, those same approaches were starting to trigger resistance more than change. The care was clearly there. What was harder to find was an approach that still worked.</p>
-  </div>
-
-  <!-- ── NORTH STAR + PRINCIPLES ── -->
-  <div class="overview-context">
-    <div class="section-eyebrow">Where we want to get to</div>
-    <h3>Our north star and design principles</h3>
-  </div>
-
-  <div class="north-star-box">
-    <div class="ns-label">North star</div>
-    <div class="ns-text">Healthy habits become the natural choice for youth, supported at key moments, shaped through shared routines, and sustained through growing independence.</div>
-  </div>
-
-  <div class="overview-context" style="margin-bottom: 0;">
-    <p style="margin-bottom: 8px;">Anchored to our HMW: "How might we motivate youth (aged 13 to 16) and their key supporters to build their confidence to start and sustain healthy habits across the 6 Wells (Eat, Sleep, Exercise, Learn, Bond, and Screen Time), so that healthier choices become natural, even as routines change and independence grows?"</p>
-  </div>
-
-  <div class="principles-row">
-    <div class="principle-card">
-      <h4>Autonomy with guardrails</h4>
-      <p>Design for shared structure, not control. Youth decide how things are done. Parents work alongside them. Neither side dictates. The structure is collaborative, which means both sides are more likely to follow it.</p>
-    </div>
-    <div class="principle-card">
-      <h4>Replace, don't restrict</h4>
-      <p>Never remove without offering something better. Screens and fast food meet real needs: comfort, stimulation, belonging. Taking them away without offering an alternative just teaches workarounds. Design what fills the space.</p>
-    </div>
-    <div class="principle-card">
-      <h4>Make it fit the day they already have</h4>
-      <p>Strengthen existing behaviours before adding new ones. Youth and parents are already busy. If something doesn't slot into the after-school hangout, the bedtime window, or the dinner table, it won't get used.</p>
+  <!-- ═══ BAND 2: THE DRIFT ═══ -->
+  <div class="ov-band alt">
+    <div class="ov-inner">
+      <div class="ov-band-number">01</div>
+      <div class="section-eyebrow">What the research told us</div>
+      <div class="overview-context">
+        <h3>Healthy habits don't slip randomly. They fade at three predictable moments.</h3>
+        <p>The research identified a pattern we call "the drift": the gradual slide away from healthy routines, not because youth choose to stop, but because external structure steps back before they have learned to manage it themselves. It happens at three transition points where routines reset and influence shifts.</p>
+      </div>
+      <div class="drift-strip">
+        <div class="drift-stage">
+          <div class="drift-stage-label">Transition 1</div>
+          <div class="drift-stage-title">P6 to Sec 1</div>
+          <div class="drift-stage-desc">After-school care ends. Youth get a phone, a personal device, and more pocket money. Afternoons shift from adult-supervised to self-managed before they have the skills to manage them.</div>
+        </div>
+        <div class="drift-stage">
+          <div class="drift-stage-label">Transition 2</div>
+          <div class="drift-stage-title">Sec 2 to Sec 3</div>
+          <div class="drift-stage-desc">Peer influence becomes the dominant force. Sleep quality drops, screens fill the gap, meals get skipped because the easier option consistently wins. Without practical strategies, the pattern deepens.</div>
+        </div>
+        <div class="drift-stage">
+          <div class="drift-stage-label">Transition 3</div>
+          <div class="drift-stage-title">Sec 4 to JC / IHL</div>
+          <div class="drift-stage-desc">External structure has largely stepped back. Youth who built their own routines carry them forward. Those who did not are still relying on someone else, but by this stage that support is gone.</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ── HOW WE GOT HERE ── -->
-  <div class="overview-context">
-    <div class="section-eyebrow">How we got here</div>
-    <h3>From 25 co-creation ideas to 3 concepts worth testing</h3>
-    <p>Each phase built on the last. Nothing was invented in a room. Everything was drawn from what we heard from 24 people across discovery and co-creation. 25 concept directions from youth and parents were scored against four filters. Only the ones that passed all four made it through.</p>
-  </div>
-
-  <div class="funnel-strip">
-    <div class="funnel-step">
-      <div class="funnel-step-num">Filter 1</div>
-      <div class="funnel-step-name">North Star</div>
-      <div class="funnel-step-desc">Does this move youth toward healthy choices feeling natural?</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-step-num">Filter 2</div>
-      <div class="funnel-step-name">Design Principles</div>
-      <div class="funnel-step-desc">Shared structure? Replaces rather than restricts? Fits the real day?</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-step-num">Filter 3</div>
-      <div class="funnel-step-name">Hard Constraints</div>
-      <div class="funnel-step-desc">No standalone apps. Must work through HPB channels. Usable at home.</div>
-    </div>
-    <div class="funnel-step">
-      <div class="funnel-step-num">Filter 4</div>
-      <div class="funnel-step-name">DVF Scoring</div>
-      <div class="funnel-step-desc">Do people want it? Can HPB run it? Can it reach enough people?</div>
+  <!-- ═══ BAND 3: KNOWING-DOING GAP ═══ -->
+  <div class="ov-band">
+    <div class="ov-inner">
+      <div class="ov-band-number">02</div>
+      <div class="overview-context" style="margin-bottom: 0;">
+        <h3>The knowing-doing gap</h3>
+        <p>Youth in this study were not uninformed. They knew fast food was not great. They knew staying up until 2am on their phones was cutting into their sleep. Several could describe a healthier routine in their own words. What many could not do was act on it, especially when they were tired, when their friends were doing something else, or when the easier option was one tap away. This is not a knowledge problem. It is a behaviour problem, and it responds to very different design decisions than information alone.</p>
+        <p>Parents had not stopped trying either. Many had kept using tools that worked well when their children were younger: rules, reminders, set routines. By Sec 2, for a number of families, those same approaches were starting to trigger resistance more than change. The care was clearly there. What was harder to find was an approach that still worked.</p>
+      </div>
     </div>
   </div>
 
-  <!-- ── THREE CONCEPTS ── -->
-  <div class="overview-context">
-    <div class="section-eyebrow">Three concepts tested</div>
-    <h3>Each responds to something specific we heard. Together they cover different windows, relationships, and wells.</h3>
-  </div>
-
-  <div class="info-grid">
-    <div class="info-card" style="border-left: 3px solid var(--c1);">
-      <h3>C1: Bedtime Bundle</h3>
-      <p>A physical magnet board on the fridge where youth design their own wind-down routine. Youth picks the magnets, parent commits their own column. Framed as a 5-night experiment with a weekly review.</p>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c1);">Window:</strong> Night, 9pm+ &nbsp; <strong style="color: var(--c1);">Wells:</strong> Sleep, Screen, Bond &nbsp; <strong style="color: var(--c1);">TTM:</strong> Stages 2-3</p>
-    </div>
-    <div class="info-card" style="border-left: 3px solid var(--c2);">
-      <h3>C2: Hook U Up</h3>
-      <p>A physical card deck for youth buddy pairs. 5 topic decks (Glow Up, Bulk Up, Cut Season, Recharge, Feel Good), 14-day challenge, one card per day. Peer-led, no parent involvement needed.</p>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c2);">Window:</strong> After school, 2-6pm &nbsp; <strong style="color: var(--c2);">Wells:</strong> Eat, Exercise, Screen &nbsp; <strong style="color: var(--c2);">TTM:</strong> Stages 3-4</p>
-    </div>
-    <div class="info-card" style="border-left: 3px solid var(--c3);">
-      <h3>C3: We Open Up</h3>
-      <p>A family conversation card game with three mechanics: Category cards start the conversation, Swap has both sides answer as each other, Spark goes deeper. Both sides answer the same questions. No one is lectured.</p>
-      <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c3);">Window:</strong> Evening, dining table &nbsp; <strong style="color: var(--c3);">Wells:</strong> Bond (unlocks Sleep, Screen, Eat) &nbsp; <strong style="color: var(--c3);">TTM:</strong> Stages 2-3</p>
-    </div>
-  </div>
-
-  <!-- ── WINDOWS MAP ── -->
-  <div class="overview-context" style="margin-bottom: 8px;">
-    <p>No two concepts target the same window or the same relationship. That is deliberate. Together they cover the gaps that open up when school ends and adult structure steps back.</p>
-  </div>
-
-  <div class="windows-map">
-    <div class="window-slot">
-      <div class="window-slot-time">6:30-7:30am</div>
-      <div class="window-slot-name">Morning</div>
-    </div>
-    <div class="window-slot">
-      <div class="window-slot-time">8am-1:30pm</div>
-      <div class="window-slot-name">School</div>
-      <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 300;">HPB's current touchpoints</div>
-    </div>
-    <div class="window-slot" style="background: rgba(255,179,71,0.06);">
-      <div class="window-slot-time">2-6pm</div>
-      <div class="window-slot-name">After School</div>
-      <span class="window-slot-concept" style="background: rgba(255,179,71,0.15); color: #ffb347;">C2</span>
-      <div style="font-size: 0.68rem; color: var(--accent-coral); margin-top: 4px; font-weight: 600;">Window 1</div>
-    </div>
-    <div class="window-slot">
-      <div class="window-slot-time">6-9pm</div>
-      <div class="window-slot-name">Evening</div>
-      <span class="window-slot-concept" style="background: rgba(196,161,255,0.15); color: #c4a1ff;">C3</span>
-    </div>
-    <div class="window-slot" style="background: rgba(94,231,213,0.06);">
-      <div class="window-slot-time">9pm-1am+</div>
-      <div class="window-slot-name">Night</div>
-      <span class="window-slot-concept" style="background: rgba(94,231,213,0.15); color: #5ee7d5;">C1</span>
-      <div style="font-size: 0.68rem; color: var(--accent-coral); margin-top: 4px; font-weight: 600;">Window 2</div>
+  <!-- ═══ BAND 4: NORTH STAR + PRINCIPLES ═══ -->
+  <div class="ov-band alt">
+    <div class="ov-inner">
+      <div class="ov-band-number">03</div>
+      <div class="section-eyebrow">Where we want to get to</div>
+      <div class="overview-context">
+        <h3>Our north star and design principles</h3>
+      </div>
+      <div class="north-star-box">
+        <div class="ns-label">North star</div>
+        <div class="ns-text">Healthy habits become the natural choice for youth, supported at key moments, shaped through shared routines, and sustained through growing independence.</div>
+      </div>
+      <div class="overview-context" style="margin-bottom: 0; margin-top: 20px;">
+        <p style="margin-bottom: 16px;">Anchored to our HMW: "How might we motivate youth (aged 13 to 16) and their key supporters to build their confidence to start and sustain healthy habits across the 6 Wells (Eat, Sleep, Exercise, Learn, Bond, and Screen Time), so that healthier choices become natural, even as routines change and independence grows?"</p>
+      </div>
+      <div class="principles-row">
+        <div class="principle-card">
+          <h4>Autonomy with guardrails</h4>
+          <p>Design for shared structure, not control. Youth decide how things are done. Parents work alongside them. Neither side dictates. The structure is collaborative, which means both sides are more likely to follow it.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Replace, don't restrict</h4>
+          <p>Never remove without offering something better. Screens and fast food meet real needs: comfort, stimulation, belonging. Taking them away without offering an alternative just teaches workarounds. Design what fills the space.</p>
+        </div>
+        <div class="principle-card">
+          <h4>Make it fit the day they already have</h4>
+          <p>Strengthen existing behaviours before adding new ones. Youth and parents are already busy. If something doesn't slot into the after-school hangout, the bedtime window, or the dinner table, it won't get used.</p>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ── ONLINE TESTING CAVEAT ── -->
-  <div class="caveat-box">
-    <div class="caveat-label">Important: we tested physical concepts through a screen</div>
-    <p>All three concepts were designed to be held, placed, or handled. The magnet board belongs on the fridge. The card deck is meant to be shuffled and passed between friends. The conversation game is built around a simultaneous physical reveal. None of that happened in these sessions. Participants navigated prototypes on a laptop or iPad, clicking through screens instead of touching physical objects. This is a systematic constraint that affected every session. The simultaneous reveal in C3 was never reached by any participant. The magnet drag-and-drop in C1 removed the tactile dimension. The social moment of passing a card in C2 could not be replicated in an individual session with a researcher. These findings should be read with that context in mind.</p>
+  <!-- ═══ BAND 5: CONCEPT FUNNEL ═══ -->
+  <div class="ov-band">
+    <div class="ov-inner">
+      <div class="ov-band-number">04</div>
+      <div class="section-eyebrow">How we got here</div>
+      <div class="overview-context">
+        <h3>From 25 co-creation ideas to 3 concepts worth testing</h3>
+        <p>Each phase built on the last. Nothing was invented in a room. Everything was drawn from what we heard from 24 people across discovery and co-creation. 25 concept directions from youth and parents were scored against four filters. Only the ones that passed all four made it through.</p>
+      </div>
+      <div class="funnel-strip">
+        <div class="funnel-step">
+          <div class="funnel-step-num">Filter 1</div>
+          <div class="funnel-step-name">North Star</div>
+          <div class="funnel-step-desc">Does this move youth toward healthy choices feeling natural?</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-num">Filter 2</div>
+          <div class="funnel-step-name">Design Principles</div>
+          <div class="funnel-step-desc">Shared structure? Replaces rather than restricts? Fits the real day?</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-num">Filter 3</div>
+          <div class="funnel-step-name">Hard Constraints</div>
+          <div class="funnel-step-desc">No standalone apps. Must work through HPB channels. Usable at home.</div>
+        </div>
+        <div class="funnel-step">
+          <div class="funnel-step-num">Filter 4</div>
+          <div class="funnel-step-name">DVF Scoring</div>
+          <div class="funnel-step-desc">Do people want it? Can HPB run it? Can it reach enough people?</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- ── REPORT STRUCTURE ── -->
-  <div class="overview-context">
-    <div class="section-eyebrow">How this report is organised</div>
-    <p>This report is organised in four steps. The first is the raw evidence, what participants actually said and did, organised by concept. The second is the synthesis, where we pull out the patterns, name what each one means, and say what it implies for the design. The third is the assessment, concept-level scores, behavioural framework analysis, and prioritised fixes. The fourth is our recommendations, where we lay out what to pilot, what to improve, and where entirely new directions may be worth exploring. You can read it end to end or jump straight to the section that matters most to you.</p>
+  <!-- ═══ BAND 6: THREE CONCEPTS ═══ -->
+  <div class="ov-band alt">
+    <div class="ov-inner">
+      <div class="ov-band-number">05</div>
+      <div class="section-eyebrow">Three concepts tested</div>
+      <div class="overview-context">
+        <h3>Each responds to something specific we heard. Together they cover different windows, relationships, and wells.</h3>
+      </div>
+      <div class="info-grid">
+        <div class="info-card" style="border-left: 3px solid var(--c1);">
+          <h3>C1: Bedtime Bundle</h3>
+          <p>A physical magnet board on the fridge where youth design their own wind-down routine. Youth picks the magnets, parent commits their own column. Framed as a 5-night experiment with a weekly review.</p>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c1);">Window:</strong> Night, 9pm+ &nbsp; <strong style="color: var(--c1);">Wells:</strong> Sleep, Screen, Bond &nbsp; <strong style="color: var(--c1);">TTM:</strong> Stages 2-3</p>
+        </div>
+        <div class="info-card" style="border-left: 3px solid var(--c2);">
+          <h3>C2: Hook U Up</h3>
+          <p>A physical card deck for youth buddy pairs. 5 topic decks (Glow Up, Bulk Up, Cut Season, Recharge, Feel Good), 14-day challenge, one card per day. Peer-led, no parent involvement needed.</p>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c2);">Window:</strong> After school, 2-6pm &nbsp; <strong style="color: var(--c2);">Wells:</strong> Eat, Exercise, Screen &nbsp; <strong style="color: var(--c2);">TTM:</strong> Stages 3-4</p>
+        </div>
+        <div class="info-card" style="border-left: 3px solid var(--c3);">
+          <h3>C3: We Open Up</h3>
+          <p>A family conversation card game with three mechanics: Category cards start the conversation, Swap has both sides answer as each other, Spark goes deeper. Both sides answer the same questions. No one is lectured.</p>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; margin-bottom: 0;"><strong style="color: var(--c3);">Window:</strong> Evening, dining table &nbsp; <strong style="color: var(--c3);">Wells:</strong> Bond (unlocks Sleep, Screen, Eat) &nbsp; <strong style="color: var(--c3);">TTM:</strong> Stages 2-3</p>
+        </div>
+      </div>
+      <div class="overview-context" style="margin-top: 24px; margin-bottom: 8px;">
+        <p>No two concepts target the same window or the same relationship. That is deliberate. Together they cover the gaps that open up when school ends and adult structure steps back.</p>
+      </div>
+      <div class="windows-map">
+        <div class="window-slot">
+          <div class="window-slot-time">6:30-7:30am</div>
+          <div class="window-slot-name">Morning</div>
+        </div>
+        <div class="window-slot">
+          <div class="window-slot-time">8am-1:30pm</div>
+          <div class="window-slot-name">School</div>
+          <div style="font-size: 0.7rem; color: var(--text-muted); font-weight: 300;">HPB's current touchpoints</div>
+        </div>
+        <div class="window-slot" style="background: rgba(255,179,71,0.06);">
+          <div class="window-slot-time">2-6pm</div>
+          <div class="window-slot-name">After School</div>
+          <span class="window-slot-concept" style="background: rgba(255,179,71,0.15); color: #ffb347;">C2</span>
+          <div style="font-size: 0.68rem; color: var(--accent-coral); margin-top: 4px; font-weight: 600;">Window 1</div>
+        </div>
+        <div class="window-slot">
+          <div class="window-slot-time">6-9pm</div>
+          <div class="window-slot-name">Evening</div>
+          <span class="window-slot-concept" style="background: rgba(196,161,255,0.15); color: #c4a1ff;">C3</span>
+        </div>
+        <div class="window-slot" style="background: rgba(94,231,213,0.06);">
+          <div class="window-slot-time">9pm-1am+</div>
+          <div class="window-slot-name">Night</div>
+          <span class="window-slot-concept" style="background: rgba(94,231,213,0.15); color: #5ee7d5;">C1</span>
+          <div style="font-size: 0.68rem; color: var(--accent-coral); margin-top: 4px; font-weight: 600;">Window 2</div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Flow — clickable guide to tabs -->
-  <div class="flow-bar">
-    <div class="flow-step clickable" data-section="evidence">
-      <div class="step-num">Step 1</div>
-      <div class="step-name">Evidence</div>
-      <div class="step-desc">Raw quotes and observations per participant</div>
-    </div>
-    <div class="flow-step clickable" data-section="synthesis">
-      <div class="step-num">Step 2</div>
-      <div class="step-name">Synthesis</div>
-      <div class="step-desc">Patterns + insights + implications</div>
-    </div>
-    <div class="flow-step clickable" data-section="assessment">
-      <div class="step-num">Step 3</div>
-      <div class="step-name">Assessment</div>
-      <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
-    </div>
-    <div class="flow-step clickable" data-section="recommendations">
-      <div class="step-num">Step 4</div>
-      <div class="step-name">Recommendations</div>
-      <div class="step-desc">What to pilot, improve, or rethink</div>
+  <!-- ═══ BAND 7: CAVEAT + REPORT STRUCTURE ═══ -->
+  <div class="ov-band">
+    <div class="ov-inner">
+      <div class="ov-band-number">06</div>
+      <div class="section-eyebrow">Before you read on</div>
+      <div class="caveat-box" style="margin-top: 16px;">
+        <div class="caveat-label">Important: we tested physical concepts through a screen</div>
+        <p>All three concepts were designed to be held, placed, or handled. The magnet board belongs on the fridge. The card deck is meant to be shuffled and passed between friends. The conversation game is built around a simultaneous physical reveal. None of that happened in these sessions. Participants navigated prototypes on a laptop or iPad, clicking through screens instead of touching physical objects. This is a systematic constraint that affected every session. The simultaneous reveal in C3 was never reached by any participant. The magnet drag-and-drop in C1 removed the tactile dimension. The social moment of passing a card in C2 could not be replicated in an individual session with a researcher. These findings should be read with that context in mind.</p>
+      </div>
+      <div class="overview-context" style="margin-top: 32px;">
+        <div class="section-eyebrow">How this report is organised</div>
+        <p>This report is organised in four steps. The first is the raw evidence, what participants actually said and did, organised by concept. The second is the synthesis, where we pull out the patterns, name what each one means, and say what it implies for the design. The third is the assessment, concept-level scores, behavioural framework analysis, and prioritised fixes. The fourth is our recommendations, where we lay out what to pilot, what to improve, and where entirely new directions may be worth exploring. You can read it end to end or jump straight to the section that matters most to you.</p>
+      </div>
+      <div class="flow-bar" style="margin-top: 20px;">
+        <div class="flow-step clickable" data-section="evidence">
+          <div class="step-num">Step 1</div>
+          <div class="step-name">Evidence</div>
+          <div class="step-desc">Raw quotes and observations per participant</div>
+        </div>
+        <div class="flow-step clickable" data-section="synthesis">
+          <div class="step-num">Step 2</div>
+          <div class="step-name">Synthesis</div>
+          <div class="step-desc">Patterns + insights + implications</div>
+        </div>
+        <div class="flow-step clickable" data-section="assessment">
+          <div class="step-num">Step 3</div>
+          <div class="step-name">Assessment</div>
+          <div class="step-desc">Concept scores, EAST, B=MAP, Kano</div>
+        </div>
+        <div class="flow-step clickable" data-section="recommendations">
+          <div class="step-num">Step 4</div>
+          <div class="step-name">Recommendations</div>
+          <div class="step-desc">What to pilot, improve, or rethink</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -4675,6 +4719,37 @@ function togglePortfolioCard(card) {
     setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
   }
 }
+
+// ── Scroll-reveal for overview bands ──
+(function() {
+  const bands = document.querySelectorAll('.ov-band:not(.visible)');
+  if (!bands.length) return;
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  // Start observing when overview section is shown
+  function observeBands() {
+    bands.forEach(function(band) {
+      if (!band.classList.contains('visible')) observer.observe(band);
+    });
+  }
+  // Re-observe whenever overview becomes active
+  var origNav = navigateTo;
+  navigateTo = function(sectionId, scrollTarget) {
+    origNav(sectionId, scrollTarget);
+    if (sectionId === 'overview') setTimeout(observeBands, 100);
+  };
+  // Also observe on initial load if overview is visible
+  if (document.getElementById('overview') &&
+      document.getElementById('overview').classList.contains('active')) {
+    observeBands();
+  }
+})();
 </script>
 </body>
 </html>
