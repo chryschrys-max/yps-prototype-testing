@@ -486,6 +486,264 @@
     background: rgba(94,231,213,0.06);
   }
 
+  /* ══════════════════════════════════════
+     EVIDENCE PAGE STYLES
+     ══════════════════════════════════════ */
+
+  /* Evidence metrics grid */
+  .ev-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .ev-metric {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.5; font-weight: 300;
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+  }
+  .ev-metric-num {
+    font-family: var(--font-display);
+    font-size: 0.7rem; font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  /* Evidence participant card */
+  .ev-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.3s;
+  }
+  .ev-card:hover { border-color: rgba(255,255,255,0.15); }
+  .ev-pid {
+    font-family: var(--font-display);
+    font-size: 0.72rem; font-weight: 700;
+    min-width: 110px; flex-shrink: 0;
+    padding-top: 2px;
+  }
+  .ev-body p {
+    font-size: 0.84rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .ev-quote {
+    margin-bottom: 8px;
+  }
+  .ev-quote .quote {
+    font-style: italic; color: var(--text-primary);
+    font-size: 0.84rem; font-weight: 400;
+  }
+  .ev-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .ev-tag {
+    font-size: 0.68rem; font-weight: 600;
+    padding: 2px 8px; border-radius: 10px;
+    letter-spacing: 0.03em;
+  }
+  .ev-tag.pos { background: rgba(94,231,213,0.12); color: var(--accent-teal); }
+  .ev-tag.neg { background: rgba(255,126,179,0.12); color: var(--accent-coral); }
+  .ev-tag.neutral { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+
+  .ev-note {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(255,179,71,0.06);
+    border: 1px solid rgba(255,179,71,0.15);
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem; color: var(--accent-orange);
+    font-weight: 400; line-height: 1.6;
+    font-style: italic;
+  }
+  .ev-src {
+    font-size: 0.72rem; color: var(--text-muted); font-weight: 500;
+    font-style: normal;
+  }
+
+  /* ══════════════════════════════════════
+     ASSESSMENT PAGE STYLES
+     ══════════════════════════════════════ */
+
+  /* Verdict grid (dark theme) */
+  .verdict-grid-dark {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .verdict-dark {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    border-top: 3px solid var(--verdict-color, var(--border-subtle));
+  }
+  .verdict-badge-dark {
+    display: inline-block;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--bg-primary);
+    padding: 2px 10px; border-radius: 10px;
+    align-self: flex-start;
+  }
+  .verdict-metric-dark {
+    font-size: 0.88rem; font-weight: 600;
+    line-height: 1.4; margin-bottom: 4px;
+  }
+  .verdict-dark p {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300;
+  }
+  .verdict-quote-dark {
+    margin-top: auto; padding-top: 8px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 0.82rem;
+  }
+  .verdict-quote-dark .quote {
+    font-style: italic; color: var(--text-primary);
+    font-weight: 400;
+  }
+
+  /* Framework grid (EAST + B=MAP) */
+  .framework-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .framework-col {}
+  .fw-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .fw-item {
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--fw-color, var(--border-subtle));
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .fw-label {
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--fw-color, var(--text-muted));
+    margin-bottom: 6px;
+  }
+  .fw-item p {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300;
+  }
+
+  /* Kano grid */
+  .kano-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .kano-col {
+    padding: 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+  }
+  .kano-col.must {
+    background: rgba(255,126,179,0.06);
+    border-color: rgba(255,126,179,0.15);
+  }
+  .kano-col.perf {
+    background: rgba(255,179,71,0.06);
+    border-color: rgba(255,179,71,0.15);
+  }
+  .kano-col.delight {
+    background: rgba(94,231,213,0.06);
+    border-color: rgba(94,231,213,0.15);
+  }
+  .kano-header {
+    font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .kano-col.must .kano-header { color: var(--accent-coral); }
+  .kano-col.perf .kano-header { color: var(--accent-orange); }
+  .kano-col.delight .kano-header { color: var(--accent-teal); }
+  .kano-col ul {
+    list-style: none; padding: 0;
+  }
+  .kano-col li {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.55; font-weight: 300;
+    padding: 4px 0 4px 14px;
+    position: relative;
+  }
+  .kano-col li::before {
+    content: ''; position: absolute;
+    left: 0; top: 12px;
+    width: 4px; height: 4px; border-radius: 50%;
+    background: var(--text-muted);
+  }
+
+  /* Fix rows (dark theme) */
+  .fix-dark {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px 20px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--accent-coral);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+  .fix-dark:has(.pilot) { border-left-color: var(--accent-blue); }
+  .fix-tag-dark {
+    font-size: 0.62rem; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
+    white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+  .fix-tag-dark.must { background: var(--accent-coral); color: var(--bg-primary); }
+  .fix-tag-dark.pilot { background: var(--accent-blue); color: var(--bg-primary); }
+  .fix-title-dark {
+    font-size: 0.88rem; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .fix-dark p {
+    font-size: 0.82rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300;
+  }
+  .fix-src {
+    font-size: 0.72rem; color: var(--text-muted);
+    font-style: italic; margin-top: 6px;
+  }
+
+  /* Recommendation (dark) */
+  .rec-dark {
+    margin-top: 20px;
+    padding: 18px 22px;
+    background: rgba(94,231,213,0.05);
+    border: 1px solid rgba(94,231,213,0.15);
+    border-radius: var(--radius-sm);
+  }
+  .rec-label-dark {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: 8px;
+  }
+  .rec-dark p {
+    font-size: 0.84rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300;
+  }
+
   /* ── Placeholder sections ── */
   .coming-soon {
     text-align: center; padding: 120px 24px;
@@ -1053,23 +1311,865 @@
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION: EVIDENCE (Step 1 - placeholder)
+     SECTION: EVIDENCE (Step 1)
      ════════════════════════════════════════ -->
 <div class="section" id="evidence">
-  <div class="coming-soon">
-    <h2>Evidence</h2>
-    <p>Raw quotes, observations, and evidence mapping organised by concept and participant. Coming next.</p>
+
+  <div class="section-head">
+    <div class="section-eyebrow">Step 1 &middot; Evidence</div>
+    <h2>What Participants Said and Did</h2>
+    <p>Raw observations and direct quotes from 21 participants across 13 sessions. Organised by concept so you can see how each one landed before we pull patterns out.</p>
   </div>
+
+  <!-- ── C1 Evidence ── -->
+  <div class="concept-block c1-block">
+    <div class="concept-heading">
+      <div class="c-badge">C1</div>
+      <div class="c-title-block">
+        <h3>Bedtime Bundle</h3>
+        <div class="c-sub">Physical magnet board for shared sleep wind-down &mdash; 12 participants tested</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Success metrics &mdash; what we were watching for</div>
+    <div class="ev-metrics-grid">
+      <div class="ev-metric"><span class="ev-metric-num">01</span>Youth chooses magnets that reflect what they would actually do, not what sounds good</div>
+      <div class="ev-metric"><span class="ev-metric-num">02</span>The parent column feels fair to both sides, not like surveillance</div>
+      <div class="ev-metric"><span class="ev-metric-num">03</span>The weekly review feels manageable, not like another task</div>
+      <div class="ev-metric"><span class="ev-metric-num">04</span>Both youth and parent can see themselves using it beyond the first week</div>
+    </div>
+
+    <div class="cluster-label">Participant observations</div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP01 Sureena</div>
+      <div class="ev-body">
+        <p>Resonated immediately, asked for a copy of the prototype. Started dragging magnets without being asked. Used Parent Says column naturally to write advance reminders for her son.</p>
+        <div class="ev-quote"><span class="quote">"Creates the atmosphere, creates the mood."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">7/7</span><span class="ev-tag neutral">Asked for prototype</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP02</div>
+      <div class="ev-body">
+        <p>Rated son's independent use at 1/7. Misread the board layout &mdash; thought the top section was for parents.</p>
+        <div class="ev-quote"><span class="quote">"I thought the top part was for me to fill in."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">3/7</span><span class="ev-tag neutral">Layout confusion</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP05</div>
+      <div class="ev-body">
+        <p>Daughter already self-managing. Confirmed the concept is physical, not digital, and said this was the right call &mdash; phone in the bedroom is the problem, not the solution.</p>
+        <div class="ev-quote"><span class="quote">"We've been quite systematic since young so they are kind of used to this routine."</span></div>
+        <div class="ev-tags"><span class="ev-tag neutral">4/7</span><span class="ev-tag neutral">Limited fit</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP07 Julie</div>
+      <div class="ev-body">
+        <p>Said it suits preschoolers, not secondary school youth. Predicted drop-off within 1 to 2 weeks. No positive comment on the weekly review.</p>
+        <div class="ev-quote"><span class="quote">"Will it be consistent for a period? I don't think so."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">4.5/7</span><span class="ev-tag neg">Age concern</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP09</div>
+      <div class="ev-body">
+        <p>Predicted drop-off within 1 to 2 weeks. Felt children would control the parent column rather than the parent. Read each magnet aloud and rejected them one by one.</p>
+        <div class="ev-quote"><span class="quote">"Kids will do it for 1 week and won't continue."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">4/7</span><span class="ev-tag neg">Sustainability doubt</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP10 Ling</div>
+      <div class="ev-body">
+        <p>Daughter already has a solid routine. Said the board would come down after 2 weeks. Said it needs "info bites" to sustain interest.</p>
+        <div class="ev-quote"><span class="quote">"Too fixed and boring."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">1/7</span><span class="ev-tag neutral">Already managed</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TP12 Bhavani</div>
+      <div class="ev-body">
+        <p>Strongest positive. Single parent, daughter's sleep is a source of real tension at home. Saw the feelings magnets as a communication channel.</p>
+        <div class="ev-quote"><span class="quote">"This is something we have been looking for a long time."</span></div>
+        <div class="ev-quote"><span class="quote">"It's a good way for the kids to communicate to the parents. Kids nowadays don't know how to communicate."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">7/7</span><span class="ev-tag pos">Strongest signal</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TY01 Evangeline</div>
+      <div class="ev-body">
+        <p>Liked the routine-building element. Said the board being visible removed the need to remember to start.</p>
+        <div class="ev-quote"><span class="quote">"It will help me by being more organised &mdash; I like to procrastinate a lot."</span></div>
+        <div class="ev-quote"><span class="quote">"More of my thing &mdash; I can plan my own schedules."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">5/7</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TY04 Xi En</div>
+      <div class="ev-body">
+        <p>Felt emotion section was an invasion of privacy. Dismissed most magnet options as not fitting her mood.</p>
+        <div class="ev-quote"><span class="quote">"Invasion of privacy &mdash; I wouldn't want my parents knowing I'm feeling sad or angry."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">5/7</span><span class="ev-tag neg">Privacy concern</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TY06 Kayna</div>
+      <div class="ev-body">
+        <p>Can see herself using it, but some days after CCA she is exhausted. Said placement beside the bed works better than the fridge.</p>
+        <div class="ev-quote"><span class="quote">"If it was placed beside my bed I'd probably use it. But if it was on the fridge I'd probably forget."</span></div>
+        <div class="ev-tags"><span class="ev-tag neutral">Placement matters</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c1)">TY11 Zillia</div>
+      <div class="ev-body">
+        <p>Needed help before she could engage. Agreed novelty fades without a re-engagement loop.</p>
+        <div class="ev-quote"><span class="quote">"I will keep doing it until I lose interest and forget."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">4/7</span><span class="ev-tag neg">Novelty fade</span></div>
+      </div>
+    </div>
+
+    <div class="ev-note">Magnet interaction could not be replicated on screen. Several participants were unable to engage with the board in the online format.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── C2 Evidence ── -->
+  <div class="concept-block c2-block">
+    <div class="concept-heading">
+      <div class="c-badge">C2</div>
+      <div class="c-title-block">
+        <h3>Hook U Up</h3>
+        <div class="c-sub">14-day peer challenge card deck &mdash; 15 participants tested</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Success metrics &mdash; what we were watching for</div>
+    <div class="ev-metrics-grid">
+      <div class="ev-metric"><span class="ev-metric-num">01</span>Youth picks a deck that matches a real habit they want to change, not what sounds impressive</div>
+      <div class="ev-metric"><span class="ev-metric-num">02</span>The peer accountability mechanic creates genuine motivation, not just compliance</div>
+      <div class="ev-metric"><span class="ev-metric-num">03</span>The proof step does not create friction that breaks the streak</div>
+      <div class="ev-metric"><span class="ev-metric-num">04</span>Both partners can see completing half the 14 days without constant reminders</div>
+    </div>
+
+    <div class="cluster-label">Participant observations</div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP01 Sureena</div>
+      <div class="ev-body">
+        <p>Instantly positive. Wanted to challenge whoever felt right that day, not stick with one buddy.</p>
+        <div class="ev-quote"><span class="quote">"Who's the smartass that made it?!"</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6.5/7</span><span class="ev-tag neutral">Buddy rotation</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP02</div>
+      <div class="ev-body">
+        <p>Skeptical. Found QR process very tedious. Counted the steps aloud.</p>
+        <div class="ev-quote"><span class="quote">"So leche ah, every day need to scan a QR code?"</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">2/7</span><span class="ev-tag neg">QR friction</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP04 Sabri</div>
+      <div class="ev-body">
+        <p>Liked Glow Up for daughters. Noted makeup and beauty deck missing from the set.</p>
+        <div class="ev-tags"><span class="ev-tag neutral">5/7</span><span class="ev-tag neutral">Missing deck</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP07 Julie</div>
+      <div class="ev-body">
+        <p>Conditional on exam period timing. Would not work during exam season.</p>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span><span class="ev-tag neutral">Exam blocking</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP10 Ling</div>
+      <div class="ev-body">
+        <p>Found it tedious. QR concern. Said "Bulk Up" would put girls off. Counted the proof steps aloud: "Scan, log in, post, share URL."</p>
+        <div class="ev-tags"><span class="ev-tag neg">3/7</span><span class="ev-tag neg">Bulk Up name</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TP12 Bhavani</div>
+      <div class="ev-body">
+        <p>Rated 1/7. Daughter has no time. Preferred online version for parental control.</p>
+        <div class="ev-tags"><span class="ev-tag neg">1/7</span><span class="ev-tag neg">No time</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY01 Evangeline</div>
+      <div class="ev-body">
+        <p>7/7 on all dimensions. Said she would pay for it. Chose Glow Up and connected it to her skin.</p>
+        <div class="ev-quote"><span class="quote">"Would keep me occupied for hours."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">7/7</span><span class="ev-tag pos">Would pay</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY02 Jia Le</div>
+      <div class="ev-body">
+        <p>Described the concept as something that creates "happy memories" alongside healthy habits. Asked what the health benefits were on each card.</p>
+        <div class="ev-quote"><span class="quote">"Wow. Both parties not only make happy memories but also gain very healthy relationships."</span></div>
+        <div class="ev-quote"><span class="quote">"What are the benefits that the body is gaining? That's what's missing."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">Wow reaction</span><span class="ev-tag neutral">Wants benefits</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY04 Xi En</div>
+      <div class="ev-body">
+        <p>Asked how to buy it mid-session. No prompting. Explored multiple decks deliberately.</p>
+        <div class="ev-quote"><span class="quote">"Can I buy this? Where can I get it?"</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span><span class="ev-tag pos">Spontaneous interest</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY06 Kayna</div>
+      <div class="ev-body">
+        <p>Independently compared it to Snapchat and TikTok streaks. Described how she would remind a friend and be reminded back.</p>
+        <div class="ev-quote"><span class="quote">"It's kind of like Snapchat or TikTok streaks. You don't want to break the streak."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">Streak comparison</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY08 Josh</div>
+      <div class="ev-body">
+        <p>Ranked C2 last. Under O-level exam pressure, self-described as someone who overthinks. Raised privacy concerns about sending selfies.</p>
+        <div class="ev-tags"><span class="ev-tag neg">4/7</span><span class="ev-tag neg">Stress / privacy</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY10 Naura</div>
+      <div class="ev-body">
+        <p>Ranked C2 first. Drawn to Recharge deck because she does not sleep well.</p>
+        <div class="ev-quote"><span class="quote">"I would not mind doing this with my friends actually."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span><span class="ev-tag pos">Ranked first</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c2)">TY11 Zillia</div>
+      <div class="ev-body">
+        <p>Would buy it. Invented her own bet mechanic: loser buys the winner something small. Saw it as a group activity, not a pair.</p>
+        <div class="ev-quote"><span class="quote">"I would do this with like, whoever is around &mdash; up to five people."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span><span class="ev-tag pos">Invented bet mechanic</span></div>
+      </div>
+    </div>
+
+    <div class="ev-note">QR proof mechanic was blocked by the 2026 school phone ban and could not be tested as designed. Peer accountability interaction was simulated, not observed.</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ── C3 Evidence ── -->
+  <div class="concept-block c3-block">
+    <div class="concept-heading">
+      <div class="c-badge">C3</div>
+      <div class="c-title-block">
+        <h3>We Open Up</h3>
+        <div class="c-sub">Family conversation card game &mdash; 15 participants tested</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Success metrics &mdash; what we were watching for</div>
+    <div class="ev-metrics-grid">
+      <div class="ev-metric"><span class="ev-metric-num">01</span>Both youth and parent understand how to play without a facilitator explaining the mechanic</div>
+      <div class="ev-metric"><span class="ev-metric-num">02</span>The questions land as curious and fun, not interrogative or threatening</div>
+      <div class="ev-metric"><span class="ev-metric-num">03</span>At least one moment of genuine surprise or laughter occurs during the session</div>
+      <div class="ev-metric"><span class="ev-metric-num">04</span>Either side reaches for it again without being told to</div>
+    </div>
+
+    <div class="cluster-label">Participant observations</div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP01 Sureena</div>
+      <div class="ev-body">
+        <p>Explored cards freely, smiled throughout the session.</p>
+        <div class="ev-quote"><span class="quote">"This looks like fun."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP02</div>
+      <div class="ev-body">
+        <p>Confused by Swap/Spark. Needed researcher guidance twice during the session.</p>
+        <div class="ev-tags"><span class="ev-tag neg">3/7</span><span class="ev-tag neg">Mechanic confusion</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP03 Hakim</div>
+      <div class="ev-body">
+        <p>Ranked C3 first. Laughed when he mimicked his son during the Swap card. Had never thought of a card game as a communication tool before.</p>
+        <div class="ev-quote"><span class="quote">"Harmless looking segway to deeper conversations."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6.5/7</span><span class="ev-tag pos">Ranked first</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP06 Han Tien</div>
+      <div class="ev-body">
+        <p>Ranked C3 first. Son grown distant since secondary school. Said he would have to start it &mdash; his son would not.</p>
+        <div class="ev-quote"><span class="quote">"It doesn't sound scary but when you do it, it does &mdash; these are things you don't usually share with family members."</span></div>
+        <div class="ev-quote"><span class="quote">"If I don't start it, nobody will."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">6/7</span><span class="ev-tag neg">No trigger</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP07 Julie</div>
+      <div class="ev-body">
+        <p>Questions too general. Predicted one or two word answers from youth.</p>
+        <div class="ev-tags"><span class="ev-tag neg">3/7</span><span class="ev-tag neg">Questions too broad</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP09</div>
+      <div class="ev-body">
+        <p>Introverted child would shut down with emotional questions.</p>
+        <div class="ev-tags"><span class="ev-tag neg">3.5/7</span><span class="ev-tag neg">Trust gap</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP10 Ling</div>
+      <div class="ev-body">
+        <p>Communication already working. Concept felt redundant. Spotted a design flaw: the Spark question does not link to the category card.</p>
+        <div class="ev-tags"><span class="ev-tag neg">1/7</span><span class="ev-tag neutral">Design flaw caught</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TP12 Bhavani</div>
+      <div class="ev-body">
+        <p>Ranked C3 first. Relationship strained around sleep.</p>
+        <div class="ev-quote"><span class="quote">"Yeah, this is something more interesting."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">7/7</span><span class="ev-tag pos">Ranked first</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TY01 Evangeline</div>
+      <div class="ev-body">
+        <p>Excited by the reversed dynamic of asking parents questions. Specific reason for 7/7: the game lets her ask questions to her parents, not just answer them.</p>
+        <div class="ev-quote"><span class="quote">"The game lets me ask questions TO my parents &mdash; that's kind of unusual."</span></div>
+        <div class="ev-tags"><span class="ev-tag pos">7/7</span><span class="ev-tag pos">Reversed dynamic</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TY04 Xi En</div>
+      <div class="ev-body">
+        <p>Would have to lie with parents present. Worried about getting lectures after honest answers.</p>
+        <div class="ev-quote"><span class="quote">"If I played this with my parents, most answers I would have to lie."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">4/7</span><span class="ev-tag neg">Trust barrier</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TY10 Naura</div>
+      <div class="ev-body">
+        <p>Worried about honesty triggers. Would feel unsafe answering.</p>
+        <div class="ev-quote"><span class="quote">"If I played this with my parents, most answers I would have to lie."</span></div>
+        <div class="ev-tags"><span class="ev-tag neg">3/7</span><span class="ev-tag neg">Feels unsafe</span></div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-pid" style="color:var(--c3)">TY11 Zillia</div>
+      <div class="ev-body">
+        <p>Felt the game was "very adult, not my age group." Suggested a Never Have I Ever format for lighter entry.</p>
+        <div class="ev-tags"><span class="ev-tag neg">4/7</span><span class="ev-tag neutral">Age mismatch</span></div>
+      </div>
+    </div>
+
+    <div class="ev-note">The simultaneous reveal &mdash; the Swap mechanic's core moment &mdash; was not reached in any online session. Findings on mechanic clarity are directional only.</div>
+  </div>
+
 </div>
 
 <!-- ════════════════════════════════════════
-     SECTION: ASSESSMENT (Step 3 - placeholder)
+     SECTION: ASSESSMENT (Step 3)
      ════════════════════════════════════════ -->
 <div class="section" id="assessment">
-  <div class="coming-soon">
-    <h2>Assessment</h2>
-    <p>Concept-level scores, behavioural framework analysis (EAST, B=MAP), Kano classification, and prioritised fixes. Coming soon.</p>
+
+  <div class="section-head">
+    <div class="section-eyebrow">Step 3 &middot; Assessment</div>
+    <h2>Concept Performance</h2>
+    <p>How each concept scored against its success metrics, how it performed against EAST and B=MAP, what falls into must-have / performance / delighter categories, and what needs fixing before a physical pilot.</p>
   </div>
+
+  <!-- ═══════════════════════════ C1 ASSESSMENT ═══════════════════════════ -->
+  <div class="concept-block c1-block">
+    <div class="concept-heading">
+      <div class="c-badge">C1</div>
+      <div class="c-title-block">
+        <h3>Bedtime Bundle</h3>
+        <div class="c-sub">Physical magnet board &mdash; Sleep &middot; Screen &middot; Bond &middot; 9pm+ window</div>
+      </div>
+    </div>
+
+    <!-- Verdict grid -->
+    <div class="cluster-label">Success metric results</div>
+    <div class="verdict-grid-dark">
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">Youth chooses magnets that reflect what they would actually do</div>
+        <p>TY01 connected naturally. TY04 dismissed most options. TY11 needed help before engaging.</p>
+        <div class="verdict-quote-dark"><span class="quote">"More of my thing &mdash; I can plan my own schedules."</span><br><span class="ev-src">TY01</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">Parent column feels fair, not like surveillance</div>
+        <p>TY04 called it invasion of privacy. TP09 felt children would control the parent column. Only TP01 reached intended use.</p>
+        <div class="verdict-quote-dark"><span class="quote">"Invasion of privacy &mdash; I wouldn't want parents knowing I'm feeling sad."</span><br><span class="ev-src">TY04</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
+        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+        <div class="verdict-metric-dark">Weekly review feels manageable</div>
+        <p>No participant commented positively. TP07, TP09, TP10 all predicted drop-off within 1&ndash;2 weeks.</p>
+        <div class="verdict-quote-dark"><span class="quote">"Will it be consistent for a period? I don't think so."</span><br><span class="ev-src">TP07</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">Both sides can see using it beyond week 1</div>
+        <p>TP01 asked for the prototype. TY01 saw it helping with procrastination. Most others were doubtful once novelty fades.</p>
+        <div class="verdict-quote-dark"><span class="quote">"I will keep doing it until I lose interest and forget."</span><br><span class="ev-src">TY11</span></div>
+      </div>
+    </div>
+
+    <!-- EAST + B=MAP -->
+    <div class="cluster-label" style="margin-top:32px;">Behavioural frameworks</div>
+    <div class="framework-grid">
+      <div class="framework-col">
+        <div class="fw-title">EAST</div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Easy &mdash; Mixed</div>
+          <p>Magnets intuitive once explained. But "How to Play" misread as button, emotion icons unclear without text, parent column role misunderstood.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Attractive &mdash; Split by age</div>
+          <p>TP01 immediately personalised. TY11 called it "adultish." TP07 said it suits preschoolers. Attractiveness depends on who is looking.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Social &mdash; Potential not activated</div>
+          <p>TP06 liked mutual commitment framing. TP01 reflected on own screen habit. TY04 saw surveillance, not connection.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Timely &mdash; Right window</div>
+          <p>Bedtime is where sleep is unstructured. For families with a shared routine, the fit is natural. Where bedtime is loose, the trigger is missing.</p>
+        </div>
+      </div>
+      <div class="framework-col">
+        <div class="fw-title">B=MAP</div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Motivation &mdash; Present for a subset</div>
+          <p>TP12 and TP01 arrived motivated. TP07 and TP10 did not see the gap. Depends on whether sleep structure has started slipping.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Ability &mdash; Comprehension gap</div>
+          <p>Board format easy once understood. Main gap is comprehension of parent column, emotion icons, and who decides. Text labels and a first-use guide would close it.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Prompt &mdash; Core strength</div>
+          <p>A physical board beside the bed is a persistent cue. Does not require an app or remembering. This is the most important feature to protect in any iteration.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kano -->
+    <div class="cluster-label" style="margin-top:32px;">Kano classification</div>
+    <div class="kano-grid">
+      <div class="kano-col must">
+        <div class="kano-header">Must-haves</div>
+        <ul>
+          <li>Text labels on emotion icons</li>
+          <li>Clear parent column instructions</li>
+          <li>Short first-use guide</li>
+          <li>Allow daily magnet changes</li>
+        </ul>
+      </div>
+      <div class="kano-col perf">
+        <div class="kano-header">Performance</div>
+        <ul>
+          <li>Daily magnet flexibility</li>
+          <li>Custom blank magnets for personalisation</li>
+          <li>Simple sleep progress tracker</li>
+        </ul>
+      </div>
+      <div class="kano-col delight">
+        <div class="kano-header">Delighters</div>
+        <ul>
+          <li>Feelings magnets as non-verbal signal</li>
+          <li>TP01 reflected on own screen habits unprompted</li>
+          <li>TP12: "Something we've been looking for a long time"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Fixes -->
+    <div class="cluster-label" style="margin-top:32px;">Priority fixes before pilot</div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Redesign the parent column as a pledge, not an observation slot</div>
+        <p>Most participants read it as monitoring. Split the board into equal Youth and Parent sides. Make the parent column show what the parent commits to.</p>
+        <div class="fix-src">TY04, TP09, TP02 &mdash; 3 of 11</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Add text labels to emotion icons</div>
+        <p>Face icons not consistently understood. TY03 asked for a "sleepy" emotion &mdash; it's the most common feeling she described and is absent.</p>
+        <div class="fix-src">TP10, TY03</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Build a re-engagement mechanism into the weekly review</div>
+        <p>Options: rotating element weekly, parent-youth check-in prompt, or 5-night reset as a recurring experiment rather than ongoing rule.</p>
+        <div class="fix-src">TP07, TP09, TP10, TY11 &mdash; 4 of 11</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark pilot">Test in Pilot</span>
+      <div>
+        <div class="fix-title-dark">Test placement beside the bed, not on the fridge</div>
+        <p>Location determines whether the prompt works at all. Beside the bed is visible at the exact moment it is most needed.</p>
+        <div class="fix-src">TY06, TY03 &mdash; raised independently</div>
+      </div>
+    </div>
+
+    <div class="rec-dark">
+      <div class="rec-label-dark">Recommendation</div>
+      <p>Run a physical pilot session with C1 before making further design changes to the magnet interaction or the parent-youth dynamic. The online format produced useful directional findings, but the core experience needs to be tested in context.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════ C2 ASSESSMENT ═══════════════════════════ -->
+  <div class="concept-block c2-block">
+    <div class="concept-heading">
+      <div class="c-badge">C2</div>
+      <div class="c-title-block">
+        <h3>Hook U Up</h3>
+        <div class="c-sub">14-day peer challenge card deck &mdash; Eat &middot; Exercise &middot; Screen &middot; After-school window</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Success metric results</div>
+    <div class="verdict-grid-dark">
+      <div class="verdict-dark" style="--verdict-color: var(--accent-teal);">
+        <div class="verdict-badge-dark" style="background: var(--accent-teal);">Met</div>
+        <div class="verdict-metric-dark">Youth picks a deck that matches a real habit</div>
+        <p>TY10 went straight to Recharge (sleep issues). TY01 chose Glow Up (skin). TY04 explored multiple decks deliberately. Self-directed in every youth session.</p>
+        <div class="verdict-quote-dark"><span class="quote">"I would not mind doing this with my friends actually."</span><br><span class="ev-src">TY10</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-teal);">
+        <div class="verdict-badge-dark" style="background: var(--accent-teal);">Met</div>
+        <div class="verdict-metric-dark">Peer accountability creates genuine motivation</div>
+        <p>4 of 5 youth ranked C2 first. TY06 independently compared to Snapchat streaks. TY11 invented a bet mechanic on the spot. Peer-driven, not compliance-driven.</p>
+        <div class="verdict-quote-dark"><span class="quote">"It's kind of like Snapchat or TikTok streaks. You don't want to break the streak."</span><br><span class="ev-src">TY06</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
+        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+        <div class="verdict-metric-dark">Proof step does not break the streak</div>
+        <p>QR blocked by 2026 school phone ban. TP10 counted the steps: "Scan, log in, post, share URL." TY08 raised selfie privacy concerns.</p>
+        <div class="verdict-quote-dark"><span class="quote">"So leche ah, every day need to scan a QR code?"</span><br><span class="ev-src">TP02</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">Both partners can complete half the 14 days</div>
+        <p>Youth confident about peer motivation. But fixed-buddy rule was too rigid. Youth wanted to rotate who they challenge.</p>
+        <div class="verdict-quote-dark"><span class="quote">"I would do this with like, whoever is around &mdash; up to five people."</span><br><span class="ev-src">TY11</span></div>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Behavioural frameworks</div>
+    <div class="framework-grid">
+      <div class="framework-col">
+        <div class="fw-title">EAST</div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Easy &mdash; Card content yes, proof no</div>
+          <p>Cards navigated without help. TY10 explored all five decks independently. The QR proof is the only friction &mdash; and it is significant.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Attractive &mdash; Strongest of three for youth</div>
+          <p>Deck names landed immediately: Glow Up, Recharge, Feel Good. TY01 would pay for it. TY04 asked how to buy it mid-session.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Social &mdash; Primary strength</div>
+          <p>Buddy mechanic makes health feel like something you do with people. TY06 compared to Snapchat. TY11 invented competitive mechanic. Youth felt it immediately.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Timely &mdash; Right window, exam pressure blocks</div>
+          <p>After-school is the right window. But exam periods make timing wrong. TY08 (O-level pressure) was the only youth who ranked C2 last.</p>
+        </div>
+      </div>
+      <div class="framework-col">
+        <div class="fw-title">B=MAP</div>
+        <div class="fw-item" style="--fw-color: var(--accent-teal);">
+          <div class="fw-label">Motivation &mdash; Highest of three concepts</div>
+          <p>Youth motivation self-generated. The peer mechanic and identity language made health behaviour feel socially relevant without framing it as intervention.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-coral);">
+          <div class="fw-label">Ability &mdash; Proof mechanic breaks it</div>
+          <p>Card content easy. QR proof not: too many steps, blocked during school hours, privacy concerns. Ability to do the challenge exists &mdash; ability to log it does not.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Prompt &mdash; Missing for Day 1</div>
+          <p>Streak is a strong ongoing prompt once started. But nothing makes someone pick up the deck on Day 1. The first day is the hardest.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Kano classification</div>
+    <div class="kano-grid">
+      <div class="kano-col must">
+        <div class="kano-header">Must-haves</div>
+        <ul>
+          <li>Replace QR with physical proof (tick, sticker, group chat)</li>
+          <li>Rename "Bulk Up" to aspiration language</li>
+          <li>Allow buddy rotation across 14 days</li>
+          <li>Add benefit explanation to each card</li>
+        </ul>
+      </div>
+      <div class="kano-col perf">
+        <div class="kano-header">Performance</div>
+        <ul>
+          <li>Skip or swap mechanic for physical challenges</li>
+          <li>Flexible challenge order</li>
+          <li>More deck topics (beauty, creativity)</li>
+          <li>Notification reminder option</li>
+        </ul>
+      </div>
+      <div class="kano-col delight">
+        <div class="kano-header">Delighters</div>
+        <ul>
+          <li>Streak comparison to Snapchat/TikTok (TY06)</li>
+          <li>TY11 invented competitive bet mechanic</li>
+          <li>TY01: "Would keep me occupied for hours" &mdash; 7/7</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Priority fixes before pilot</div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Replace the QR proof mechanic with a physical or social alternative</div>
+        <p>Three independent blockers: phone ban, privacy concerns, too many steps. The peer witness is the accountability &mdash; the platform upload is not needed.</p>
+        <div class="fix-src">TP02, TP07, TP08, TY08 &mdash; multiple sessions</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Rename "Bulk Up"</div>
+        <p>"Bulk Up" uses effort language when every other deck uses aspiration language. Landed as male-coded and gym-oriented for female participants.</p>
+        <div class="fix-src">TP10, TP04 &mdash; female participant sessions</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Allow buddy rotation &mdash; 2 to 4 people across the 14 days</div>
+        <p>One fixed buddy was too rigid. The commitment should be to the streak and the challenge, not to a fixed person. Keep the Shield mechanic.</p>
+        <div class="fix-src">TP01, TP02, TY11, TY10 &mdash; 4 of 11</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Add a benefit explanation to each card</div>
+        <p>Youth want to know what happens if they do the challenge. A one-line outcome on each card closes the gap.</p>
+        <div class="fix-src">TY02, TY08 &mdash; raised independently</div>
+      </div>
+    </div>
+
+    <div class="rec-dark">
+      <div class="rec-label-dark">Recommendation</div>
+      <p>Fix the four must-fix items, particularly the QR mechanic. Then run a 14-day pilot with at least two youth pairs from different school contexts. C2 is the concept with the strongest youth appetite. The pilot should stress-test sustainability, not just initial engagement.</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════ C3 ASSESSMENT ═══════════════════════════ -->
+  <div class="concept-block c3-block">
+    <div class="concept-heading">
+      <div class="c-badge">C3</div>
+      <div class="c-title-block">
+        <h3>We Open Up</h3>
+        <div class="c-sub">Family conversation card game &mdash; Bond &middot; Sleep &middot; Screen &middot; Trust is the condition</div>
+      </div>
+    </div>
+
+    <div class="cluster-label">Success metric results</div>
+    <div class="verdict-grid-dark">
+      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
+        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+        <div class="verdict-metric-dark">Both sides understand how to play without a facilitator</div>
+        <p>Swap and Spark confused almost every participant. TP02 needed researcher intervention twice. No participant reached the simultaneous reveal.</p>
+        <div class="verdict-quote-dark"><span class="quote">"Very confused about what 'Swap' actually means."</span><br><span class="ev-src">TP04</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">Questions land as curious and fun, not threatening</div>
+        <p>TY01 and TP03 found them engaging. TY04 would have to lie. TY10 worried about lectures. Question set needs a lighter entry tier.</p>
+        <div class="verdict-quote-dark"><span class="quote">"If I played this with my parents, most answers I would have to lie."</span><br><span class="ev-src">TY10</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-orange);">
+        <div class="verdict-badge-dark" style="background: var(--accent-orange);">Partial</div>
+        <div class="verdict-metric-dark">At least one moment of genuine surprise or laughter</div>
+        <p>TP03 laughed mimicking his son. TP01 smiled throughout. But the designed moment of surprise &mdash; the simultaneous reveal &mdash; was not reached in any session.</p>
+        <div class="verdict-quote-dark"><span class="quote">"Harmless looking segway to deeper conversations."</span><br><span class="ev-src">TP03</span></div>
+      </div>
+      <div class="verdict-dark" style="--verdict-color: var(--accent-coral);">
+        <div class="verdict-badge-dark" style="background: var(--accent-coral);">Not Met</div>
+        <div class="verdict-metric-dark">Either side reaches for it again without being told to</div>
+        <p>No participant described a natural trigger. TP06: his son would not start it. TP11: parent drives by default. Nothing in the environment signals "now is the time."</p>
+        <div class="verdict-quote-dark"><span class="quote">"If I don't start it, nobody will."</span><br><span class="ev-src">TP06</span></div>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Behavioural frameworks</div>
+    <div class="framework-grid">
+      <div class="framework-col">
+        <div class="fw-title">EAST</div>
+        <div class="fw-item" style="--fw-color: var(--accent-coral);">
+          <div class="fw-label">Easy &mdash; Mechanic clarity is the blocker</div>
+          <p>Question cards were easy. Swap and Spark were not. TP10 found a design flaw: Spark question doesn't link to its category. Must be self-explanatory on card.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Attractive &mdash; Conditional on family type</div>
+          <p>TP06, TP03, TP12 found it immediately attractive (felt a real gap). TP10 and TP07 did not (gap didn't exist). Attractiveness reflects the family, not the design.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Social &mdash; Right mechanic, wrong entry point</div>
+          <p>Swap is the right idea. But social dynamic depends on a baseline of trust not all families had. Where trust was lower, questions felt threatening.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Timely &mdash; Trust is the condition, not time of day</div>
+          <p>Needs low-pressure timing. Weekends or holidays. Weekday evenings with homework pending will not work.</p>
+        </div>
+      </div>
+      <div class="framework-col">
+        <div class="fw-title">B=MAP</div>
+        <div class="fw-item" style="--fw-color: var(--accent-orange);">
+          <div class="fw-label">Motivation &mdash; High where it fits, absent where it doesn't</div>
+          <p>TP06, TP03, TP12 recognised the problem. TP10 rated 1/7 (communication already working). Motivation is binary &mdash; depends on whether the family has the gap.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-coral);">
+          <div class="fw-label">Ability &mdash; Mechanic confusion + trust gap</div>
+          <p>Two ability gaps: mechanic comprehension (Swap/Spark not understood) and trust (TY04 and TY10 felt unsafe answering). Both must be in place.</p>
+        </div>
+        <div class="fw-item" style="--fw-color: var(--accent-coral);">
+          <div class="fw-label">Prompt &mdash; Entirely absent</div>
+          <p>Unlike C1 (on the wall) or C2 (a friend texts), C3 sits in a drawer. Neither side has a natural reason to go first. Needs a low-stakes trigger built in.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Kano classification</div>
+    <div class="kano-grid">
+      <div class="kano-col must">
+        <div class="kano-header">Must-haves</div>
+        <ul>
+          <li>On-card mechanic guide for Swap and Spark</li>
+          <li>Fix Spark card link to its category</li>
+          <li>Level 1 starter set &mdash; light questions first</li>
+          <li>A built-in low-stakes trigger for starting</li>
+        </ul>
+      </div>
+      <div class="kano-col perf">
+        <div class="kano-header">Performance</div>
+        <ul>
+          <li>Visible question depth tiers on each card</li>
+          <li>More cards for replay value</li>
+          <li>Physical components only &mdash; no digital version needed</li>
+          <li>Lighter physical activities to avoid conversation fatigue</li>
+        </ul>
+      </div>
+      <div class="kano-col delight">
+        <div class="kano-header">Delighters</div>
+        <ul>
+          <li>Youth asking parents questions (TY01 &mdash; 7/7)</li>
+          <li>TP03 laughed mimicking his son &mdash; felt playful not clinical</li>
+          <li>TP12: "This is something more interesting" &mdash; 7/7</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cluster-label" style="margin-top:32px;">Priority fixes before pilot</div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark pilot">Physical Pilot First</span>
+      <div>
+        <div class="fix-title-dark">Run a physical session before changing the Swap mechanic</div>
+        <p>The simultaneous reveal was never reached online. Swap depends on both people placing cards face-down and revealing together. This cannot be simulated on screen.</p>
+        <div class="fix-src">Observation &mdash; all sessions</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Add a Level 1 starter set of lighter questions</div>
+        <p>TP10 described current questions as "level 2 to 3." A Level 1 set of light, observable, non-emotional questions would let families build comfort first.</p>
+        <div class="fix-src">TP10, TY04, TY10, TY11 &mdash; 4 of 11</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Build in a low-stakes trigger that makes starting feel incidental</div>
+        <p>A single card left on the dinner table as an open invitation, a "question of the week" format, or a card in a visible place that signals "whenever."</p>
+        <div class="fix-src">TP06, TP03, TY06, TP11 &mdash; multiple sessions</div>
+      </div>
+    </div>
+    <div class="fix-dark">
+      <span class="fix-tag-dark must">Must Fix</span>
+      <div>
+        <div class="fix-title-dark">Fix the Spark card link to its category card</div>
+        <p>The Spark follow-up question does not relate to the category just played. The flow breaks &mdash; follow-up lands as random rather than deepening.</p>
+        <div class="fix-src">TP10 &mdash; caught independently</div>
+      </div>
+    </div>
+
+    <div class="rec-dark">
+      <div class="rec-label-dark">Recommendation</div>
+      <p>Prioritise a physical pilot for C3 above the other two concepts. C1 and C2 have clearer validation from the online format. C3 has the most conditional results and the most to gain from a physical test. Run with 2&ndash;3 families where parents describe a shift in connection with their secondary school child. Observe across at least two sessions.</p>
+    </div>
+  </div>
+
 </div>
 
 <!-- ════ SCRIPTS ════ -->
