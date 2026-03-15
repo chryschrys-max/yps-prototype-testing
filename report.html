@@ -956,6 +956,76 @@
     .detail-row { grid-template-columns: 1fr; }
   }
 
+  /* ── Tools Used section ── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px; margin-bottom: 32px;
+  }
+  .tool-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .tool-card:hover { border-color: rgba(255,255,255,0.15); }
+  .tool-card-top {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .tool-card-left {
+    padding: 24px 28px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .tool-card-right {
+    padding: 24px 28px;
+    background: rgba(255,255,255,0.01);
+  }
+  .tool-name {
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--text-primary); margin: 0 0 4px;
+  }
+  .tool-full-name {
+    font-size: 0.78rem; color: var(--text-muted);
+    margin: 0 0 14px; font-weight: 400;
+  }
+  .tool-desc {
+    font-size: 0.9rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300; margin: 0;
+  }
+  .tool-why-label {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-teal); margin: 0 0 10px;
+  }
+  .tool-why {
+    font-size: 0.9rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300; margin: 0;
+  }
+  .tool-used-in {
+    padding: 14px 28px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex; flex-wrap: wrap; gap: 8px;
+    align-items: center;
+  }
+  .tool-used-label {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--text-muted); margin-right: 4px;
+  }
+  .tool-used-tag {
+    font-size: 0.72rem; font-weight: 500;
+    padding: 3px 10px; border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .tool-card-top { grid-template-columns: 1fr; }
+    .tool-card-right { border-top: 1px solid rgba(255,255,255,0.05); }
+    .tool-card-left { border-right: none; }
+  }
+
   /* ══════════════════════════════════════
      DATA VISUALIZATION STYLES
      ══════════════════════════════════════ */
@@ -1504,6 +1574,13 @@
       <button class="nav-item" data-section="recommendations" data-scroll="rec-decision">Decision table</button>
       <button class="nav-item" data-section="recommendations" data-scroll="rec-directions">New directions</button>
     </div>
+  </div>
+
+  <div class="nav-group">
+    <button class="nav-item" data-section="tools">
+      <span class="nav-dot" style="background: rgba(255,255,255,0.35);"></span>
+      Tools Used
+    </button>
   </div>
 
   <div class="sidebar-footer">
@@ -3618,6 +3695,217 @@
       </div>
 
     </div>
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════
+     SECTION: TOOLS USED
+     ════════════════════════════════════════ -->
+<div class="section" id="tools" role="region" aria-label="Tools Used">
+
+  <div class="section-head">
+    <div class="section-eyebrow">Reference</div>
+    <h2>Tools and Frameworks Used</h2>
+    <p>Every framework in this report was chosen for a specific reason. We did not apply them because they are standard practice. We applied them because each one answers a question that the others cannot. This page explains what each tool does, why we used it, and where it appears in the report.</p>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- 1. 7-point Likert Scale -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">7-Point Likert Scale</div>
+          <div class="tool-full-name">Quantitative self-report rating</div>
+          <div class="tool-desc">Each participant rated every concept they saw on a 1-to-7 scale across five dimensions: overall experience, likelihood of use, ease of understanding, perceived pressure or control, and fit with daily routines. The scale gives a directional number that can be compared across concepts and participants.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">Qualitative feedback tells you what people think. A rating tells you how strongly they feel about it. We needed both. The Likert scale gave us a way to spot outliers quickly (TP10 rating 1/7 on C1 while TP12 rated 7/7) and to compare concepts side by side. However, we also found that ratings did not always match what participants said, which is itself useful information. At least 4 of 16 participants gave scores that contradicted their verbal feedback. That is why we treat ratings as directional signals, not conclusions.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 1: Evidence</span>
+        <span class="tool-used-tag">Step 3: Assessment</span>
+      </div>
+    </div>
+
+    <!-- 2. Success Metrics -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Pre-Set Success Metrics</div>
+          <div class="tool-full-name">Concept-level pass/fail criteria</div>
+          <div class="tool-desc">Before testing began, we defined 3 to 4 success metrics per concept. These were specific, observable outcomes: "Youth chooses magnets that reflect what they would actually do" or "Proof step does not break the streak." After testing, each metric was scored as Met, Partial, or Not Met based on what participants actually did and said.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">Setting success criteria before seeing results prevents the team from moving the goalposts after the fact. It forces clarity about what "working" actually means for each concept. Without pre-set metrics, it is easy to rationalise mixed results as positive because something landed well. With them, you know exactly what you were looking for and whether you found it. This is especially important when the client asks "will it work?" The answer is not a feeling. It is a checklist that was written before the data came in.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 3: Assessment</span>
+      </div>
+    </div>
+
+    <!-- 3. EAST -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">EAST</div>
+          <div class="tool-full-name">Easy, Attractive, Social, Timely</div>
+          <div class="tool-desc">A behavioural science framework developed by the UK Behavioural Insights Team. It evaluates whether an intervention is Easy to do, Attractive to engage with, Social in nature (uses peer or group dynamics), and Timely in when it reaches people. Each concept is scored against all four dimensions.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">EAST answers the question: "Even if people want to use this, will they actually do it?" A concept can be desirable and still fail because it is too hard to start, not appealing enough to try, isolating instead of social, or delivered at the wrong moment. EAST catches those friction points. For example, C2 scored well on Attractive and Social but poorly on Easy because the QR proof mechanic had too many steps. Without EAST, we might have said "youth like it" and missed that the proof step would kill it in practice.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 3: Assessment (all concepts)</span>
+      </div>
+    </div>
+
+    <!-- 4. B=MAP -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">B=MAP</div>
+          <div class="tool-full-name">Behaviour = Motivation &times; Ability &times; Prompt</div>
+          <div class="tool-desc">From BJ Fogg's Behavior Model. A behaviour happens when three things come together at the same moment: the person is motivated enough, they have the ability to do it, and something prompts them to act. If any one of the three is missing, the behaviour does not happen, regardless of how strong the other two are.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">B=MAP tells you exactly where a concept breaks. Is the problem that youth do not want to do it (motivation)? That they want to but cannot figure out how (ability)? Or that nothing reminds them to start (prompt)? Each failure point requires a different fix. C1's prompt was its strongest feature (a physical board on the fridge is always visible), but its motivation was present for only a subset of families. C3 had motivation from parents but zero prompt: nothing makes either side pick up the cards. Knowing which component fails tells the design team where to focus, instead of redesigning everything.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 3: Assessment (all concepts)</span>
+      </div>
+    </div>
+
+    <!-- 5. Kano Model -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Kano Model</div>
+          <div class="tool-full-name">Must-have / Performance / Delighter classification</div>
+          <div class="tool-desc">A product design framework that sorts features into three categories. Must-haves are features that people expect and notice only when they are missing (like text labels on icons). Performance features improve satisfaction the more you invest in them (like the number of challenge decks). Delighters are unexpected features that create strong positive reactions (like the feelings magnets doubling as a communication tool).</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">Kano answers the question: "Where should we spend our limited budget?" Not all features are equal. Fixing a must-have (text labels on C1's emotion icons) removes a barrier. Improving a performance feature (adding more challenge decks to C2) increases engagement. Building a delighter (feelings magnets as communication) creates advocacy. If you spend resources polishing a delighter while a must-have is broken, the concept still fails. Kano prevents that by making the priority order visible.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 3: Assessment (all concepts)</span>
+      </div>
+    </div>
+
+    <!-- 6. Transtheoretical Model -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Transtheoretical Model (TTM)</div>
+          <div class="tool-full-name">Stages of Change: Precontemplation, Contemplation, Preparation, Action, Maintenance</div>
+          <div class="tool-desc">A behaviour change model that describes five stages people move through when changing a habit. Precontemplation means they are not yet thinking about change. Contemplation means they are aware of the problem but not acting. Preparation means they are planning to act. Action means they are making the change. Maintenance means they are sustaining it. People at different stages respond differently to the same intervention.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">TTM explains why the same concept got a 7/7 from one participant and a 1/7 from another. TP12 was at Preparation: actively looking for a solution and ready to act. TP10 was at Maintenance: already had a working routine and found every concept redundant. Neither reaction was wrong. They were just at different stages. Without TTM, those contradictory scores look like the concept is inconsistent. With TTM, they make complete sense. This also means that targeting matters as much as design: offering the wrong concept at the wrong stage will not land regardless of quality.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 2: Synthesis (Cross-concept 5)</span>
+      </div>
+    </div>
+
+    <!-- 7. Self-Determination Theory -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Self-Determination Theory (SDT)</div>
+          <div class="tool-full-name">Autonomy, Competence, Relatedness</div>
+          <div class="tool-desc">A motivation theory that identifies three psychological needs which, when met, produce internal motivation that sustains over time. Autonomy means feeling that you chose this, not that someone imposed it. Competence means feeling capable of doing it. Relatedness means feeling connected to others through the behaviour. When all three are present, motivation tends to persist even after external support is removed.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">The sustainability question kept coming up: "Will youth still do this after the novelty fades?" SDT answers that directly. Behaviour held up by external structure (a board on the wall, a streak counter, a parent initiating a game) tends to fade when that structure steps back. What keeps behaviour going is internal motivation built on autonomy, competence, and relatedness. SDT helped explain why C2's motivation held without adult involvement (youth chose their own decks, felt competent, and connected to a buddy) while C3's motivation split along role lines (parents felt the relatedness pull but youth did not experience autonomy in starting the game).</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 2: Synthesis (Cross-concept)</span>
+        <span class="tool-used-tag">Step 3: Assessment (B=MAP Motivation rows)</span>
+      </div>
+    </div>
+
+    <!-- 8. Keep / Fix / Drop -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Keep / Fix / Drop</div>
+          <div class="tool-full-name">Design action classification</div>
+          <div class="tool-desc">A simple sorting tool that classifies every finding into one of three actions. Keep means the feature works as designed and should be protected in the next iteration. Fix means the feature has value but needs changes before it is usable. Drop means the feature actively harms the experience and should be removed.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">Research produces a lot of findings. Without a clear action label, teams tend to treat everything as "interesting" and either change too much or not enough. Keep/Fix/Drop forces a decision on every pattern: is this something to protect, something to redesign, or something to remove? It makes the design brief for the next iteration concrete. For this report, 35% of design elements were Keep, 61% were Fix, and 4% were Drop. That tells the team that most of the design logic is sound but the execution needs targeted work.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 2: Synthesis (all concepts)</span>
+        <span class="tool-used-tag">Step 3: Assessment (fix priorities)</span>
+      </div>
+    </div>
+
+    <!-- 9. DVF -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">DVF Scoring</div>
+          <div class="tool-full-name">Desirability, Viability, Feasibility</div>
+          <div class="tool-desc">A concept selection framework that scores ideas against three lenses. Desirability asks whether people actually want it. Viability asks whether the organisation can sustain it (budget, channels, staffing). Feasibility asks whether it can be built and delivered within the constraints. An idea needs to pass all three to move forward.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">DVF was used before this report, during concept selection. The 25 ideas from co-creation were scored against DVF alongside the north star, design principles, and design constraints. Only the ideas that passed all four filters were brought forward for prototyping. This matters for context: the three concepts tested in this report were not arbitrary picks. They were the survivors of a structured selection process that considered whether people want it, whether HPB can run it, and whether it can reach enough people within the project's constraints (no standalone apps, existing channels, usable at home).</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Pre-testing concept selection</span>
+        <span class="tool-used-tag">Step 4: Recommendations (context)</span>
+      </div>
+    </div>
+
+    <!-- 10. Pattern Strength -->
+    <div class="tool-card">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="tool-name">Pattern Strength Count</div>
+          <div class="tool-full-name">Independent participant convergence</div>
+          <div class="tool-desc">For every pattern identified in the synthesis, we counted how many participants independently raised the same observation without being prompted. This is not a statistical measure. It is a convergence signal: when multiple people who have never met each other describe the same experience, that pattern is more likely to reflect something real than one person's preference.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why we used it</div>
+          <div class="tool-why">Qualitative research is sometimes dismissed as "just opinions." Pattern strength turns individual observations into evidence. When 5 out of 11 participants independently flag sustainability as a concern for C1, that is not one person's worry. It is a signal. We treat 4 or more participants as a strong signal and 2 or fewer as a hypothesis worth watching. This gives the client a way to weigh findings without needing a statistically significant sample, which is not the purpose of qualitative research in the first place.</div>
+        </div>
+      </div>
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Step 2: Synthesis (pattern charts)</span>
+      </div>
+    </div>
+
   </div>
 
 </div>
