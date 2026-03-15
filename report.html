@@ -1038,6 +1038,56 @@
     border-top: 1px solid rgba(255,255,255,0.06);
   }
 
+  /* ── Stickiness rationale ── */
+  .sticky-section {
+    margin: 48px 0 0;
+    padding: 40px 36px 36px;
+    background: rgba(255,255,255,0.015);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+  }
+  .sticky-section .cluster-label { margin-top: 0; }
+  .sticky-intro {
+    font-size: 0.92rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.7; margin-bottom: 28px;
+  }
+  .sticky-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .sticky-card {
+    padding: 22px 24px;
+    background: rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px;
+  }
+  .sticky-card-framework {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: 8px;
+  }
+  .sticky-card h4 {
+    font-size: 0.95rem; font-weight: 600;
+    color: var(--text-primary); margin: 0 0 8px;
+    line-height: 1.4;
+  }
+  .sticky-card p {
+    font-size: 0.85rem; color: var(--text-secondary);
+    font-weight: 300; line-height: 1.65; margin: 0 0 10px;
+  }
+  .sticky-card p:last-child { margin-bottom: 0; }
+  .sticky-quote {
+    font-size: 0.8rem; color: var(--text-muted);
+    font-style: italic; padding-left: 12px;
+    border-left: 2px solid rgba(255,255,255,0.08);
+    margin: 10px 0 0;
+  }
+  .sticky-card.full-width { grid-column: 1 / -1; }
+  @media (max-width: 768px) {
+    .sticky-grid { grid-template-columns: 1fr; }
+    .sticky-section { padding: 28px 20px 24px; }
+  }
+
   .direction-card {
     padding: 20px 24px; margin-bottom: 16px;
     background: rgba(255,255,255,0.02);
@@ -3822,10 +3872,48 @@
     </div>
   </div>
 
+  <!-- Stickiness rationale -->
+  <div class="sticky-section">
+    <div class="cluster-label">Why it sticks (or doesn't)</div>
+    <p class="sticky-intro">The most common question from stakeholders is: "What happens after day 2?" The behavioural frameworks we used throughout this study give a clear answer. Stickiness is not about motivation. It is about whether the concept's mechanics align with what behavioural science tells us sustains action over time. Here are the four patterns that emerged from validation, each grounded in the frameworks.</p>
+
+    <div class="sticky-grid">
+
+      <div class="sticky-card">
+        <div class="sticky-card-framework">B=MAP &middot; Social Motivation + SDT &middot; Relatedness</div>
+        <h4>Peer accountability beats willpower</h4>
+        <p>Fogg's B=MAP model says behaviour happens when motivation, ability, and a prompt converge at the same moment. In C2, the buddy is all three: the social bond provides motivation, the shared challenge keeps ability high, and the peer nudge is the prompt. Self-Determination Theory explains why this works longer term. Relatedness, the need to feel connected to others, is one of three innate psychological needs. When the habit is tied to a relationship, dropping the habit means dropping the person. That is why C2's streak mechanic held and C1's solo board did not.</p>
+        <div class="sticky-quote">TY06: "It's kind of like Snapchat or TikTok streaks. You don't want to break the streak."</div>
+      </div>
+
+      <div class="sticky-card">
+        <div class="sticky-card-framework">B=MAP &middot; Prompt + EAST &middot; Easy</div>
+        <h4>Physical cues only work in context</h4>
+        <p>A prompt that is not in the right place at the right time does not fire. EAST says the first condition for behaviour change is making it easy: reduce friction, remove steps, put it in the path. B=MAP says the prompt must arrive when motivation and ability are both present. C1's fridge magnet works for families who gather in the kitchen before bed. It fails when the behaviour happens in the bedroom. The placement determines whether the concept sustains or fades.</p>
+        <div class="sticky-quote">TY06: "If it was placed beside my bed I'd probably use it. But if it was on the fridge I'd probably forget."</div>
+      </div>
+
+      <div class="sticky-card">
+        <div class="sticky-card-framework">SDT &middot; Autonomy + TTM &middot; Action stage</div>
+        <h4>Identity framing outlasts health framing</h4>
+        <p>SDT says people sustain behaviour when it feels self-chosen, not imposed. TTM tells us that participants in the Action stage need reinforcement that connects to who they want to become, not what they should avoid. C2's "Glow Up" deck worked because it tied health behaviour to identity ("I want to look and feel good") rather than compliance ("I should eat better"). When the behaviour serves the self-image, it persists beyond novelty. When it serves an external goal, it drops as soon as the novelty fades.</p>
+        <div class="sticky-quote">TY01: "Natural glow up rather than using products." Rated 7/7. Said she would pay for it.</div>
+      </div>
+
+      <div class="sticky-card">
+        <div class="sticky-card-framework">Kano &middot; Excitement &rarr; Expected + B=MAP &middot; Motivation decay</div>
+        <h4>Without a re-engagement loop, every concept drops</h4>
+        <p>Kano's model predicts that excitement features become expected features over time. What delights on day 1 feels ordinary by day 14. B=MAP explains the mechanism: motivation naturally decays, and if the prompt does not compensate (by getting stronger or more social), the behaviour falls below the action line. C1 had no re-engagement loop. C2 had one (the buddy nudge). C3 had none (the cards sit in a drawer until someone decides to play). The difference between "drops after day 2" and "becomes a routine" is whether the concept has a built-in mechanism that pulls people back after the novelty wears off.</p>
+        <div class="sticky-quote">TP09: "Kids will do it for 1 week and won't continue." TY11: "I will keep doing it until I lose interest and forget."</div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- New directions portfolio -->
   <div id="rec-directions" class="rec-section-break">
     <div class="cluster-label">New directions worth exploring</div>
-    <p class="portfolio-intro">These directions emerged from what participants said and did during validation. Each one has at least two independent signals from different sessions. Every direction maps back to the north star, the 6 wells, the design principles, and the windows where unhealthy choices build up.</p>
+    <p class="portfolio-intro">A common concern is "there are so many card games out there" and "they will drop it after day 2." These directions are designed to answer both. They are not card games. They are behaviour change mechanics wrapped in formats youth already use: streaks, trades, social challenges, and conversation triggers. Each direction has at least two independent signals from different sessions and maps back to the north star, the 6 wells, the design principles, and the windows where unhealthy choices build up.</p>
     <p class="portfolio-intro" style="margin-top: 4px;">Click any card to see the full mapping.</p>
 
     <div class="portfolio-grid">
@@ -4179,6 +4267,51 @@
             </div>
           </div>
           <div class="portfolio-evidence">Evidence: Amanda (co-creation): "Once take back, I will go back to my sneakier behaviour." Keev (co-creation): "I cannot survive. I need stimulation." Y10: screen time fills the gap when nothing else is available. Both co-creation and validation confirmed that restriction backfires.</div>
+        </div>
+      </div>
+
+      <!-- Card 9: NEW CONCEPT - Digital Streak Layer -->
+      <div class="portfolio-card" onclick="togglePortfolioCard(this)">
+        <div class="portfolio-card-header">
+          <div class="portfolio-origin new-direction">New direction</div>
+          <div class="portfolio-card-title">Streak Mode: Digital Re-engagement Layer</div>
+          <div class="portfolio-card-subtitle">A lightweight digital companion for C2 that adds streak tracking, buddy nudges, and reminders. Not an app that replaces the cards. A layer that keeps people coming back to them.</div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-tags">
+            <span class="portfolio-tag tag-well">Exercise</span>
+            <span class="portfolio-tag tag-well">Eat</span>
+            <span class="portfolio-tag tag-well">Screen</span>
+            <span class="portfolio-tag tag-principle">Make it fit the day</span>
+            <span class="portfolio-tag tag-pillar">Confidence Loop</span>
+            <span class="portfolio-tag tag-window">Window 1: 2-6pm</span>
+            <span class="portfolio-tag tag-window">Window 2: 9pm+</span>
+          </div>
+          <p>Youth did not ask for an app. They asked for the specific mechanics that apps like Duolingo and Snapchat use: streaks, nudges, and a visible counter that makes quitting feel like losing something. Two participants independently requested this during C2 testing. This is the missing re-engagement loop that the stickiness analysis identified.</p>
+        </div>
+        <div class="expand-hint">Click to see full mapping</div>
+        <div class="portfolio-detail">
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>North star connection</h5>
+              <p>Confidence Loop. Each day the streak grows, the cost of breaking it increases. Behavioural science calls this the "endowed progress effect." Once someone has 5 days, losing them feels worse than the effort of day 6. The healthy habit becomes the default because the alternative (losing the streak) is psychologically costly.</p>
+            </div>
+            <div class="detail-block">
+              <h5>Behavioural framework</h5>
+              <p>B=MAP: the notification is the Prompt, delivered at the right moment when Ability is high (phone is already in hand). Kano: the streak counter shifts from an excitement feature to an expected feature, meaning dropping it feels like a loss, not a missed bonus. SDT Relatedness: the buddy nudge ties the streak to a relationship, not just a number.</p>
+            </div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-block">
+              <h5>How it works</h5>
+              <p>A simple web page or chat-based tracker (no app download required). Youth logs a daily check-in: "Did you do today's challenge? Yes / Shield." The streak counter updates. If a day is missed, the buddy gets a nudge: "Your partner hasn't checked in. Send a reminder?" No photo proof, no QR scan, no upload. Just a tap and a counter. Designed to solve the QR proof failure while adding the re-engagement loop that physical cards lack.</p>
+            </div>
+            <div class="detail-block">
+              <h5>What makes it different</h5>
+              <p>This is not a health app. There is no dashboard, no data visualization, no parent login. It is a streak counter with a social nudge. The entire interaction takes under 10 seconds. Youth already maintain streaks on Snapchat and Duolingo. This uses the same mechanic for a different purpose. The physical cards remain the experience. The digital layer just makes sure people come back to them.</p>
+            </div>
+          </div>
+          <div class="portfolio-evidence">Evidence: TY04: "I just want the streak, like Duolingo. I don't need to post anything." TY06: "Maybe if it could send a notification, if a notification pops up they're more likely to remember." TY06 also compared C2 to "Snapchat or TikTok streaks, you don't want to break the streak." QR proof failed across every test condition (school phone ban, privacy, friction), confirming the need for a simpler digital mechanic.</div>
         </div>
       </div>
 
