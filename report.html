@@ -18,8 +18,8 @@
     --bg-card: rgba(255,255,255,0.05);
     --bg-glass: rgba(255,255,255,0.07);
     --text-primary: #ffffff;
-    --text-secondary: rgba(255,255,255,0.82);
-    --text-muted: rgba(255,255,255,0.42);
+    --text-secondary: rgba(255,255,255,0.88);
+    --text-muted: rgba(255,255,255,0.55);
     --accent-teal: #5ee7d5;
     --accent-orange: #ffb347;
     --accent-purple: #c4a1ff;
@@ -27,7 +27,15 @@
     --accent-blue: #7cc4fa;
     --accent-coral: #ff7eb3;
     --accent-peach: #ffd1a4;
-    --border-subtle: rgba(255,255,255,0.1);
+    --border-subtle: rgba(255,255,255,0.13);
+
+    /* Status colors — SEPARATE from concept colors */
+    --status-met: #4ade80;
+    --status-partial: #fbbf24;
+    --status-not: #f87171;
+    --status-met-dim: rgba(74,222,128,0.12);
+    --status-partial-dim: rgba(251,191,36,0.12);
+    --status-not-dim: rgba(248,113,113,0.12);
     --glow-teal: rgba(94, 231, 213, 0.18);
     --glow-orange: rgba(255, 179, 71, 0.18);
     --glow-purple: rgba(196, 161, 255, 0.18);
@@ -56,6 +64,7 @@
 
   body {
     font-family: var(--font-body);
+    font-size: 16px;
     background: var(--bg-primary);
     color: var(--text-primary);
     min-height: 100vh;
@@ -323,8 +332,8 @@
     margin-bottom: 12px;
   }
   .section-head p {
-    font-size: 1rem; color: var(--text-secondary);
-    line-height: 1.75; font-weight: 300; max-width: 700px;
+    font-size: 1.05rem; color: var(--text-secondary);
+    line-height: 1.8; font-weight: 300; max-width: 720px;
   }
 
   /* ── Concept Block ── */
@@ -920,28 +929,299 @@
     color: var(--text-muted); white-space: nowrap;
   }
 
-  /* ── Placeholder sections ── */
-  .coming-soon {
-    text-align: center; padding: 120px 24px;
+  /* ══════════════════════════════════════
+     EXECUTIVE SUMMARY / BOTTOM LINE BOX
+     ══════════════════════════════════════ */
+  .bottom-line {
+    background: linear-gradient(135deg, rgba(94,231,213,0.10) 0%, rgba(124,196,250,0.08) 100%);
+    border: 1.5px solid rgba(94,231,213,0.25);
+    border-radius: var(--radius-md);
+    padding: 28px 32px;
+    margin-bottom: 40px;
   }
-  .coming-soon h2 {
+  .bottom-line-label {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .bottom-line-label::before {
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent-teal);
+  }
+  .bottom-line p {
+    font-size: 1.08rem; color: var(--text-primary);
+    line-height: 1.8; font-weight: 400;
+  }
+  .bottom-line strong { color: var(--accent-teal); font-weight: 600; }
+
+  /* ══════════════════════════════════════
+     STEP PROGRESS INDICATOR
+     ══════════════════════════════════════ */
+  .step-indicator {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 8px 18px;
+    background: var(--bg-glass);
+    border: 1px solid var(--border-subtle);
+    border-radius: 50px;
+    font-size: 0.82rem; font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .step-indicator .si-current {
+    color: var(--text-primary); font-weight: 700;
+  }
+  .step-indicator .si-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-muted);
+  }
+  .step-indicator .si-dot.active {
+    background: var(--accent-teal);
+    width: 8px; height: 8px;
+  }
+
+  /* ══════════════════════════════════════
+     COLLAPSIBLE EVIDENCE CARDS
+     ══════════════════════════════════════ */
+  .ev-card { cursor: pointer; }
+  .ev-card .ev-body { overflow: hidden; }
+  .ev-card.collapsed .ev-body p,
+  .ev-card.collapsed .ev-quote { display: none; }
+  .ev-card.collapsed .ev-tags { margin-top: 0; }
+  .ev-card .ev-toggle {
+    font-size: 0.72rem; color: var(--text-muted);
+    font-weight: 500; text-align: right;
+    padding-top: 4px;
+  }
+  .ev-summary-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-left: 4px solid var(--accent-teal);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .c2-block .ev-summary-box { border-left-color: var(--accent-orange); }
+  .c3-block .ev-summary-box { border-left-color: var(--accent-purple); }
+  .ev-summary-box .ev-sum-title {
     font-family: var(--font-display);
-    font-size: 1.6rem; font-weight: 700; margin-bottom: 12px;
+    font-size: 0.88rem; font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-primary);
   }
-  .coming-soon p {
-    font-size: 0.95rem; color: var(--text-secondary); font-weight: 300;
+  .ev-summary-box ul {
+    list-style: none; padding: 0;
+  }
+  .ev-summary-box li {
+    font-size: 1rem; color: var(--text-secondary);
+    line-height: 1.7; padding: 5px 0 5px 16px;
+    position: relative;
+  }
+  .ev-summary-box li::before {
+    content: ''; position: absolute; left: 0; top: 14px;
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--text-muted);
+  }
+  .ev-expand-btn {
+    background: var(--bg-glass); border: 1px solid var(--border-subtle);
+    border-radius: 8px; padding: 10px 20px;
+    font-size: 0.88rem; font-weight: 500; color: var(--text-secondary);
+    cursor: pointer; transition: all 0.3s; margin-bottom: 12px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .ev-expand-btn:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+
+  /* ══════════════════════════════════════
+     BETTER QUOTE STYLING
+     ══════════════════════════════════════ */
+  .ev-quote {
+    margin-bottom: 10px;
+    padding: 8px 0 8px 16px;
+    border-left: 3px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.03);
+    border-radius: 0 6px 6px 0;
+  }
+  .c1-block .ev-quote { border-left-color: rgba(94,231,213,0.4); }
+  .c2-block .ev-quote { border-left-color: rgba(255,179,71,0.4); }
+  .c3-block .ev-quote { border-left-color: rgba(196,161,255,0.4); }
+  .ev-quote .quote {
+    font-style: italic; color: var(--text-primary);
+    font-size: 1rem; font-weight: 400;
+  }
+
+  /* ══════════════════════════════════════
+     BIGGER FIX TAGS + REC BOXES
+     ══════════════════════════════════════ */
+  .fix-tag-dark {
+    font-size: 0.72rem; font-weight: 800;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 4px;
+    white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+  }
+  .fix-title-dark {
+    font-size: 1rem; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .fix-dark p {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
+  }
+  .fix-src {
+    font-size: 0.78rem; color: var(--text-muted);
+    font-style: italic; margin-top: 6px;
+  }
+
+  .rec-dark {
+    margin-top: 24px;
+    padding: 24px 28px;
+    background: rgba(94,231,213,0.08);
+    border: 1.5px solid rgba(94,231,213,0.2);
+    border-left: 5px solid var(--accent-teal);
+    border-radius: var(--radius-sm);
+  }
+  .rec-label-dark {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--accent-teal); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rec-label-dark::before {
+    content: '\2192'; font-size: 1rem;
+  }
+  .rec-dark p {
+    font-size: 1rem; color: var(--text-secondary);
+    line-height: 1.75; font-weight: 400;
+  }
+
+  /* ══════════════════════════════════════
+     BIGGER CHARTS
+     ══════════════════════════════════════ */
+  .chart-canvas-wrap {
+    position: relative;
+    height: 320px;
+  }
+
+  /* ══════════════════════════════════════
+     BUMP REMAINING SMALL TEXT
+     ══════════════════════════════════════ */
+  .ev-metric {
+    display: flex; align-items: baseline; gap: 10px;
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+  }
+  .ev-metric-num {
+    font-family: var(--font-display);
+    font-size: 0.82rem; font-weight: 700;
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+  .ev-body p {
+    font-size: 1rem; color: var(--text-secondary);
+    line-height: 1.7; font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .ev-tag {
+    font-size: 0.75rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 10px;
+    letter-spacing: 0.03em;
+  }
+  .fw-label {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--fw-color, var(--text-muted));
+    margin-bottom: 6px;
+  }
+  .fw-item p {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
+  }
+  .kano-header {
+    font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .kano-col li {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
+    padding: 5px 0 5px 16px;
+    position: relative;
+  }
+  .verdict-metric-dark {
+    font-size: 1rem; font-weight: 600;
+    line-height: 1.45; margin-bottom: 6px;
+  }
+  .verdict-dark p {
+    font-size: 0.95rem; color: var(--text-secondary);
+    line-height: 1.65; font-weight: 300;
+  }
+  .chart-box .chart-title {
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .chart-box .chart-sub {
+    font-size: 0.85rem; color: var(--text-muted);
+    font-style: italic; margin-bottom: 16px;
+  }
+  .sc-verdict-legend span {
+    font-size: 0.78rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .sentiment-legend span {
+    font-size: 0.85rem; color: var(--text-muted);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .sentiment-bar {
+    display: flex; height: 18px; border-radius: 9px;
+    overflow: hidden; gap: 2px;
+  }
+  .pattern-num {
+    font-family: var(--font-display);
+    font-size: 0.85rem; font-weight: 700;
+    color: var(--text-muted);
+    padding-top: 2px; flex-shrink: 0; width: 28px;
+  }
+  .pattern-who {
+    font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .cluster-label {
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 12px;
   }
 
   /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .sidebar { display: none; }
+    .main-content { margin-left: 0; }
+    .section { padding: 32px 20px 60px; }
+  }
   @media (max-width: 768px) {
-    .nav-bar { padding: 0 16px; overflow-x: auto; }
-    .nav-tab { font-size: 0.72rem; padding: 14px 10px; }
-    .section { padding: 80px 16px 60px; }
+    .section { padding: 24px 16px 60px; }
     .insight-row { grid-template-columns: 1fr; }
     .insight-cell:first-child { border-right: none; border-bottom: 1px solid var(--border-subtle); }
     .cross-grid { grid-template-columns: 1fr; }
     .flow-bar { flex-direction: column; }
     .flow-step:not(:last-child)::after { display: none; }
+    .chart-row { grid-template-columns: 1fr; }
+    .verdict-grid-dark { grid-template-columns: 1fr; }
+    .framework-grid { grid-template-columns: 1fr; }
+    .kano-grid { grid-template-columns: 1fr; }
+    .scorecard-strip { grid-template-columns: 1fr; }
+    .ev-metrics-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -1025,6 +1305,12 @@
     <h1 class="hero-title">Validation Testing Report</h1>
   </div>
 
+  <!-- Bottom line / executive summary -->
+  <div class="bottom-line">
+    <div class="bottom-line-label">Bottom line</div>
+    <p>We tested three health behaviour concepts with 21 young people and parents. <strong>Concept 2 (Hook U Up)</strong> &mdash; a peer challenge card deck &mdash; had the strongest youth response and is closest to pilot-ready after fixing its proof mechanic. <strong>Concept 1 (Bedtime Bundle)</strong> works for families where sleep structure is slipping, but needs a re-engagement loop. <strong>Concept 3 (We Open Up)</strong> needs a physical pilot before any design decisions &mdash; the core mechanic could not be tested online.</p>
+  </div>
+
   <!-- Intro paragraph -->
   <div class="intro-block">
     <p>We tested three early-stage concepts with 21 participants &mdash; 12 parents and 9 youth &mdash; over multiple online sessions in March 2026. Each concept tackles a different moment in a young person's day: bedtime, after-school time with friends, and family conversation at home. None of them were finished products. They were prototypes, built just enough to put in front of real people and find out what holds up and what falls apart.</p>
@@ -1076,6 +1362,12 @@
      SECTION: SYNTHESIS
      ════════════════════════════════════════ -->
 <div class="section" id="synthesis">
+
+  <div class="step-indicator">
+    <span class="si-dot"></span> <span>Participant Data</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 2: Key Findings</span>
+    <span class="si-dot"></span> <span>Recommendations</span>
+  </div>
 
   <div class="section-head">
     <div class="section-eyebrow">Step 2 &middot; Synthesis</div>
@@ -1556,6 +1848,12 @@
      ════════════════════════════════════════ -->
 <div class="section" id="evidence">
 
+  <div class="step-indicator">
+    <span class="si-dot active"></span> <span class="si-current">Step 1: Participant Data</span>
+    <span class="si-dot"></span> <span>Key Findings</span>
+    <span class="si-dot"></span> <span>Recommendations</span>
+  </div>
+
   <div class="section-head">
     <div class="section-eyebrow">Step 1 &middot; Evidence</div>
     <h2>What Participants Said and Did</h2>
@@ -1612,8 +1910,20 @@
       <div class="ev-metric"><span class="ev-metric-num">04</span>Both youth and parent can see themselves using it beyond the first week</div>
     </div>
 
-    <div class="cluster-label">Participant observations</div>
+    <div class="ev-summary-box">
+      <div class="ev-sum-title">Key findings at a glance</div>
+      <ul>
+        <li>Ratings polarised: TP12 gave 7/7 (sleep tension at home), TP10 gave 1/7 (daughter already managed)</li>
+        <li>Physical board as a persistent cue was the strongest design feature &mdash; praised by 5 participants independently</li>
+        <li>Parent column read as surveillance, not shared commitment &mdash; biggest design gap</li>
+        <li>Sustainability concern raised by every age group &mdash; no one believed it would last beyond 2 weeks</li>
+      </ul>
+    </div>
 
+    <div class="cluster-label">Participant observations</div>
+    <button class="ev-expand-btn" onclick="toggleEvCards(this)">Show all 11 participant cards &#9662;</button>
+
+    <div class="ev-cards-group" style="display:none;">
     <div class="ev-card">
       <div class="ev-pid" style="color:var(--c1)">TP01 Sureena</div>
       <div class="ev-body">
@@ -1715,6 +2025,7 @@
       </div>
     </div>
 
+    </div><!-- /ev-cards-group -->
     <div class="ev-note">Magnet interaction could not be replicated on screen. Several participants were unable to engage with the board in the online format.</div>
   </div>
 
@@ -1752,8 +2063,20 @@
       <div class="ev-metric"><span class="ev-metric-num">04</span>Both partners can see completing half the 14 days without constant reminders</div>
     </div>
 
-    <div class="cluster-label">Participant observations</div>
+    <div class="ev-summary-box">
+      <div class="ev-sum-title">Key findings at a glance</div>
+      <ul>
+        <li>Youth ranked C2 first in 4 of 5 sessions &mdash; strongest positive reaction of all three concepts</li>
+        <li>TY04 asked "Can I buy this?" mid-session &mdash; no prompting. TY01 would pay for it.</li>
+        <li>QR proof mechanic is the single biggest blocker &mdash; too many steps, blocked by school phone ban, privacy concerns</li>
+        <li>"Bulk Up" deck name puts off female participants &mdash; only deck using effort language instead of aspiration</li>
+      </ul>
+    </div>
 
+    <div class="cluster-label">Participant observations</div>
+    <button class="ev-expand-btn" onclick="toggleEvCards(this)">Show all 13 participant cards &#9662;</button>
+
+    <div class="ev-cards-group" style="display:none;">
     <div class="ev-card">
       <div class="ev-pid" style="color:var(--c2)">TP01 Sureena</div>
       <div class="ev-body">
@@ -1867,6 +2190,7 @@
       </div>
     </div>
 
+    </div><!-- /ev-cards-group -->
     <div class="ev-note">QR proof mechanic was blocked by the 2026 school phone ban and could not be tested as designed. Peer accountability interaction was simulated, not observed.</div>
   </div>
 
@@ -1904,8 +2228,20 @@
       <div class="ev-metric"><span class="ev-metric-num">04</span>Either side reaches for it again without being told to</div>
     </div>
 
-    <div class="cluster-label">Participant observations</div>
+    <div class="ev-summary-box">
+      <div class="ev-sum-title">Key findings at a glance</div>
+      <ul>
+        <li>Most polarised ratings of all three concepts &mdash; TP12 and TY01 gave 7/7, TP10 gave 1/7</li>
+        <li>Swap and Spark mechanic confused almost every participant &mdash; no one reached the simultaneous reveal</li>
+        <li>Youth asking parents questions was an unexpected strength &mdash; TY01 cited it as her specific reason for 7/7</li>
+        <li>No natural trigger for starting the game &mdash; TP06: "If I don't start it, nobody will"</li>
+      </ul>
+    </div>
 
+    <div class="cluster-label">Participant observations</div>
+    <button class="ev-expand-btn" onclick="toggleEvCards(this)">Show all 12 participant cards &#9662;</button>
+
+    <div class="ev-cards-group" style="display:none;">
     <div class="ev-card">
       <div class="ev-pid" style="color:var(--c3)">TP01 Sureena</div>
       <div class="ev-body">
@@ -2010,6 +2346,7 @@
       </div>
     </div>
 
+    </div><!-- /ev-cards-group -->
     <div class="ev-note">The simultaneous reveal &mdash; the Swap mechanic's core moment &mdash; was not reached in any online session. Findings on mechanic clarity are directional only.</div>
   </div>
 
@@ -2019,6 +2356,12 @@
      SECTION: ASSESSMENT (Step 3)
      ════════════════════════════════════════ -->
 <div class="section" id="assessment">
+
+  <div class="step-indicator">
+    <span class="si-dot"></span> <span>Participant Data</span>
+    <span class="si-dot"></span> <span>Key Findings</span>
+    <span class="si-dot active"></span> <span class="si-current">Step 3: Recommendations</span>
+  </div>
 
   <div class="section-head">
     <div class="section-eyebrow">Step 3 &middot; Assessment</div>
@@ -2616,10 +2959,26 @@ document.querySelectorAll('.flow-step.clickable').forEach(step => {
 // Initialize: hide sub-navs except for active section
 navSubs.forEach(sub => { sub.style.display = 'none'; });
 
+// ── Toggle evidence card groups ──
+function toggleEvCards(btn) {
+  const group = btn.nextElementSibling;
+  if (group.style.display === 'none') {
+    group.style.display = 'block';
+    btn.innerHTML = 'Hide participant cards &#9652;';
+  } else {
+    group.style.display = 'none';
+    btn.innerHTML = btn.innerHTML.replace('Hide', 'Show').replace('&#9652;', '&#9662;');
+    // Restore original text
+    const count = group.querySelectorAll('.ev-card').length;
+    btn.innerHTML = `Show all ${count} participant cards &#9662;`;
+  }
+}
+
 // ── Chart defaults ──
-Chart.defaults.color = 'rgba(255,255,255,0.5)';
+Chart.defaults.color = 'rgba(255,255,255,0.6)';
 Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
 Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 13;
 
 // ── Evidence Charts ──
 function renderEvidenceCharts() {
@@ -2639,12 +2998,12 @@ function renderEvidenceCharts() {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { boxWidth: 12, padding: 16, font: { size: 12 } } },
+        legend: { position: 'top', labels: { boxWidth: 14, padding: 18, font: { size: 14 } } },
         tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw}/7` } }
       },
       scales: {
-        x: { ticks: { font: { size: 11 } }, grid: { display: false } },
-        y: { min: 0, max: 7, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Rating (1-7)', font: { size: 11 } } }
+        x: { ticks: { font: { size: 13 } }, grid: { display: false } },
+        y: { min: 0, max: 7, ticks: { stepSize: 1, font: { size: 13 } }, title: { display: true, text: 'Rating (1-7)', font: { size: 13 } } }
       }
     }
   });
@@ -2666,11 +3025,11 @@ function renderEvidenceCharts() {
       indexAxis: 'y',
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { boxWidth: 12, padding: 16, font: { size: 12 } } },
+        legend: { position: 'top', labels: { boxWidth: 14, padding: 18, font: { size: 14 } } },
         tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} participants` } }
       },
       scales: {
-        x: { stacked: true, max: 15, ticks: { font: { size: 11 } }, title: { display: true, text: 'Participants', font: { size: 11 } } },
+        x: { stacked: true, max: 15, ticks: { font: { size: 13 } }, title: { display: true, text: 'Participants', font: { size: 13 } } },
         y: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } }
       }
     }
@@ -2705,8 +3064,8 @@ function renderSynthesisCharts() {
       responsive: true, maintainAspectRatio: false,
       plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.raw} participants surfaced this` } } },
       scales: {
-        x: { min: 0, max: 8, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Participants who surfaced pattern', font: { size: 11 } } },
-        y: { ticks: { font: { size: 11 } }, grid: { display: false } }
+        x: { min: 0, max: 8, ticks: { stepSize: 1, font: { size: 13 } }, title: { display: true, text: 'Participants who surfaced pattern', font: { size: 13 } } },
+        y: { ticks: { font: { size: 13 } }, grid: { display: false } }
       }
     }
   });
@@ -2753,12 +3112,12 @@ function renderAssessmentCharts() {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { boxWidth: 12, padding: 14, font: { size: 12 } } },
+        legend: { position: 'top', labels: { boxWidth: 14, padding: 18, font: { size: 14 } } },
         tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw} participants` } }
       },
       scales: {
         x: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } },
-        y: { stacked: true, ticks: { stepSize: 2, font: { size: 11 } }, title: { display: true, text: 'Participants', font: { size: 11 } } }
+        y: { stacked: true, ticks: { stepSize: 2, font: { size: 13 } }, title: { display: true, text: 'Participants', font: { size: 13 } } }
       }
     }
   });
@@ -2778,11 +3137,11 @@ function renderAssessmentCharts() {
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { boxWidth: 12, padding: 14, font: { size: 12 } } }
+        legend: { position: 'top', labels: { boxWidth: 14, padding: 18, font: { size: 14 } } }
       },
       scales: {
         x: { stacked: true, ticks: { font: { size: 12 } }, grid: { display: false } },
-        y: { stacked: true, max: 4, ticks: { stepSize: 1, font: { size: 11 } }, title: { display: true, text: 'Success metrics (4 per concept)', font: { size: 11 } } }
+        y: { stacked: true, max: 4, ticks: { stepSize: 1, font: { size: 13 } }, title: { display: true, text: 'Success metrics (4 per concept)', font: { size: 13 } } }
       }
     }
   });
