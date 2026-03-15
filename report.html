@@ -1020,10 +1020,87 @@
     color: var(--text-secondary);
   }
 
+  /* TTM anchor card */
+  .tool-card.anchor {
+    border: 1px solid rgba(94,231,213,0.25);
+    background: rgba(94,231,213,0.03);
+  }
+  .tool-card.anchor:hover { border-color: rgba(94,231,213,0.4); }
+  .anchor-badge {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 4px; margin-bottom: 12px;
+    background: rgba(94,231,213,0.12); color: #5ee7d5;
+  }
+  .ttm-stages {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; margin: 20px 0 0; border-radius: 8px; overflow: hidden;
+  }
+  .ttm-stage {
+    padding: 14px 12px; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s;
+  }
+  .ttm-stage:last-child { border-right: none; }
+  .ttm-stage:hover { background: rgba(255,255,255,0.04); }
+  .ttm-stage-num {
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 4px;
+  }
+  .ttm-stage-name {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--text-primary); margin-bottom: 6px;
+  }
+  .ttm-stage-desc {
+    font-size: 0.75rem; color: var(--text-secondary);
+    line-height: 1.5; font-weight: 300;
+  }
+  .ttm-stage-example {
+    font-size: 0.72rem; color: var(--text-muted);
+    font-style: italic; margin-top: 6px; line-height: 1.4;
+  }
+  .ttm-concept-map {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 12px; margin-top: 20px;
+  }
+  .ttm-concept-fit {
+    padding: 14px 16px; border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .ttm-concept-fit h5 {
+    font-size: 0.78rem; font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .ttm-concept-fit p {
+    font-size: 0.8rem; color: var(--text-secondary);
+    line-height: 1.6; font-weight: 300; margin: 0;
+  }
+  .ttm-arrow-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin: 12px 0 0; padding: 0 8px;
+  }
+  .ttm-arrow-segment {
+    flex: 1; height: 3px; position: relative;
+  }
+  .ttm-arrow-segment::after {
+    content: ''; position: absolute; right: -5px; top: -4px;
+    border-left: 6px solid; border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+  .ttm-arrow-label {
+    font-size: 0.65rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    text-align: center; margin-top: 6px;
+  }
+
   @media (max-width: 768px) {
     .tool-card-top { grid-template-columns: 1fr; }
     .tool-card-right { border-top: 1px solid rgba(255,255,255,0.05); }
     .tool-card-left { border-right: none; }
+    .ttm-stages { grid-template-columns: 1fr; }
+    .ttm-concept-map { grid-template-columns: 1fr; }
   }
 
   /* ══════════════════════════════════════
@@ -3712,6 +3789,80 @@
 
   <div class="tools-grid">
 
+    <!-- ANCHOR: Transtheoretical Model -->
+    <div class="tool-card anchor">
+      <div class="tool-card-top">
+        <div class="tool-card-left">
+          <div class="anchor-badge">Anchor framework</div>
+          <div class="tool-name">Transtheoretical Model (TTM)</div>
+          <div class="tool-full-name">Stages of Change: Precontemplation, Contemplation, Preparation, Action, Maintenance</div>
+          <div class="tool-desc">A behaviour change model that describes five stages people move through when adopting a new habit. Not everyone is at the same starting point. Some youth have not yet thought about changing their routine. Others are already planning to act. A few are already doing it. The stage a person is at determines what kind of support will actually land, and what will feel irrelevant or even patronising. TTM was the first lens we applied to our participants. Before evaluating any concept, we needed to know where each person was standing.</div>
+        </div>
+        <div class="tool-card-right">
+          <div class="tool-why-label">Why this is the anchor</div>
+          <div class="tool-why">Every other framework in this report answers a downstream question. EAST asks "will they adopt it?" B=MAP asks "where does it break?" Kano asks "what to prioritise?" SDT asks "will it last?" But none of those questions matter if you are offering the intervention to someone who is not ready for it. TTM is the first question: where is this person right now? It determined how we read every participant's response. TP12 gave C1 a 7/7 not because C1 is a better concept, but because TP12 was at Stage 3 (Preparation), actively looking for exactly this kind of tool. TP10 gave C1 a 1/7 not because C1 is flawed, but because TP10 was at Stage 5 (Maintenance), already had a working routine, and found the concept redundant. Without TTM, those two scores look like a contradiction. With TTM, they are both correct. The concept is fine. The targeting is what matters. This is also why the research identified three transition points (P6 to Sec 1, Sec 2 to Sec 3, Sec 4 to JC) as the moments where the drift happens. Those transitions are when people move between stages, and that is when the intervention has the best chance of landing.</div>
+        </div>
+      </div>
+
+      <div class="ttm-stages">
+        <div class="ttm-stage" style="background: rgba(248,113,113,0.08);">
+          <div class="ttm-stage-num">Stage 1</div>
+          <div class="ttm-stage-name">Precontemplation</div>
+          <div class="ttm-stage-desc">Not thinking about change. Does not see a problem.</div>
+          <div class="ttm-stage-example">"I'm fine. I don't need this."</div>
+        </div>
+        <div class="ttm-stage" style="background: rgba(255,179,71,0.08);">
+          <div class="ttm-stage-num">Stage 2</div>
+          <div class="ttm-stage-name">Contemplation</div>
+          <div class="ttm-stage-desc">Aware of the problem but not yet acting on it.</div>
+          <div class="ttm-stage-example">TY08: knows she should change but exam pressure blocks action.</div>
+        </div>
+        <div class="ttm-stage" style="background: rgba(251,191,36,0.08);">
+          <div class="ttm-stage-num">Stage 3</div>
+          <div class="ttm-stage-name">Preparation</div>
+          <div class="ttm-stage-desc">Planning to act. Looking for the right tool.</div>
+          <div class="ttm-stage-example">TP12: "This is something we have been looking for a long time." (7/7)</div>
+        </div>
+        <div class="ttm-stage" style="background: rgba(94,231,213,0.08);">
+          <div class="ttm-stage-num">Stage 4</div>
+          <div class="ttm-stage-name">Action</div>
+          <div class="ttm-stage-desc">Making the change. Actively trying new behaviours.</div>
+          <div class="ttm-stage-example">TY06: gym is already part of identity. Exercise is active, sleep is not.</div>
+        </div>
+        <div class="ttm-stage" style="background: rgba(196,161,255,0.08);">
+          <div class="ttm-stage-num">Stage 5</div>
+          <div class="ttm-stage-name">Maintenance</div>
+          <div class="ttm-stage-desc">Sustaining the change. Routine is already working.</div>
+          <div class="ttm-stage-example">TP10: "Communication is already working." Concepts felt redundant. (1/7)</div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 28px 4px;">
+        <div style="font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;">Which concepts fit which stages</div>
+      </div>
+      <div class="ttm-concept-map" style="padding: 0 28px 20px;">
+        <div class="ttm-concept-fit" style="border-left: 3px solid var(--c1);">
+          <h5 style="color: var(--c1);">C1 Bedtime Bundle</h5>
+          <p>Best fit at Stages 2 to 3 (Contemplation to Preparation). The family knows sleep structure is slipping but has not found a tool yet. If they are already at Stage 5 (routine works), the board feels pointless. If they have not noticed the problem yet (Stage 1), they will not see the need.</p>
+        </div>
+        <div class="ttm-concept-fit" style="border-left: 3px solid var(--c2);">
+          <h5 style="color: var(--c2);">C2 Hook U Up</h5>
+          <p>Best fit at Stages 3 to 4 (Preparation to Action). Youth who are ready to try something and just need a structured way to start. The peer mechanic works because it converts intention into action through social accountability. Does not land at Stage 1 (no interest) or Stage 5 (already doing it).</p>
+        </div>
+        <div class="ttm-concept-fit" style="border-left: 3px solid var(--c3);">
+          <h5 style="color: var(--c3);">C3 We Open Up</h5>
+          <p>Best fit at Stages 2 to 3 (Contemplation to Preparation). The family feels the distance growing but has not found a way to talk about it. If communication is already strong (Stage 5), the game feels unnecessary. If neither side has noticed the gap (Stage 1), nobody initiates.</p>
+        </div>
+      </div>
+
+      <div class="tool-used-in">
+        <span class="tool-used-label">Used in:</span>
+        <span class="tool-used-tag">Pre-testing: participant staging</span>
+        <span class="tool-used-tag">Step 2: Synthesis (Cross-concept 5)</span>
+        <span class="tool-used-tag">Step 4: Recommendations (targeting)</span>
+      </div>
+    </div>
+
     <!-- 1. 7-point Likert Scale -->
     <div class="tool-card">
       <div class="tool-card-top">
@@ -3808,24 +3959,7 @@
       </div>
     </div>
 
-    <!-- 6. Transtheoretical Model -->
-    <div class="tool-card">
-      <div class="tool-card-top">
-        <div class="tool-card-left">
-          <div class="tool-name">Transtheoretical Model (TTM)</div>
-          <div class="tool-full-name">Stages of Change: Precontemplation, Contemplation, Preparation, Action, Maintenance</div>
-          <div class="tool-desc">A behaviour change model that describes five stages people move through when changing a habit. Precontemplation means they are not yet thinking about change. Contemplation means they are aware of the problem but not acting. Preparation means they are planning to act. Action means they are making the change. Maintenance means they are sustaining it. People at different stages respond differently to the same intervention.</div>
-        </div>
-        <div class="tool-card-right">
-          <div class="tool-why-label">Why we used it</div>
-          <div class="tool-why">TTM explains why the same concept got a 7/7 from one participant and a 1/7 from another. TP12 was at Preparation: actively looking for a solution and ready to act. TP10 was at Maintenance: already had a working routine and found every concept redundant. Neither reaction was wrong. They were just at different stages. Without TTM, those contradictory scores look like the concept is inconsistent. With TTM, they make complete sense. This also means that targeting matters as much as design: offering the wrong concept at the wrong stage will not land regardless of quality.</div>
-        </div>
-      </div>
-      <div class="tool-used-in">
-        <span class="tool-used-label">Used in:</span>
-        <span class="tool-used-tag">Step 2: Synthesis (Cross-concept 5)</span>
-      </div>
-    </div>
+    <!-- TTM moved to anchor position at top -->
 
     <!-- 7. Self-Determination Theory -->
     <div class="tool-card">
