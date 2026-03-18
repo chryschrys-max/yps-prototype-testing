@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HPB x YPS — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #faf9f7;
+  --bg-dark: #0c0e2b;
+  --text: #1a1a2e;
+  --text-light: #6b7280;
+  --text-white: #f4f2ff;
+  --accent-teal: #5ee7d5;
+  --accent-orange: #ff8a5c;
+  --accent-purple: #a78bfa;
+  --accent-coral: #ff7eb3;
+  --accent-blue: #3b82f6;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 20px;
+  --max-w: 1200px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ── Navigation ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 20px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all 0.4s;
+}
+.nav.scrolled {
+  background: rgba(250, 249, 247, 0.9);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-size: 0.88rem; font-weight: 500; color: var(--text-light);
+  transition: color 0.3s; position: relative;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 2px; background: var(--accent-teal); transform: scaleX(0);
+  transition: transform 0.3s; border-radius: 2px;
+}
+.nav-links a:hover::after { transform: scaleX(1); }
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -20%; right: -10%;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(94,231,213,0.15), transparent 70%);
+  filter: blur(60px);
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -10%; left: -10%;
+  width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,126,179,0.1), transparent 70%);
+  filter: blur(60px);
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(94,231,213,0.1); border: 1px solid rgba(94,231,213,0.2);
+  border-radius: 50px; padding: 8px 20px;
+  font-size: 0.78rem; font-weight: 600; color: #0d9488;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.hero-tag .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-teal);
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 800; line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+  position: relative; z-index: 1;
+}
+.hero h1 .gradient {
+  background: linear-gradient(135deg, #0d9488, #3b82f6, #a78bfa);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.2rem; color: var(--text-light);
+  max-width: 560px; line-height: 1.7;
+  font-weight: 400; position: relative; z-index: 1;
+  margin-bottom: 48px;
+}
+.hero-meta {
+  display: flex; gap: 48px;
+  font-size: 0.82rem; color: var(--text-light);
+  position: relative; z-index: 1;
+}
+.hero-meta div { text-align: left; }
+.hero-meta .label {
+  font-weight: 600; color: var(--text);
+  text-transform: uppercase; letter-spacing: 1px;
+  font-size: 0.68rem; margin-bottom: 4px;
+}
+
+/* ── Sections ── */
+section { padding: 100px 24px; }
+.container { max-width: var(--max-w); margin: 0 auto; }
+
+.section-label {
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 3px;
+  color: var(--accent-teal); margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.15; margin-bottom: 20px;
+}
+.section-desc {
+  font-size: 1.05rem; color: var(--text-light);
+  line-height: 1.7; max-width: 640px;
+}
+
+/* ── Overview ── */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 24px; margin-top: 64px;
+}
+.overview-card {
+  background: #fff; border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius); padding: 36px 32px;
+  transition: all 0.4s;
+}
+.overview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+}
+.overview-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 20px;
+}
+.overview-card:nth-child(1) .overview-icon { background: rgba(94,231,213,0.12); }
+.overview-card:nth-child(2) .overview-icon { background: rgba(255,138,92,0.12); }
+.overview-card:nth-child(3) .overview-icon { background: rgba(167,139,250,0.12); }
+.overview-card h3 {
+  font-family: var(--font-display); font-size: 1.2rem;
+  font-weight: 700; margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.overview-card p {
+  font-size: 0.9rem; color: var(--text-light); line-height: 1.65;
+}
+
+/* ── Context section ── */
+.context-split {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center; margin-top: 64px;
+}
+.context-stat {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-bottom: 32px;
+}
+.context-stat .num {
+  font-family: var(--font-display);
+  font-size: 3rem; font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.context-stat .stat-label {
+  font-size: 0.95rem; color: var(--text-light); line-height: 1.5;
+}
+.context-text {
+  font-size: 1rem; color: var(--text-light); line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* ── Concept Showcase ── */
+.concept-section {
+  padding: 120px 24px;
+  position: relative;
+}
+.concept-section:nth-child(even) { background: #fff; }
+
+.concept-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 64px; align-items: center;
+  max-width: var(--max-w); margin: 0 auto;
+}
+.concept-header.reverse { direction: rtl; }
+.concept-header.reverse > * { direction: ltr; }
+
+.concept-badge {
+  display: inline-flex; padding: 6px 16px;
+  border-radius: 50px; font-size: 0.7rem;
+  font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-bottom: 16px;
+}
+.badge-teal { background: rgba(94,231,213,0.12); color: #0d9488; }
+.badge-orange { background: rgba(255,138,92,0.12); color: #c2410c; }
+.badge-purple { background: rgba(167,139,250,0.12); color: #7c3aed; }
+
+.concept-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  margin-bottom: 16px; line-height: 1.15;
+}
+.concept-desc {
+  font-size: 1.05rem; color: var(--text-light);
+  line-height: 1.7; margin-bottom: 32px;
+}
+
+.concept-features {
+  list-style: none; display: flex; flex-direction: column; gap: 14px;
+}
+.concept-features li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.92rem; color: var(--text-light); line-height: 1.6;
+}
+.concept-features li::before {
+  content: ''; width: 6px; height: 6px;
+  border-radius: 50%; margin-top: 8px; flex-shrink: 0;
+}
+.concept-features.teal li::before { background: var(--accent-teal); }
+.concept-features.orange li::before { background: var(--accent-orange); }
+.concept-features.purple li::before { background: var(--accent-purple); }
+
+.concept-visual {
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.1);
+}
+.concept-visual img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+/* ── Gallery Grid ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: var(--max-w); margin: 48px auto 0;
+}
+.gallery-item {
+  border-radius: 16px; overflow: hidden;
+  aspect-ratio: 1; position: relative;
+  cursor: pointer;
+  transition: transform 0.4s;
+}
+.gallery-item:hover { transform: scale(1.03); }
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+/* Card grid for concept 2 decks */
+.deck-showcase {
+  display: flex; gap: 20px; justify-content: center;
+  flex-wrap: wrap; margin-top: 48px;
+  max-width: var(--max-w); margin-left: auto; margin-right: auto;
+}
+.deck-card {
+  width: 180px; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+.deck-card:hover {
+  transform: translateY(-12px) rotate(-2deg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.deck-card img { width: 100%; height: auto; }
+
+/* ── Process section ── */
+.process-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 32px; margin-top: 64px;
+}
+.process-step {
+  position: relative; padding: 32px 24px;
+  border-left: 2px solid rgba(0,0,0,0.06);
+}
+.process-step:first-child { border-left: 2px solid var(--accent-teal); }
+.step-num {
+  font-family: var(--font-display);
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  color: var(--accent-teal); margin-bottom: 16px;
+}
+.process-step h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 700;
+  margin-bottom: 10px; letter-spacing: -0.01em;
+}
+.process-step p {
+  font-size: 0.88rem; color: var(--text-light); line-height: 1.7;
+}
+
+/* ── CTA / Try Prototype ── */
+.cta-section {
+  background: var(--bg-dark); color: var(--text-white);
+  text-align: center; padding: 120px 24px;
+  position: relative; overflow: hidden;
+}
+.cta-section::before {
+  content: ''; position: absolute; top: -20%; left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(94,231,213,0.15), transparent 60%);
+  filter: blur(80px);
+}
+.cta-section .section-title { color: var(--text-white); }
+.cta-section .section-desc {
+  color: rgba(244,242,255,0.6);
+  margin: 0 auto 48px;
+}
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #5ee7d5, #7cc4fa);
+  color: var(--bg-dark); border: none; border-radius: 50px;
+  padding: 18px 48px; font-size: 1.1rem; font-weight: 700;
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 8px 32px rgba(94,231,213,0.3);
+  text-decoration: none;
+}
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 48px rgba(94,231,213,0.5);
+}
+
+/* ── Footer ── */
+.footer {
+  padding: 48px 24px;
+  text-align: center;
+  font-size: 0.82rem; color: var(--text-light);
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ── Scroll Animations ── */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ── Image Lightbox ── */
+.lightbox {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.9);
+  display: none; align-items: center; justify-content: center;
+  cursor: zoom-out;
+  backdrop-filter: blur(10px);
+}
+.lightbox.active { display: flex; }
+.lightbox img {
+  max-width: 90vw; max-height: 90vh;
+  border-radius: 12px; object-fit: contain;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .nav { padding: 16px 20px; }
+  .nav-links { display: none; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .context-split { grid-template-columns: 1fr; gap: 40px; }
+  .concept-header, .concept-header.reverse { grid-template-columns: 1fr; direction: ltr; }
+  .concept-header.reverse > * { direction: ltr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .hero-meta { flex-wrap: wrap; gap: 24px; }
+  .deck-showcase { gap: 12px; }
+  .deck-card { width: 140px; }
+}
+@media (max-width: 600px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: 1fr; }
+  .deck-card { width: 110px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">HPB x YPS</div>
+  <div class="nav-links">
+    <a href="#overview">Overview</a>
+    <a href="#context">Context</a>
+    <a href="#concept1">Concept 1</a>
+    <a href="#concept2">Concept 2</a>
+    <a href="#concept3">Concept 3</a>
+    <a href="#process">Process</a>
+    <a href="#prototype">Try Prototype</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="hero-tag">
+    <span class="dot"></span>
+    Case Study
+  </div>
+  <h1>
+    Youth Peer Support<br>
+    <span class="gradient">Prototype Design</span>
+  </h1>
+  <p class="hero-sub">
+    Designing tangible tools that help teens and parents build healthier habits together — from better sleep to honest conversations.
+  </p>
+  <div class="hero-meta">
+    <div>
+      <div class="label">Client</div>
+      Health Promotion Board
+    </div>
+    <div>
+      <div class="label">Role</div>
+      Product Design
+    </div>
+    <div>
+      <div class="label">Scope</div>
+      Prototype Testing
+    </div>
+    <div>
+      <div class="label">Year</div>
+      2025
+    </div>
+  </div>
+</header>
+
+<!-- Overview -->
+<section id="overview">
+  <div class="container">
+    <div class="section-label reveal">Project Overview</div>
+    <h2 class="section-title reveal">Three concepts.<br>One shared goal.</h2>
+    <p class="section-desc reveal">
+      We designed three interactive prototypes to strengthen teen-parent relationships and encourage healthier everyday habits. Each concept uses a different format — a magnetic board, challenge cards, and a conversation game — to meet families where they are.
+    </p>
+
+    <div class="overview-grid">
+      <div class="overview-card reveal reveal-delay-1">
+        <div class="overview-icon">&#127769;</div>
+        <h3>Lights Out, Level Up</h3>
+        <p>A magnetic fridge board that helps teens and parents co-create a bedtime routine, with weekly sleep tracking and mood check-ins.</p>
+      </div>
+      <div class="overview-card reveal reveal-delay-2">
+        <div class="overview-icon">&#128170;</div>
+        <h3>Hook U Up</h3>
+        <p>A 14-day challenge deck done with a friend. Flip a card each day, complete the challenge, and upload proof before midnight.</p>
+      </div>
+      <div class="overview-card reveal reveal-delay-3">
+        <div class="overview-icon">&#128172;</div>
+        <h3>We Open Up (WOU)</h3>
+        <p>A card game for teens and parents. Draw a question, both answer honestly, and turn awkward silence into real conversation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Context -->
+<section id="context" style="background: #fff;">
+  <div class="container">
+    <div class="section-label reveal">The Challenge</div>
+    <h2 class="section-title reveal">Bridging the gap between<br>teens and parents.</h2>
+
+    <div class="context-split">
+      <div>
+        <div class="context-stat reveal">
+          <span class="num">3</span>
+          <span class="stat-label">Physical prototypes<br>designed and tested</span>
+        </div>
+        <div class="context-stat reveal">
+          <span class="num">14</span>
+          <span class="stat-label">Days of challenge-based<br>habit formation</span>
+        </div>
+        <div class="context-stat reveal">
+          <span class="num">5</span>
+          <span class="stat-label">Wellness themes across<br>challenge decks</span>
+        </div>
+      </div>
+      <div>
+        <p class="context-text reveal">
+          Many teens in Singapore struggle with sleep, screen time, and communicating openly with their parents. Traditional health education often feels prescriptive and disconnected from their daily lives.
+        </p>
+        <p class="context-text reveal">
+          HPB's Youth Peer Support programme needed something different: tools that teens would actually <em>want</em> to use — not because they had to, but because the experience felt relevant, fun, and peer-driven.
+        </p>
+        <p class="context-text reveal">
+          Our approach was to design physical, tactile prototypes that bring parents and teens into shared activities — lowering the barrier to connection through play, routine, and honest conversation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Concept 1: Lights Out, Level Up -->
+<section class="concept-section" id="concept1">
+  <div class="concept-header">
+    <div>
+      <span class="concept-badge badge-teal reveal">Concept 01</span>
+      <h2 class="concept-name reveal">Lights Out,<br>Level Up</h2>
+      <p class="concept-desc reveal">
+        A magnetic board you and your parent use to build a bedtime routine together. Stick it on the fridge, pick your magnets, and track how you sleep.
+      </p>
+      <ul class="concept-features teal reveal">
+        <li>Drag-and-drop magnets for wind-down activities and room setup</li>
+        <li>A dedicated parent column for shared commitment</li>
+        <li>Weekly sleep tracker with feeling magnets (Calm, Sad, Happy, Angry)</li>
+        <li>Designed for the fridge — visible, physical, and part of daily life</li>
+      </ul>
+    </div>
+    <div class="concept-visual reveal">
+      <img src="images/c1-intro.png" alt="Lights Out Level Up — magnetic board on fridge with parent and teen" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <div class="gallery-grid" style="margin-top: 80px;">
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/Concept-1.png" alt="Concept 1 illustration" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/c1-board design.png" alt="Board design layout" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <img src="images/c1-background.png" alt="Concept 1 background" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Magnet samples -->
+  <div class="deck-showcase" style="margin-top: 48px;">
+    <div class="deck-card reveal"><img src="images/c1-wind_down1.png" alt="Warm Drink magnet" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c1-wind_down2.png" alt="Stretch magnet" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c1-wind_down3.png" alt="Chill Music magnet" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c1-room_setup1.png" alt="Room setup magnet" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c1-room_setup2.png" alt="Room setup magnet" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- Concept 2: Hook U Up -->
+<section class="concept-section" id="concept2" style="background: #fff;">
+  <div class="concept-header reverse">
+    <div>
+      <span class="concept-badge badge-orange reveal">Concept 02</span>
+      <h2 class="concept-name reveal">Hook U Up</h2>
+      <p class="concept-desc reveal">
+        A 14-day challenge deck you do with a friend. Pick a topic, flip a card each day, and prove you did it before midnight. Miss a day and the streak resets.
+      </p>
+      <ul class="concept-features orange reveal">
+        <li>5 themed decks: Bulk Up, Cut Season, Energy Era, Glow Up, Recharge</li>
+        <li>14 daily challenge cards per deck with escalating difficulty</li>
+        <li>Photo proof required before midnight — accountability with a buddy</li>
+        <li>Complete all 14 days for a chance at an HPB prize</li>
+      </ul>
+    </div>
+    <div class="concept-visual reveal">
+      <img src="images/c2-intro.png" alt="Hook U Up challenge decks and teens playing" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Deck showcase -->
+  <div class="deck-showcase">
+    <div class="deck-card reveal"><img src="images/c2-deck-bulk.png" alt="Bulk Up deck" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c2-deck-cut.png" alt="Cut Season deck" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c2-deck-energy.png" alt="Energy Era deck" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c2-deck-glow-up.png" alt="Glow Up deck" loading="lazy"></div>
+    <div class="deck-card reveal"><img src="images/c2-deck-recharge.png" alt="Recharge deck" loading="lazy"></div>
+  </div>
+
+  <!-- Sample cards -->
+  <div class="gallery-grid" style="margin-top: 48px;">
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/c2-bulk1-front.png" alt="Bulk Up Day 1" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/c2-energy1-front.png" alt="Energy Era Day 1" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <img src="images/c2-glow-up1-front.png" alt="Glow Up Day 1" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- Concept 3: We Open Up -->
+<section class="concept-section" id="concept3">
+  <div class="concept-header">
+    <div>
+      <span class="concept-badge badge-purple reveal">Concept 03</span>
+      <h2 class="concept-name reveal">We Open Up<br>(WOU)</h2>
+      <p class="concept-desc reveal">
+        A card game for you and your parent. Draw a question, both answer honestly, and turn awkward silence into real conversation — one question at a time.
+      </p>
+      <ul class="concept-features purple reveal">
+        <li>Category Cards — everyone answers, no skipping (yes, parents too)</li>
+        <li>Swap Cards — answer as the other person, then compare</li>
+        <li>Spark Cards — go one layer deeper, completely optional</li>
+        <li>No right answers, no judgement — just honest conversation</li>
+      </ul>
+    </div>
+    <div class="concept-visual reveal">
+      <img src="images/c3-intro.png" alt="We Open Up card game box and family playing" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Card samples -->
+  <div class="gallery-grid" style="margin-top: 80px;">
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/c3-wou1.png" alt="WOU Category Card" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/c3-wou2.png" alt="WOU Card" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <img src="images/c3-wou3.png" alt="WOU Card" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-1">
+      <img src="images/c3-wou4.png" alt="WOU Card" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-2">
+      <img src="images/c3-wou5.png" alt="WOU Card" loading="lazy">
+    </div>
+    <div class="gallery-item reveal reveal-delay-3">
+      <img src="images/Concept-3.png" alt="Concept 3 illustration" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="process" style="background: #fff;">
+  <div class="container">
+    <div class="section-label reveal">Design Process</div>
+    <h2 class="section-title reveal">How we got here.</h2>
+    <p class="section-desc reveal">
+      From research to physical prototypes — a youth-centred, iterative design process.
+    </p>
+
+    <div class="process-steps">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-num">Step 01</div>
+        <h3>Research & Discovery</h3>
+        <p>Understanding teen-parent dynamics, sleep behaviours, and peer influence through interviews and secondary research with HPB.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-num">Step 02</div>
+        <h3>Concept Development</h3>
+        <p>Ideating three distinct formats — a board, challenge cards, and a conversation game — each targeting different aspects of teen wellness.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-num">Step 03</div>
+        <h3>Prototyping</h3>
+        <p>Designing high-fidelity physical prototypes with illustrated magnets, printed card decks, and interactive digital companions for testing.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-4">
+        <div class="step-num">Step 04</div>
+        <h3>User Testing</h3>
+        <p>Testing prototypes with real teen-parent pairs, observing interactions, and iterating based on what resonated and what fell flat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="prototype">
+  <div class="section-label reveal" style="color: var(--accent-teal);">Try It</div>
+  <h2 class="section-title reveal">Experience the prototypes.</h2>
+  <p class="section-desc reveal">
+    Explore the interactive digital versions of all three concepts — drag magnets, flip cards, and shuffle the deck.
+  </p>
+  <a href="prototype.html" class="cta-btn reveal">
+    Launch Prototype
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>HPB x YPS — Youth Peer Support Prototype Design</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <img src="" alt="Enlarged view" id="lightbox-img">
+</div>
+
+<script>
+// Nav scroll effect
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// Lightbox
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+document.querySelectorAll('.gallery-item, .deck-card').forEach(item => {
+  item.addEventListener('click', () => {
+    const img = item.querySelector('img');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    lightbox.classList.add('active');
+  });
+});
+
+lightbox.addEventListener('click', () => {
+  lightbox.classList.remove('active');
+});
+</script>
+
+</body>
+</html>
